@@ -77,9 +77,9 @@ def update_topgainers():
 
         if topgainers and stats:
             print(f"Updating top gainers...")
-            coins_db.delete_one({"market": 'topgainers'})
+            coins_db.delete_one({"market": 'stats'})
             coins_db.insert_one(
-                {'market': 'topgainers', 'coins': topgainers, 'stats': stats})
+                {'market': 'stats', 'stats': stats})
         else:
             # Expand this to make sure lists match
             print(f"Failed to add top gainers on coinbase")
