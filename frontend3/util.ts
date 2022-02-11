@@ -1,6 +1,15 @@
 import type { BigNumberish } from "@ethersproject/bignumber";
 import { formatUnits } from "@ethersproject/units";
 
+export function titleCase(str: string) {
+  let formattedString = str.toLowerCase().split(" ");
+  for (var i = 0; i < formattedString.length; i++) {
+    formattedString[i] =
+      formattedString[i].charAt(0).toUpperCase() + formattedString[i].slice(1);
+  }
+  return formattedString.join(" ");
+}
+
 export function shortenHex(hex: string, length = 4) {
   return `${hex.substring(0, length + 2)}…${hex.substring(
     hex.length - length

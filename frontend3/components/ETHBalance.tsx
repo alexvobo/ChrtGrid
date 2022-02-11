@@ -3,11 +3,11 @@ import { useWeb3React } from "@web3-react/core";
 import useETHBalance from "../hooks/useETHBalance";
 import { parseBalance } from "../util";
 
-const ETHBalance = () => {
+const ETHBalance = ({ className }) => {
   const { account } = useWeb3React<Web3Provider>();
   const { data } = useETHBalance(account);
 
-  return <p>Balance: Ξ{parseBalance(data ?? 0)}</p>;
+  return <p className={className}>{parseBalance(data ?? 0)} Ξ </p>;
 };
 
 export default ETHBalance;

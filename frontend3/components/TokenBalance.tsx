@@ -6,15 +6,20 @@ import { parseBalance } from "../util";
 type TokenBalanceProps = {
   tokenAddress: string;
   symbol: string;
+  className: string;
 };
 
-const TokenBalance = ({ tokenAddress, symbol }: TokenBalanceProps) => {
+const TokenBalance = ({
+  tokenAddress,
+  symbol,
+  className,
+}: TokenBalanceProps) => {
   const { account } = useWeb3React<Web3Provider>();
   const { data } = useTokenBalance(account, tokenAddress);
 
   return (
-    <p>
-      {`${symbol} Balance`}: {parseBalance(data ?? 0)}
+    <p className={className}>
+      {symbol}: {parseBalance(data ?? 0)}
     </p>
   );
 };

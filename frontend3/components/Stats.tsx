@@ -1,3 +1,4 @@
+import { useState } from "react";
 import LoadingIcons from "react-loading-icons";
 import { Transition } from "@headlessui/react";
 import useSWR from "swr";
@@ -15,32 +16,59 @@ function orderBySubKey(input, key, order) {
       .sort((a, b) => b.value[key] - a.value[key]);
   }
 }
+function moneyFormat(labelValue) {
 
-export default function Stats({ exchange, maxCharts, sortOrder }) {
-  const { data, isValidating, error } = useSWR(`/api/${exchange}/stats`, {
-    refreshInterval: 60000,
+  // Nine Zeroes for Billions
+  return Math.abs(Number(labelValue)) >= 1.0e+9
+
+  ? (Math.abs(Number(labelValue)) / 1.0e+9).toFixed(2) + " B"
+  // Six Zeroes for Millions 
+  : Math.abs(Number(labelValue)) >= 1.0e+6
+
+  ? (Math.abs(Number(labelValue)) / 1.0e+6).toFixed(2) + " M"
+  // Three Zeroes for Thousands
+  : Math.abs(Number(labelValue)) >= 1.0e+3
+
+  ? (Math.abs(Number(labelValue)) / 1.0e+3).toFixed(2) + " K"
+
+  : Math.abs(Number(labelValue));
+
+}
+
+export default function Stats({ exchange, maxCharts }) {
+
+  const [sortAscending, setSortAscending] = useState(false);
+
+  const { data, error } = useSWR(`/api/${exchange}/stats`, {
+    refreshInterval: 1000*60,
   });
   // Set Timeout, if timeout then ping = false
 
   if (error) {
     console.log(error);
   }
+  
   return (
     <>
-      <div className="opacity-100 inset-0 overflow-y-auto">
+      <div className="mt-10 opacity-100 inset-0 overflow-y-auto ">
         <div className="text-center">
-          <div className="inline-block w-full xs:max-w-sm max-w-sm  md:max-w-md lg:max-w-md 2xl:max-w-lg  p-4 mb-3 overflow-hidden text-left align-middle transition-all transform bg-indigo-900 shadow-xl rounded-sm">
-            <div className="text-center text-yellow-400 font-bold">
-              24H {sortOrder ? "WORST" : "TOP"} GAINERS
+          <div className="inline-block w-3/4 xs:max-w-sm max-w-sm  md:max-w-md lg:max-w-md 2xl:max-w-lg  p-4 mb-2  text-left align-middle transition-all transform bg-transparent rounded-sm">
+            <div className="text-center text-yellow-500 font-bold text-2xl mb-4 rounded-sm">
+              24H {sortAscending ? "WORST" : "TOP"} GAINERS
             </div>
 
-            <div className=" grid grid-flow-row ">
+            <div className=" grid grid-flow-row  ">
+              <div className="text-yellow-500 grid grid-flow-col  border-b-2 border-b-indigo-500 text-xl pb-1 font-medium  ">
+                <p className="text-left pl-2">Symbol</p>  <p className="text-center">Price</p>
+                {/* <p className="text-right">Volume</p> */}
+                <p className="text-right pr-2">Change</p></div>
+              
               {data ? (
                 Object.values(
                   orderBySubKey(
-                    data[0]["stats"],
+                    data,
                     "percentage_change",
-                    sortOrder
+                    sortAscending
                   )
                 ).map(
                   (item, i) =>
@@ -51,20 +79,32 @@ export default function Stats({ exchange, maxCharts, sortOrder }) {
                         rel="noreferrer"
                         className=""
                         key={i}>
-                        <div className="hover:bg-indigo-700 grid grid-flow-col  border-2 border-indigo-200/0 border-b-indigo-500">
-                          <p className="text-md font-medium hover:text-white  text-gray-200 ">
+                        <div className=" hover:text-xl hover:pl-2 hover:pr-2  leading-7 hover:bg-indigo-900 grid grid-flow-col  border-2 border-indigo-200/0 border-b-indigo-700">
+                          <p className="pl-4 text-md font-medium text-left hover:text-white  text-gray-200 ">
                             {item["key"]}
-                            {/* {console.log(item)} */}
                           </p>
-                          {console.log(item["value"])}
+                          {/* Changes price color based on % change. May remove in future. */}
                           <p
-                            className={`text-md font-bold text-right font-medium  ${
+                            className={`text-md font-bold text-center text-gray-200 hover:text-white ${
+                              item["value"]["percentage_change"] < -10 
+                                ? "hover:text-red-400 text-red-600":
+                                (item["value"]["percentage_change"] < 10 ? "": "hover:text-green-400 text-green-600")}`}>
+                            ${item["value"]["last"]}
+                          </p>
+                          {/* {console.log(item["value"])} */}
+                          {/* <p className="text-md font-medium hover:text-white  text-gray-200 text-center ">
+                            {moneyFormat(item["value"]['volume']*item["value"]["last"])}
+                          </p> */}
+                          <p
+                            className={`text-md font-bold text-right pr-4 ${
                               item["value"]["percentage_change"] > 0
                                 ? "hover:text-green-400 text-green-600"
                                 : "hover:text-red-400 text-red-600"
                             }`}>
-                            {Math.round(item["value"]["percentage_change"], 2)}%
+                            {Math.round(item["value"]["percentage_change"])}%
                           </p>
+                         
+                         
                         </div>
                       </a>
                     )
@@ -77,7 +117,17 @@ export default function Stats({ exchange, maxCharts, sortOrder }) {
             </div>
           </div>
         </div>
+        <div className="text-center mb-4">
+            <button
+              className="w-[100px] text-lg border-2  bg-transparent hover:bg-red-700 text-red-600 font-bold hover:text-black py-1 px-2 border-red-700 hover:border-transparent rounded  "
+              onClick={() => {
+                setSortAscending(!sortAscending);
+              }}>
+              Sort
+        </button>
       </div>
+      </div>
+
     </>
   );
 }
