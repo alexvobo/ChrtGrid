@@ -1,13 +1,22 @@
-import type { Web3Provider } from "@ethersproject/providers";
-import { useWeb3React } from "@web3-react/core";
+import { useMoralis } from "react-moralis";
 import useETHBalance from "../hooks/useETHBalance";
+import Image from "next/image";
+import avax from "../public/avax.svg";
 import { parseBalance } from "../util";
 
+type ETHBalanceProps = {
+  className: string;
+};
 const ETHBalance = ({ className }) => {
-  const { account } = useWeb3React<Web3Provider>();
+  const { account } = useMoralis();
   const { data } = useETHBalance(account);
 
-  return <p className={className}>{parseBalance(data ?? 0)} Ξ </p>;
+  return (
+    <div className={className}>
+      <span className="mr-1 pb-">{parseBalance(data ?? 0)}</span>
+      <Image className="" src={avax} height={17} width={17} alt="AVAX" />
+    </div>
+  );
 };
 
 export default ETHBalance;

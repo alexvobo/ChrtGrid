@@ -1,16 +1,15 @@
-import type { Web3Provider } from "@ethersproject/providers";
-import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
+import { useMoralis } from "react-moralis";
 
 export default function useENSName(address: string) {
-  const { library, chainId } = useWeb3React<Web3Provider>();
+  const { web3, chainId } = useMoralis();
   const [ENSName, setENSName] = useState("");
 
   useEffect(() => {
-    if (library && typeof address === "string") {
+    if (web3 && typeof address === "string") {
       let stale = false;
 
-      library
+      web3
         .lookupAddress(address)
         .then((name) => {
           if (!stale && typeof name === "string") {
@@ -24,7 +23,7 @@ export default function useENSName(address: string) {
         setENSName("");
       };
     }
-  }, [library, address, chainId]);
+  }, [web3, address, chainId]);
 
   return ENSName;
 }

@@ -1,5 +1,5 @@
 import type { Web3Provider } from "@ethersproject/providers";
-import { useWeb3React } from "@web3-react/core";
+import { useMoralis } from "react-moralis";
 import useSWR from "swr";
 
 function getBlockNumber(library: Web3Provider) {
@@ -9,7 +9,9 @@ function getBlockNumber(library: Web3Provider) {
 }
 
 export default function useBlockNumber() {
-  const { library } = useWeb3React<Web3Provider>();
+  const { web3 } = useMoralis();
+
+  const library = web3;
   const shouldFetch = !!library;
 
   return useSWR(shouldFetch ? ["BlockNumber"] : null, getBlockNumber(library), {

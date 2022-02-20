@@ -1,47 +1,23 @@
-import { useWeb3React } from "@web3-react/core";
-import { UserRejectedRequestError } from "@web3-react/injected-connector";
 import { useEffect, useState } from "react";
 import { ExternalLinkIcon } from "@heroicons/react/outline";
-import { injected } from "../connectors";
 
-import useSWR from "swr";
 import ETHBalance from "../components/ETHBalance";
-import TokenBalance from "../components/TokenBalance";
+import Pro from "./Pro";
 
 import useENSName from "../hooks/useENSName";
-import useMetaMaskOnboarding from "../hooks/useMetaMaskOnboarding";
+import { useMoralis } from "react-moralis";
 
 import { formatEtherscanLink, shortenHex, titleCase } from "../util";
 
-type AccountProps = {
-  triedToEagerConnect: boolean;
-};
-
-const Account = ({ triedToEagerConnect }: AccountProps) => {
-  const GRID_TOKEN_ADDRESS = "";
-
-  const { active, error, activate, chainId, account, setError } =
-    useWeb3React();
-
-  const {
-    isMetaMaskInstalled,
-    isWeb3Available,
-    startOnboarding,
-    stopOnboarding,
-  } = useMetaMaskOnboarding();
-
+const Account = () => {
   // manage connecting state for injected connector
-  const [connecting, setConnecting] = useState(false);
 
-  const [userData, setUserData] = useState(null);
-  useEffect(() => {
-    if (active || error) {
-      setConnecting(false);
-      stopOnboarding();
-    }
-  }, [active, error, stopOnboarding]);
+  const { account, chainId } = useMoralis();
 
   const ENSName = useENSName(account);
+
+  const [userData, setUserData] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (typeof account === "string" && account.length > 0) {
@@ -52,7 +28,6 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
           "Content-Type": "application/json",
         },
       });
-      console.log("Logged ", account);
       fetch("/api/user/" + account)
         .then((res) => res.json())
         .then((data) => {
@@ -63,40 +38,8 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
     }
   }, [account]);
 
-  if (error) {
+  if (!account) {
     return null;
-  }
-
-  if (!triedToEagerConnect) {
-    return null;
-  }
-
-  if (typeof account !== "string") {
-    return (
-      <div className="text-center  mb-2">
-        {isWeb3Available ? (
-          <button
-            className="bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-black py-2 px-4 border border-red-500 hover:border-transparent rounded "
-            disabled={connecting}
-            onClick={() => {
-              setConnecting(true);
-
-              activate(injected, undefined, true).catch((error) => {
-                // ignore the error if it's a user rejected request
-                if (error instanceof UserRejectedRequestError) {
-                  setConnecting(false);
-                } else {
-                  setError(error);
-                }
-              });
-            }}>
-            {isMetaMaskInstalled ? "Connect to MetaMask" : "Connect to Wallet"}
-          </button>
-        ) : (
-          <button onClick={startOnboarding}>Install Metamask</button>
-        )}
-      </div>
-    );
   }
 
   return (
@@ -124,36 +67,32 @@ const Account = ({ triedToEagerConnect }: AccountProps) => {
           <div className="">
             <h3 className="text-xl font-medium text-yellow-500">Balance</h3>
 
-            <ETHBalance className="text-lg" />
+            <ETHBalance className="text-lg mt-2 " />
           </div>
-          {/* <div className="">
-            <h3 className="text-xl font-medium  text-yellow-500">
-              Token Balance
-            </h3>
-            <TokenBalance
-              tokenAddress={GRID_TOKEN_ADDRESS}
-              symbol="GRID"
-              className="text-lg"
-            />
-          </div> */}
+
           <div className="">
             <h3 className="text-xl font-medium  text-yellow-500">Membership</h3>
             <p className="text-lg">
               {userData ? titleCase(userData.membership) : "Free"}
             </p>
           </div>
-          <div>
-            {userData.membership == "free" && (
-              <a
-                href="https://traderjoexyz.com"
-                target="_blank"
-                rel="noreferrer">
-                <button className="mt-3 mb-1 bg-transparent hover:bg-red-700 text-red-600 font-bold hover:text-black py-2 px-4 border-2 border-red-700 hover:border-transparent rounded">
-                  Get Pro
-                </button>
-              </a>
-            )}
-          </div>
+          {!userData || userData.membership == "free" ? (
+            <div>
+              <button
+                type="button"
+                onClick={() => setOpenModal(true)}
+                className="mt-3 mb-1 bg-transparent hover:bg-red-600 text-yellow-400 font-bold hover:text-black py-2 px-4 border-2 border-red-600 hover:border-transparent rounded">
+                Go Pro
+              </button>
+              <Pro isOpen={openModal} setIsOpen={setOpenModal} />
+            </div>
+          ) : userData.membership == "pro" ||
+            userData.membership == "lifetime" ? (
+            <div className="grid grid-flow-col border-2 w-3/4 mx-auto">
+              <p> Insert hook for chartsAmt</p>
+              <p> Insert hook to enable refresh in chartgrid</p>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

@@ -11,7 +11,6 @@ export default async function handler(req, res) {
       const { db } = await connectToDatabase();
 
       var ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-
       const user = await db.collection("users").update(
         { _id: address },
         {
@@ -20,7 +19,8 @@ export default async function handler(req, res) {
             _id: address,
             joined: Date.now(),
             joined_ip: ip,
-            membership: "free",
+            tier: "free",
+            payment_history: [],
           },
         },
         { upsert: true }
@@ -28,6 +28,7 @@ export default async function handler(req, res) {
 
       return res.status(200).json({ message: "User Updated" });
     } catch (error) {
+      console.log("here", error);
       return res.status(404).json({ error: "Failed to connect to DB" });
     }
   }

@@ -1,31 +1,14 @@
-import json
-import requests
+from .util import tradingview_formatter, api_data, percentage_change
+
 from pprint import pprint
 # import coinGecko as CoinGecko
 
 COINBASE_API = "https://api.exchange.coinbase.com"
 
 
-def tradingview_formatter(exchange, coins, pair="USD"):
-    return [f"{exchange.upper()}:{c}{pair}" for c in coins]
-
-
-def api_data(url, headers={"Accept": "application/json"}):
-    response = requests.request("GET", url, headers=headers)
-    if response.ok:
-        return json.loads(response.text)
-
-
-def percentage_change(price, last_price):
-    try:
-        return round((float(last_price)-float(price))/float(price), 2)*100
-    except ZeroDivisionError as e:
-        return 0
-
-
 def product_filter(product):
     # Stable coins, delisted coins, or high caps that may or may not have indexing problems on CoinGecko
-    blacklist = ["GYEN", "RAI", "XRP", "LINK", "CGLD", "WLUNA", "WBTC"]
+    blacklist = ["GYEN", "RAI", "XRP", "WLUNA", "WBTC"]
 
     if product['base_currency'] not in blacklist and \
             product['fx_stablecoin'] == False and product['quote_currency'] == "USD":

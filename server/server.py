@@ -8,11 +8,15 @@ import time
 import scrapers.coinbaseScraper as CoinbaseScraper
 import scrapers.sandwichScraper as SandwichScraper
 import scrapers.twitterScraper as TwitterScraper
+import scrapers.kucoinScraper as KucoinScraper
+import scrapers.binanceScraper as BinanceScraper
 
 from apscheduler.schedulers.background import BackgroundScheduler
 
 MONGO_HOSTNAME = 'localhost'
 MONGO_PORT = 27017
+
+exchanges = ['coinbase', 'kucoin', 'binance']
 
 # region Update DB
 
@@ -53,37 +57,48 @@ def update_coins(exchange='coinbase', market='usd_markets'):
             print(f"{exchange} -- {market} -- up to date")
 
 
-def update_latest_coinbase():
+def update_latest():
     # Run this on timer, bi-daily
-    with MongoClient(MONGO_HOSTNAME, MONGO_PORT) as client:
-        coins_db = client.sandwich['coinbase']
+    for e in exchanges:
+        with MongoClient(MONGO_HOSTNAME, MONGO_PORT) as client:
+            coins_db = client.sandwich[e]
+            new_coins = []
+            if e == "coinbase":
+                new_coins = TwitterScraper.get_latest_coinbase()
+            elif e == "kucoin":
+                new_coins = TwitterScraper.get_latest_kucoin()
+            elif e == "binance":
+                new_coins = TwitterScraper.get_latest_binance()
 
-        new_coins = TwitterScraper.get_latest_from_coinbase()
-
-        if new_coins:
-            print(f"Updating Latest Products...")
-            coins_db.delete_one({"market": 'latest'})
-            coins_db.insert_one({'market': 'latest', 'coins': new_coins})
-        else:
-            # Expand this to make sure lists match
-            print(f"Failed to add latest coinbase coins")
+            if new_coins:
+                print(f"Updating Latest Products...")
+                coins_db.delete_one({"market": 'latest'})
+                coins_db.insert_one({'market': 'latest', 'coins': new_coins})
+            else:
+                # Expand this to make sure lists match
+                print(f"Failed to add latest {e} coins")
 
 
 def update_topgainers():
-    with MongoClient(MONGO_HOSTNAME, MONGO_PORT) as client:
-        coins_db = client.sandwich['coinbase']
+    for e in exchanges:
+        with MongoClient(MONGO_HOSTNAME, MONGO_PORT) as client:
+            coins_db = client.sandwich[e]
 
-        topgainers, stats = CoinbaseScraper.get_topgainers()
+            if e == 'coinbase':
+                topgainers, stats = CoinbaseScraper.get_topgainers()
+            elif e == "kucoin":
+                topgainers, stats = KucoinScraper.get_topgainers()
+            elif e == "binance":
+                topgainers, stats = BinanceScraper.get_topgainers()
 
-        if topgainers and stats:
-            print(f"Updating top gainers...")
-            coins_db.delete_one({"market": 'stats'})
-            coins_db.insert_one(
-                {'market': 'stats', 'stats': stats})
-        else:
-            # Expand this to make sure lists match
-            print(f"Failed to add top gainers on coinbase")
-
+            if topgainers and stats:
+                print(f"Updating top gainers...")
+                coins_db.delete_one({"market": 'stats'})
+                coins_db.insert_one(
+                    {'market': 'stats', 'coins': topgainers, 'stats': stats})
+            else:
+                # Expand this to make sure lists match
+                print(f"Failed to add top gainers " + e)
 
 # def update_lowcaps_coinbase():
 #     # Run this on timer, bi-daily
@@ -101,9 +116,9 @@ def update_topgainers():
 #             print(f"Failed to add low caps")
 
 
-def add_list_db():
+def add_list_db(exchange):
     with MongoClient(MONGO_HOSTNAME, MONGO_PORT) as client:
-        coins_db = client.sandwich['coinbase']
+        coins_db = client.sandwich[exchange]
         with open("server/customlist.txt", "r") as f:
             products = [line.strip() for line in f.readlines()]
             if products:
@@ -116,14 +131,12 @@ def add_list_db():
 # region Scheduling
 sched = BackgroundScheduler(daemon=True)
 sched.add_job(update_topgainers, 'interval', minutes=2)
-sched.add_job(update_latest_coinbase, 'interval', minutes=720)
+sched.add_job(update_latest, 'interval', minutes=720)
 sched.add_job(update_coins, 'interval', minutes=1440)
 sched.start()
 # endregion
 
 app = Flask(__name__)
-
-
 # region API
 
 
@@ -131,72 +144,15 @@ def api_response(data, status):
     return jsonify({'data': data, 'status': status})
 
 
-@ app.route("/exchanges")
-def fetch_exchanges():
-    with MongoClient(MONGO_HOSTNAME, MONGO_PORT) as client:
-        url_db = client.sandwich['urls']
-        print("Responding with exchanges")
-        try:
-            return api_response([e for e in url_db.find().distinct('exchange')], 200)
-        except:
-            return api_response([], 404)
+@ app.route("/ping")
+def ping():
+    return api_response({"status": "alive"}, 200)
 
-
-@ app.route("/<exchange>")
-def fetch_markets_urls(exchange):
-    if exchange:
-        print("Responding with market names and urls")
-        with MongoClient(MONGO_HOSTNAME, MONGO_PORT) as client:
-            url_db = client.sandwich['urls']
-            try:
-                return api_response([{'market': m['market'], 'url':m['url']} for m in url_db.find({'exchange': exchange.lower()})], 200)
-            except:
-                return api_response([], 404)
-
-
-@ app.route("/<exchange>/markets")
-def fetch_markets(exchange):
-    if exchange:
-        print("Responding with market names")
-        with MongoClient(MONGO_HOSTNAME, MONGO_PORT) as client:
-            url_db = client.sandwich['urls']
-            try:
-                return api_response([m['market'] for m in url_db.find({'exchange': exchange.lower()})], 200)
-            except:
-                return api_response([], 404)
-
-
-@ app.route("/<exchange>/<market>")
-def fetch_coins(exchange, market):
-    if exchange and market:
-        print("Responding with default coin names")
-        with MongoClient(MONGO_HOSTNAME, MONGO_PORT) as client:
-            coin_db = client.sandwich[exchange.lower()]
-            try:
-                coins = coin_db.find_one({'market': market})['coins']
-                if market == "random":
-                    random.shuffle(coins)
-                return api_response(coins, 200)
-            except:
-                return api_response([], 404)
-
-
-@ app.route("/<exchange>/stats")
-def fetch_coins_topgainers_stats(exchange):
-    if exchange:
-        print("Responding with top gainers' stats")
-        with MongoClient(MONGO_HOSTNAME, MONGO_PORT) as client:
-            coin_db = client.sandwich[exchange.lower()]
-            try:
-                stats = coin_db.find_one({'market': 'topgainers'})['stats']
-                return api_response(stats, 200)
-            except:
-                return api_response([], 404)
 
 # endregion
 
 
 if __name__ == "__main__":
     update_topgainers()
-    update_latest_coinbase()
+    update_latest()
     app.run(debug=True)

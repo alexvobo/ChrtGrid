@@ -1,5 +1,5 @@
 import type { Web3Provider } from "@ethersproject/providers";
-import { useWeb3React } from "@web3-react/core";
+import { useMoralis } from "react-moralis";
 import useSWR from "swr";
 import useKeepSWRDataLiveAsBlocksArrive from "./useKeepSWRDataLiveAsBlocksArrive";
 
@@ -12,13 +12,13 @@ function getETHBalance(library: Web3Provider) {
 }
 
 export default function useETHBalance(address: string, suspense = false) {
-  const { library, chainId } = useWeb3React();
+  const { chainId, web3 } = useMoralis();
 
-  const shouldFetch = typeof address === "string" && !!library;
+  const shouldFetch = typeof address === "string" && !!web3;
 
   const result = useSWR(
     shouldFetch ? ["ETHBalance", address, chainId] : null,
-    getETHBalance(library),
+    getETHBalance(web3),
     {
       suspense,
     }

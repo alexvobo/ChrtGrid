@@ -1,19 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
 import LoadingIcons from "react-loading-icons";
-import { useRouter } from "next/router";
-import useSWRImmutable from "swr/immutable";
-
+import { useData } from "../contexts/DataContext";
 import useInterval from "../hooks/useInterval";
-import Toggle from "./Toggle";
 
 function reloadPage() {
   window.location.reload();
 }
+const exchangeThemes = {
+  coinbase: {
+    gridColor: "border-blue-600 ",
+  },
+  kucoin: {
+    gridColor: "border-[#23af91] ",
+  },
+  binance: {
+    gridColor: "border-yellow-500 ",
+  },
+};
+export default function ChartGrid({ maxCharts }) {
+  const { coins, exchange } = useData();
 
-export default function ChartGrid({ exchange, market, maxCharts }) {
-  const router = useRouter();
-  const { data, error } = useSWRImmutable(`/api/${exchange}/${market}/coins`);
   const [refresh, setRefresh] = useState(false);
 
   useInterval(() => {
@@ -21,36 +28,45 @@ export default function ChartGrid({ exchange, market, maxCharts }) {
     if (refresh === true) reloadPage();
   }, 1000 * 60 * 15);
 
-  if (!data || error)
+  if (coins === undefined || !coins || coins.length === 0 || !exchange) {
     return (
       <div className="flex justify-center items-center h-screen">
+        {console.log(coins)}
+
         <LoadingIcons.Bars height="5em" fill="white" speed={0.75} />
       </div>
     );
-
+  }
   return (
     <>
-      {console.log(data)}
-      <div className="grid xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 grid-cols-3 ">
-        {data.map(
-          (item, i) =>
-            i < maxCharts && (
-              <div
-                className="h-[300px] border-2 border-yellow-600 w-full overflow-hidden"
-                key={i}>
-                {/* <AdvancedRealTimeChart
-                symbol={item}
-                  theme="dark"
-                  hide_side_toolbar={true}
-                hide_legend={true}
-                interval="120"
-                autosize
-                  withdateranges={true}
+      <div
+        className={`grid xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 grid-cols-3 `}>
+        {coins &&
+          exchange &&
+          coins.map(
+            (item, i) =>
+              i < maxCharts && (
+                <div
+                  className={
+                    `h-[300px] border-2 w-full overflow-hidden ` +
+                    exchangeThemes[exchange]["gridColor"]
+                  }
+                  key={i}>
+                  <div className="text-white">{item}</div>
+                  {/* <AdvancedRealTimeChart
+                    symbol={item}
+                    theme="dark"
+                    hide_side_toolbar={true}
+                    hide_legend={true}
+                    interval="120"
+                    autosize
+                    withdateranges={true}
                   /> */}
-              </div>
-            )
-        )}
+                </div>
+              )
+          )}
       </div>
     </>
   );
 }
+// serversideprops: ({ exchange, market, maxCharts }) => {};
