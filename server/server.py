@@ -58,7 +58,6 @@ def update_coins(exchange='coinbase', market='usd_markets'):
 
 
 def update_latest():
-    # Run this on timer, bi-daily
     for e in exchanges:
         with MongoClient(MONGO_HOSTNAME, MONGO_PORT) as client:
             coins_db = client.sandwich[e]
@@ -132,7 +131,7 @@ def add_list_db(exchange):
 sched = BackgroundScheduler(daemon=True)
 sched.add_job(update_topgainers, 'interval', minutes=2)
 sched.add_job(update_latest, 'interval', minutes=720)
-sched.add_job(update_coins, 'interval', minutes=1440)
+# sched.add_job(update_coins, 'interval', minutes=1440)
 sched.start()
 # endregion
 

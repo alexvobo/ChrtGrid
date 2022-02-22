@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { ExternalLinkIcon } from "@heroicons/react/outline";
-import LoadingIcons from "react-loading-icons";
+
 import ETHBalance from "../components/ETHBalance";
 
 import Pro from "./Pro";
@@ -8,13 +7,10 @@ import Pro from "./Pro";
 import useENSName from "../hooks/useENSName";
 import { useMoralis } from "react-moralis";
 import { useAccount } from "../contexts/AccountContext";
-import { formatEtherscanLink, shortenHex, titleCase } from "../util";
 import Plaque from "./Plaque";
 import AddressBar from "./AddressBar";
 
 const Account = () => {
-  // manage connecting state for injected connector
-
   const { account, chainId } = useMoralis();
   const ENSName = useENSName(account);
   const { userData } = useAccount();
@@ -47,9 +43,7 @@ const Account = () => {
         <div className="inline-block w-[350px] max-w-md  p-2  overflow-hidden align-middle bg-transparent rounded border-4 border-pink-600 shadow-lg shadow-blue-700 ">
           <div className="grid grid-rows-4 text-center mb-3 gap-3">
             <div className="">
-              <h3 className="text-xl font-medium   text-yellow-500">
-                Account {console.log(userData)}
-              </h3>
+              <h3 className="text-xl font-medium   text-yellow-500">Account</h3>
               <div className="w-2/3 mx-auto   ">
                 <AddressBar
                   account={account}
@@ -71,7 +65,9 @@ const Account = () => {
                 Membership
               </h3>
               <Plaque
-                membership={userData.membership ? userData.membership : "free"}
+                membership={
+                  userData?.membership ? userData?.membership : "free"
+                }
               />
             </div>
             {!userData || userData?.membership === "free" ? (
@@ -91,6 +87,7 @@ const Account = () => {
           </div>
         </div>
       </div>
+      {/* </Transition> */}
     </>
   );
 };

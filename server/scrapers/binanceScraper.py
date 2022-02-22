@@ -11,11 +11,11 @@ def get_data():
 
 def product_filter(product):
     # Stable coins, delisted coins, or high caps that may or may not have indexing problems on CoinGecko
-    blacklist = ["USDC", "TUSD", "PAX", "USDT", "UST", "DAI"]
+    blacklist = ["USDC", "TUSD", "PAX", "USDT", "UST", "DAI", "BUSD", "USDP"]
     if product['symbol'][-4:] == "USDT":
         base = product['symbol'][:-4]
         # quote = product['symbol'].split("-")[1]
-        if base not in blacklist and base[-2:] not in ['3L', '3S', 'UP'] and base[-4:]!= "DOWN":
+        if base not in blacklist and base[-2:] not in ['3L', '3S', 'UP'] and base[-4:] != "DOWN":
             return True
 
         return False

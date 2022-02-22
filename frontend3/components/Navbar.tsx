@@ -9,9 +9,10 @@ import GRID from "../public/grid-nav.svg";
 import useSWR from "swr";
 
 const navigation = [
-  { name: "Help", href: "/", current: true },
+  { name: "Home", href: "/", current: true },
+  { name: "Help", href: "/help", current: false },
   // { name: "Accounts", href: "/account", current: false },
-  { name: "Bot", href: "/bot", current: false },
+  // { name: "Bot", href: "/bot", current: false },
 ];
 const tickers: TickerTapeSymbol[] = [
   {
@@ -25,6 +26,14 @@ const tickers: TickerTapeSymbol[] = [
   {
     proName: "FOREXCOM:DJI",
     title: "Dow Jones",
+  },
+  {
+    proName: "TVC:USOIL",
+    title: "Oil",
+  },
+  {
+    proName: "NASDAQ:AAPL",
+    title: "Apple",
   },
   {
     proName: "INDEX:BTCUSD",
@@ -43,11 +52,6 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-{
-  /* <span className="text-white relative ">
-            {true ? <Blob color="green" /> : <Blob color="red" />}
-          </span> */
-}
 export default function Navbar() {
   const { data: ping } = useSWR("/api/ping", (url) =>
     fetch(url).then((r) => r.json())
@@ -62,7 +66,6 @@ export default function Navbar() {
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                {/* Mobile menu button*/}
                 <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
@@ -85,19 +88,31 @@ export default function Navbar() {
 
                 <div className="hidden sm:block sm:ml-6 md:mt-6">
                   <div className="flex space-x-4 ">
-                    {navigation.map((item) => (
-                      <Link key={item.name} href={item.href}>
-                        <a
-                          className={classNames(
-                            item.current
-                              ? "bg-gray-900 text-white"
-                              : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                            "px-3 py-2 rounded-md  font-medium text-md"
-                          )}
-                          aria-current={item.current ? "page" : undefined}>
-                          {item.name}
-                        </a>
-                      </Link>
+                    {navigation?.map((item, idx) => (
+                      <>
+                        <Link key={item.name} href={item.href}>
+                          <a
+                            className={classNames(
+                              item.current
+                                ? " text-white "
+                                : "text-gray-300 hover:border-2 hover:border-pink-500 hover:text-white shadow-md hover:shadow-blue-500 ",
+                              "px-2 py-2 rounded-md  font-medium text-md "
+                            )}
+                            aria-current={item.current ? "page" : undefined}>
+                            {item.name}
+                          </a>
+                        </Link>
+                        {item.name === "Help" && (
+                          <div
+                            key={item.name + String(idx)}
+                            className="relative right-7">
+                            <span className="flex h-3 w-3 ">
+                              <span className="animate-ping absolute h-3 w-3 rounded-full bg-sky-400 opacity-75"></span>
+                              <span className="relative rounded-full h-3 w-3 bg-sky-500"></span>
+                            </span>
+                          </div>
+                        )}
+                      </>
                     ))}
                   </div>
                 </div>
@@ -136,7 +151,7 @@ export default function Navbar() {
                   className={classNames(
                     item.current
                       ? "bg-gray-900 text-white"
-                      : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                      : "text-gray-300 hover:bg-pink-600 hover:text-white shadow-md hover:shadow-blue-500 ",
                     "block px-3 py-2 rounded-md text-base font-medium"
                   )}
                   aria-current={item.current ? "page" : undefined}>

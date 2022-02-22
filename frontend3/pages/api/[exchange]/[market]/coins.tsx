@@ -15,7 +15,6 @@ export default async function handler(req, res) {
       query: { exchange, market },
     } = req;
 
-    console.log(exchange, market);
     if (exchange === "" || !exchange || !market || market === "") {
       return res.status(400).json({
         error: "Error with parameters",

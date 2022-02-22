@@ -11,9 +11,8 @@ function useAccount() {
 
 function AccountProvider({ children }) {
   const { account, chainId, isLoggingOut } = useMoralis();
-  const ENSName = useENSName(account);
   const [maxCharts, setMaxCharts] = useState(9);
-  const [exchangePreference, setExchangePreference] = useState(0); //paywall
+  // const [exchangePreference, setExchangePreference] = useState(0); //paywall
 
   const { data: memberships } = useSWR("/api/memberships/", (url) =>
     fetch(url).then((r) => r.json())
@@ -25,10 +24,10 @@ function AccountProvider({ children }) {
   function getMaxCharts(userData) {
     if (userData && userData !== undefined) {
       console.log(userData);
-      let maxCharts = memberships.memberships.filter(
+      let maxCharts = memberships?.memberships?.filter(
         (m) => m.tier === userData.membership
       );
-      if (Object.keys(maxCharts).length) {
+      if (maxCharts != null && Object.keys(maxCharts)?.length) {
         console.log("MAX CHARTS:", maxCharts);
         setMaxCharts(maxCharts[0]["maxCharts"]);
       }
@@ -41,14 +40,6 @@ function AccountProvider({ children }) {
       setMaxCharts(9);
     };
   }, [userData]);
-
-  // useEffect(() => {
-  //   first
-
-  //   return () => {
-  //     second
-  //   }
-  // }, [isLoggingOut])
 
   return (
     <AccountContext.Provider value={{ userData, maxCharts }}>

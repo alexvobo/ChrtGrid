@@ -41,6 +41,7 @@ export default function Example() {
       twitter: "https://twitter.com/binance",
     },
   };
+  const cooldown = 15000; //Required to prevent spamming of requests, tradingview will ban user
   function listOptions(exchInfo) {
     if (exchInfo) {
       return [
@@ -114,7 +115,7 @@ export default function Example() {
         {
           name: "Custom Lists",
           market: "custom",
-          description: "Choose your own coins",
+          description: "Lifetime/Pro Only",
           disabled: true,
           url: (
             <>
@@ -130,7 +131,7 @@ export default function Example() {
     kucoin: listOptions(exchangeInfo["kucoin"]),
     binance: listOptions(exchangeInfo["binance"]),
   });
-  const { exchange, market, chartsLoading } = useData();
+  const { exchange, market } = useData();
   const { switchExchange, switchMarket } = useDataUpdate();
   const [loading, setLoading] = useState(false);
 
@@ -144,7 +145,7 @@ export default function Example() {
           switchExchange(Object.keys(exchanges)[index]);
           setTimeout(() => {
             setLoading(false);
-          }, 10000);
+          }, cooldown);
         }}>
         <Tab.List className="flex p-1 space-x-1 bg-blue-900/20 rounded-xl">
           {Object.keys(exchanges).map((e) => (
@@ -168,39 +169,39 @@ export default function Example() {
           {Object.entries(exchanges).map(([e, markets], idx) => (
             <Tab.Panel key={idx} className={classNames(" rounded-xl p-3")}>
               <ul>
-                {markets.map((m, i) => (
+                {markets?.map((m, i) => (
                   <li
                     key={m.name + i}
                     className={classNames(
                       `${exchangeInfo[e]["marketStyle"]} relative p-3 rounded-md hover:bg-coolGray-100`,
-                      m.market === market ? "bg-indigo-800/50" : ""
+                      m?.market === market ? "bg-indigo-800/50" : ""
                     )}>
                     <button
-                      className={m.disabled ? "cursor-not-allowed" : null}
-                      disabled={loading || m.disabled}
+                      className={m?.disabled ? "cursor-not-allowed" : null}
+                      disabled={loading || m?.disabled}
                       onClick={() => {
                         setLoading(true);
-                        switchMarket(m.market);
+                        switchMarket(m?.market);
                         setTimeout(() => {
                           setLoading(false);
-                        }, 10000);
+                        }, cooldown);
                       }}>
                       <h3 className="text-yellow-500 mb-2 text-md text-left font-medium leading-5">
-                        {m.name}
+                        {m?.name}
                       </h3>
 
                       <ul className="flex mt-1 space-x-1 text-sm font-normal leading-4 text-coolGray-500">
-                        <li>{m.description}</li>
+                        <li>{m?.description}</li>
                         <li>&middot;</li>
                         <li className="text-blue-500 hover:underline z-10">
-                          {m.url}
+                          {m?.url}
                         </li>
                       </ul>
 
                       <a
                         href="#"
                         className={classNames(
-                          m.disabled ? "cursor-not-allowed" : null,
+                          m?.disabled ? "cursor-not-allowed" : null,
                           "absolute inset-0 rounded-md",
                           "focus:z-10 focus:outline-none focus:ring-2 ring-red-600"
                         )}

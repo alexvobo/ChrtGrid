@@ -85,7 +85,7 @@ export default function Stats() {
 
               {stats &&
               stats !== undefined &&
-              Object.keys(stats).length &&
+              Object.keys(stats).length > 1 &&
               maxCharts ? (
                 Object.values(
                   orderBySubKey(stats, "percentage_change", sortAscending)
@@ -128,7 +128,7 @@ export default function Stats() {
                     )
                 )
               ) : (
-                <div className="flex justify-center z-10">
+                <div className="flex justify-center mt-4 z-10">
                   <LoadingIcons.Bars height="2em" fill="#ffffff" speed={1} />
                 </div>
               )}

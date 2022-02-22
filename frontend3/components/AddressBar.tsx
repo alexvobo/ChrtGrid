@@ -2,9 +2,15 @@ import React from "react";
 import { formatEtherscanLink, shortenHex } from "../util";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { ClipboardCopyIcon } from "@heroicons/react/outline";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function AddressBar({ account, chainId, ENSName, copyAddress }) {
   function copy(addr) {
     navigator.clipboard.writeText(addr);
+    toast.dark("Copied to clipboard!", {
+      position: "bottom-right",
+    });
   }
 
   return (

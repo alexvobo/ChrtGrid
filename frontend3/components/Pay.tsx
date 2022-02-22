@@ -36,6 +36,7 @@ export default function Pay({ amount, receiver, tier }) {
     try {
       setClickedPay(true);
       const id = toast.loading("Processing Payment...", {
+        theme: "dark",
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,

@@ -17,7 +17,7 @@ export function shortenHex(hex: string, length = 4) {
 }
 
 const ETHERSCAN_PREFIXES = {
-  1: "etherscan.io",
+  "0x1": "etherscan.io",
   "0xa86a": "snowtrace.io",
   "0xa869": "testnet.snowtrace.io",
 };

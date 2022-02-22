@@ -101,14 +101,14 @@ export default function Pro({ isOpen, setIsOpen }) {
               leave="ease-in duration-200"
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95">
-              <div className="inline-block w-full max-w-max h-[500px] p-4  overflow-hidden text-left align-middle transition-all transform bg-blue-900/90 shadow-xl rounded-2xl">
+              <div className="inline-block w-full max-w-max h-[550px] py-8 px-4  overflow-hidden text-left align-middle transition-all transform bg-blue-900/90 shadow-xl rounded-2xl">
                 <Dialog.Title
                   as="h3"
                   className="border-b-2 border-yellow-500 pb-4 text-4xl text-center font-medium leading-6 text-white">
                   Go Pro Today!
                 </Dialog.Title>
                 <div className="">
-                  <div className=" w-full ">
+                  <div className=" w-full  ">
                     <p className="text-2xl  text-center text-white mt-2 mb-4">
                       Unlock extra features on GRID with Pro
                     </p>
@@ -123,7 +123,7 @@ export default function Pro({ isOpen, setIsOpen }) {
 
                       <li>
                         <ArrowSmRightIcon className="inline h-7 w-7  ml-2" />
-                        Lifetime
+                        Premium NFT Giveaways
                         <CashIcon className="inline h-7 w-7  ml-2" />{" "}
                       </li>
                       {/* <li>
@@ -133,7 +133,7 @@ export default function Pro({ isOpen, setIsOpen }) {
                       </li> */}
                       <li>
                         <ArrowSmRightIcon className="inline  h-7 w-7  ml-2" />
-                        More Charts [6 &#8594; 12]
+                        More Charts [9 &#8594; 12]
                         {
                           <PresentationChartLineIcon className="inline mb-1 h-7 w-7 ml-2" />
                         }
@@ -153,7 +153,7 @@ export default function Pro({ isOpen, setIsOpen }) {
                 </div>
                 <div></div>
 
-                <div className="mt-2 text-center justify-center ">
+                <div className="mt-4  text-center justify-center ">
                   {paymentData &&
                   networks &&
                   membershipTier &&
@@ -190,7 +190,7 @@ export default function Pro({ isOpen, setIsOpen }) {
                         {/* <span> Address: {paymentData["payment_to"]}</span> */}
                       </div>
 
-                      <div className="mt-3 ">
+                      <div className="mt-5 ">
                         <Pay
                           amount={paymentData["payment_amount"]}
                           receiver={paymentData["payment_to"]}

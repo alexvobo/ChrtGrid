@@ -3,11 +3,7 @@ import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
 import LoadingIcons from "react-loading-icons";
 import { useData } from "../contexts/DataContext";
 import { useAccount } from "../contexts/AccountContext";
-// import useInterval from "../hooks/useInterval";
 
-function reloadPage() {
-  window.location.reload();
-}
 const exchangeThemes = {
   coinbase: {
     gridColor: "border-blue-600 ",
@@ -22,13 +18,6 @@ const exchangeThemes = {
 export default function ChartGrid() {
   const { coins, exchange } = useData();
   const { maxCharts } = useAccount();
-  const [refresh, setRefresh] = useState(false);
-
-  // useInterval(() => {
-  //   // Every 15 min, reload page to refresh all TradingView charts at once if refresh is enabled
-  //   if (refresh === true) reloadPage();
-  // }, 1000 * 60 * 15);
-  console.log(maxCharts);
   if (
     coins === undefined ||
     !coins ||
@@ -55,16 +44,16 @@ export default function ChartGrid() {
                   exchangeThemes[exchange]["gridColor"]
                 }
                 key={i}>
-                <div className="text-white">{item}</div>
+                {/* <div className="text-white">{item}</div> */}
                 {/* <AdvancedRealTimeChart
-                    symbol={item}
-                    theme="dark"
-                    hide_side_toolbar={true}
-                    hide_legend={true}
-                    interval="240"
-                    autosize
-                    withdateranges={true}
-                  /> */}
+                  symbol={item}
+                  theme="dark"
+                  hide_side_toolbar={true}
+                  hide_legend={true}
+                  interval="240"
+                  autosize
+                  withdateranges={true}
+                /> */}
               </div>
             )
         )}
@@ -72,4 +61,3 @@ export default function ChartGrid() {
     </>
   );
 }
-// serversideprops: ({ exchange, market, maxCharts }) => {};
