@@ -2,11 +2,12 @@ import { connectToDatabase } from "../../../lib/mongodb";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const address = req.body["account"];
+    const address = req.body["account"]?.toLowerCase();
 
     if (!address) {
       return res.status(400).json({ error: "metamask error" });
     }
+
     try {
       const { db } = await connectToDatabase();
 
@@ -19,7 +20,7 @@ export default async function handler(req, res) {
             _id: address,
             joined: Date.now(),
             joined_ip: ip,
-            tier: "free",
+            membership: "free",
             payment_history: [],
           },
         },

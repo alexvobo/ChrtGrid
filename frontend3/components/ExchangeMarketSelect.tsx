@@ -1,12 +1,11 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Tab } from "@headlessui/react";
 import Image from "next/image";
 import CoinbaseLogo from "../public/coinbase.svg";
 import KucoinLogo from "../public/kucoin.svg";
 import BinanceLogo from "../public/binance.svg";
 import { titleCase } from "../util";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-
+import LoadingIcons from "react-loading-icons";
 import { useData, useDataUpdate } from "../contexts/DataContext";
 
 export default function Example() {
@@ -46,9 +45,10 @@ export default function Example() {
     if (exchInfo) {
       return [
         {
-          name: "Top/Worst Gainers",
+          name: "Best/Worst Gainers",
           market: "stats",
-          description: "Pumps pls",
+          description: "Pumps & Dumps pls",
+          disabled: false,
           url: (
             <>
               <a href={exchInfo.url} target="_blank" rel="noreferrer">
@@ -71,7 +71,8 @@ export default function Example() {
         {
           name: "Latest",
           market: "latest",
-          description: "New coins",
+          description: "Straight from the sauce",
+          disabled: false,
           url: (
             <>
               <a href={exchInfo.twitter} target="_blank" rel="noreferrer">
@@ -84,22 +85,8 @@ export default function Example() {
         {
           name: "Random",
           market: "random",
-          description: "🎲🎰 Roll the dice 🎰🎲",
-          url: (
-            <>
-              <a
-                href="https://sandwich.finance"
-                target="_blank"
-                rel="noreferrer">
-                🥪.finance
-              </a>
-            </>
-          ),
-        },
-        {
-          name: "Default",
-          market: "custom",
-          description: `List as-is`,
+          description: "Random Picks",
+          disabled: false,
           url: (
             <>
               {" "}
@@ -113,7 +100,7 @@ export default function Example() {
                     className="mr-2"
                     height={20}
                     width={20}
-                    alt="CoinbaseLogo"
+                    alt={`${exchInfo.name}Logo`}
                   />
                   <span className="ml-2">
                     {"   "}
@@ -121,6 +108,17 @@ export default function Example() {
                   </span>
                 </span>
               </a>
+            </>
+          ),
+        },
+        {
+          name: "Custom Lists",
+          market: "custom",
+          description: "Choose your own coins",
+          disabled: true,
+          url: (
+            <>
+              <p>Coming soon...</p>
             </>
           ),
         },
@@ -132,8 +130,9 @@ export default function Example() {
     kucoin: listOptions(exchangeInfo["kucoin"]),
     binance: listOptions(exchangeInfo["binance"]),
   });
-  const { exchange, market } = useData();
+  const { exchange, market, chartsLoading } = useData();
   const { switchExchange, switchMarket } = useDataUpdate();
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className="mx-auto w-full max-w-md px-2 py-16 sm:px-0">
@@ -141,11 +140,16 @@ export default function Example() {
         defaultIndex={0}
         onChange={(index) => {
           console.log(exchange, market);
+          setLoading(true);
           switchExchange(Object.keys(exchanges)[index]);
+          setTimeout(() => {
+            setLoading(false);
+          }, 10000);
         }}>
         <Tab.List className="flex p-1 space-x-1 bg-blue-900/20 rounded-xl">
           {Object.keys(exchanges).map((e) => (
             <Tab
+              disabled={loading}
               key={e}
               className={({ selected }) =>
                 classNames(
@@ -171,7 +175,16 @@ export default function Example() {
                       `${exchangeInfo[e]["marketStyle"]} relative p-3 rounded-md hover:bg-coolGray-100`,
                       m.market === market ? "bg-indigo-800/50" : ""
                     )}>
-                    <button onClick={() => switchMarket(m.market)}>
+                    <button
+                      className={m.disabled ? "cursor-not-allowed" : null}
+                      disabled={loading || m.disabled}
+                      onClick={() => {
+                        setLoading(true);
+                        switchMarket(m.market);
+                        setTimeout(() => {
+                          setLoading(false);
+                        }, 10000);
+                      }}>
                       <h3 className="text-yellow-500 mb-2 text-md text-left font-medium leading-5">
                         {m.name}
                       </h3>
@@ -187,6 +200,7 @@ export default function Example() {
                       <a
                         href="#"
                         className={classNames(
+                          m.disabled ? "cursor-not-allowed" : null,
                           "absolute inset-0 rounded-md",
                           "focus:z-10 focus:outline-none focus:ring-2 ring-red-600"
                         )}
@@ -199,6 +213,14 @@ export default function Example() {
           ))}
         </Tab.Panels>
       </Tab.Group>
+      <div className="text-center font-medium text-white mx-auto">
+        {loading ? (
+          <div>
+            Please Wait...{" "}
+            <LoadingIcons.Grid stroke="" className="h-5 w-5 mb-2 inline " />{" "}
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }

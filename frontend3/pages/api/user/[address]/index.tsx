@@ -2,8 +2,7 @@ import { connectToDatabase } from "../../../../lib/mongodb";
 
 export default async function handler(req, res) {
   const { query: account } = req;
-
-  const address = account["address"];
+  const address = account["address"]?.toLowerCase();
 
   if (!address) {
     return res.status(400).json({ error: "Data error" });
@@ -17,7 +16,6 @@ export default async function handler(req, res) {
       .find({ _id: address })
       .project({ joined: 1, membership: 1 })
       .toArray();
-
     return res.status(200).json(user[0]);
   } catch (error) {
     return res.status(404).json({ error: "Failed to get data from DB" });

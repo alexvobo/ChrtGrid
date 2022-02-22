@@ -5,8 +5,8 @@ export default async function handler(req, res) {
 
   // console.log("In payment/get, ", params);
 
-  const network = params["network"].toLowerCase();
-  const tier = params["tier"].toLowerCase();
+  const network = params["network"]?.toLowerCase();
+  const tier = params["tier"]?.toLowerCase();
 
   if (network === "" || !network || !tier || tier === "") {
     return res.status(400).json({
@@ -18,18 +18,18 @@ export default async function handler(req, res) {
   try {
     const { db } = await connectToDatabase();
 
-    const proMembership = await db
+    const membershipQuery = await db
       .collection("membership")
       .find({ tier: tier.toLowerCase(), network: network.toLowerCase() })
       .toArray();
 
-    if (!proMembership) {
+    if (!membershipQuery) {
       throw new Error("Error finding membership details");
     }
 
-    const paymentTier = proMembership[0]["tier"];
-    const paymentAddress = proMembership[0]["payment_address"];
-    const paymentAmount = proMembership[0]["cost"];
+    const paymentTier = membershipQuery[0]["tier"];
+    const paymentAddress = membershipQuery[0]["payment_address"];
+    const paymentAmount = membershipQuery[0]["cost"];
 
     return res.status(200).json({
       message: "Obtained payment parameters successfully",

@@ -11,9 +11,10 @@ import Layout from "../components/Layout";
 import ChartGrid from "../components/ChartGrid";
 import Stats from "../components/Stats";
 import ExchangeMarketSelect from "../components/ExchangeMarketSelect";
-import SelectNetwork, { networks } from "../components/SelectNetwork";
+// import SelectNetwork from "../components/SelectNetwork";
 
 import GRID from "../public/grid.svg";
+import LoadingIcons from "react-loading-icons";
 const exchangeThemes = {
   coinbase: {
     gridColor: "border-blue-600 ",
@@ -27,36 +28,44 @@ const exchangeThemes = {
 };
 export default function Home() {
   const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn", "");
-  const { exchange } = useData();
-  const [maxCharts, setMaxCharts] = useState(12);
+  const { exchange, networks, chartsLoading } = useData();
   const [supported, setSupported] = useState(false);
-  const { Moralis, web3, enableWeb3, isWeb3Enabled, deactivateWeb3 } =
-    useMoralis();
-  const { switchNetwork, chain } = useChain();
+  const { enableWeb3, isWeb3Enabled, deactivateWeb3, chainId } = useMoralis();
+  const { chain } = useChain();
+
+  // useEffect(() => {
+  //   async function signout() {
+  //     await deactivateWeb3();
+  //     setLoggedIn("false");
+  //   }
+  //   if (supported === false) {
+  //     signout();
+  //   }
+  // }, [supported, deactivateWeb3, setLoggedIn]);
+  // function checkSupported() {
+  //   networks?.map((network) => {
+  //     if (network["chainID"] === chain?.chainId) {
+  //       return true
+  //     }
+  //   });
+  //   return false
+  // }
 
   useEffect(() => {
-    if (supported === false) {
-      deactivateWeb3();
-    }
-  }, [supported, deactivateWeb3]);
-
-  useEffect(() => {
-    if (isWeb3Enabled) {
-      if (networks && chain) {
-        setSupported(false);
-        networks.map((network) => {
-          if (network["chainID"] === chain["chainId"]) {
-            setSupported(true);
-            console.log("Here");
-          }
-        });
+    console.log("moralis", chainId);
+    console.log("usechain", chain?.chainId);
+    setSupported(false);
+    networks?.map((network) => {
+      if (network["chainID"] === chain?.chainId) {
+        setSupported(true);
       }
-    }
-  }, [chain, isWeb3Enabled]);
+    });
+  }, [chain, , chainId, networks]);
   return (
     <div>
       <Head>
-        <title>Gridly</title>
+        {/* https://www.toptal.com/designers/htmlarrows/symbols/ */}
+        <title>&#9782; chrtGrid</title>
         <meta name="description" content="gridly.xyz" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -64,15 +73,7 @@ export default function Home() {
       <main>
         <div className=" mt-2 items-center grid md:grid-cols-3 md:gap-3 lg:gap-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 ">
           <div className="mx-auto grid grid-flow-row">
-            {loggedIn === "true" ? (
-              <Image
-                className=""
-                height={150}
-                width={200}
-                src={GRID}
-                alt="GRID"
-              />
-            ) : (
+            {loggedIn === "false" || !isWeb3Enabled ? (
               <Image
                 className=""
                 height={250}
@@ -80,38 +81,12 @@ export default function Home() {
                 src={GRID}
                 alt="GRID"
               />
-            )}
-            {isWeb3Enabled && (
-              <div className="mt-2 grid grid-flow-col mb-2 gap-1">
-                <SelectNetwork />
+            ) : null}
 
-                <a
-                  href="https://youtu.be/8xyUaSY4ZMg?t=26"
-                  target="_blank"
-                  rel="noreferrer">
-                  <button
-                    className="h-11 rounded-lg leading-4 overflow-hidden large:text-lg bg-transparent hover:bg-yellow-400 text-yellow-400 font-medium   hover:text-black py-1 px-4 border-2 border-red-600 hover:border-transparent "
-                    disabled={!isWeb3Enabled}>
-                    I&apos;ve had enough
-                  </button>
-                </a>
-                <button
-                  className="h-11 m rounded-lg  bg-transparent hover:bg-yellow-400 text-yellow-400 font-medium hover:text-black py-1 px-4 border-2 border-red-600 hover:border-transparent "
-                  disabled={!isWeb3Enabled}
-                  onClick={async () => {
-                    await deactivateWeb3();
-                    setLoggedIn("false");
-                  }}>
-                  Logout
-                </button>
-              </div>
-            )}
-
-            {loggedIn === "true" ? <Account /> : null}
             <div className=" text-center mb-2">
               {!isWeb3Enabled ? (
                 <button
-                  className="bg-transparent hover:bg-red-600 text-yellow-400 font-semibold hover:text-black py-2 px-4 border border-red-600 hover:border-transparent rounded "
+                  className="bg-transparent hover:bg-red-600 text-yellow-400 font-semibold hover:text-black py-2 px-4 border-2 border-red-600 hover:border-transparent rounded "
                   disabled={isWeb3Enabled}
                   onClick={async () => {
                     await enableWeb3();
@@ -119,23 +94,52 @@ export default function Home() {
                   }}>
                   Connect to MetaMask
                 </button>
-              ) : null}
+              ) : loggedIn === "true" && supported === true ? (
+                <>
+                  <div className="mt-8 grid grid-flow-col mb-6 mr-6">
+                    {/* <SelectNetwork /> */}
+                    <a
+                      href="https://youtu.be/8xyUaSY4ZMg?t=26"
+                      target="_blank"
+                      rel="noreferrer">
+                      <button
+                        className="h-11 m rounded-lg  bg-transparent hover:bg-yellow-400 text-yellow-400 font-medium hover:text-black py-1 px-4 border-2 border-red-600 hover:border-transparent "
+                        disabled={!isWeb3Enabled}>
+                        I&apos;ve had enough
+                      </button>
+                    </a>
+                    <button
+                      className="h-11 m rounded-lg  bg-transparent hover:bg-yellow-400 text-yellow-400 font-medium hover:text-black py-1 px-4 border-2 border-red-600 hover:border-transparent "
+                      disabled={!isWeb3Enabled}
+                      onClick={async () => {
+                        await deactivateWeb3();
+                        setLoggedIn("false");
+                      }}>
+                      Logout
+                    </button>
+                  </div>
+                  <Account />
+                </>
+              ) : (
+                <div className="text-lg font-bold text-red-700">
+                  Please switch networks
+                </div>
+              )}
             </div>
           </div>
-
           <div className=" z-10 ">
-            <Stats maxCharts={maxCharts} />
+            <Stats />
           </div>
-
-          <div className="">
+          <div className="mb-2">
             <ExchangeMarketSelect />
           </div>
         </div>
+
         <div
           className={
             `z-10 border-2 my-2 ` + exchangeThemes[exchange]["gridColor"]
           }>
-          <ChartGrid maxCharts={maxCharts} />
+          <ChartGrid />
         </div>
       </main>
     </div>

@@ -34,7 +34,7 @@ export default async function handler(
     //Fetches membership data for requested tier first from the DB.
     const membership = await db
       .collection("membership")
-      .find({ tier: tier, network: network })
+      .find({ tier: tier.toLowerCase(), network: network.toLowerCase() })
       .toArray();
 
     db_membership_data["paymentAddress"] = membership[0]["payment_address"];

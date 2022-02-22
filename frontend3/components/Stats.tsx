@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import LoadingIcons from "react-loading-icons";
+import { useAccount } from "../contexts/AccountContext";
 import { useData } from "../contexts/DataContext";
 
 function orderBySubKey(input, key, order) {
@@ -52,10 +53,10 @@ const exchangeThemes = {
     font: " text-white hover:text-black ",
   },
 };
-export default function Stats({ maxCharts }) {
+export default function Stats() {
   const [sortAscending, setSortAscending] = useState(false);
   const { exchange, stats } = useData();
-
+  const { maxCharts } = useAccount();
   // const { data, error } = useSWR(`/api/${exchange}/stats`, {
   //   refreshInterval: 1000 * 60,
   // });
@@ -65,8 +66,8 @@ export default function Stats({ maxCharts }) {
     <>
       <div className="mt-10 opacity-100 inset-0 overflow-y-auto ">
         <div className="text-center">
-          <div className="inline-block w-3/4 xs:max-w-sm max-w-sm  md:max-w-md lg:max-w-md 2xl:max-w-lg  p-4 mb-2  text-left align-middle transition-all transform bg-transparent rounded-sm">
-            <div className="text-center text-yellow-500 font-bold text-2xl mb-4 rounded-sm">
+          <div className="inline-block w-3/4 xs:max-w-sm max-w-sm  md:max-w-md lg:max-w-md 2xl:max-w-lg  p-4 mb-2  text-left align-middle transition-all transform bg-transparent ">
+            <div className="text-center text-yellow-500 font-bold text-2xl mb-4 ">
               24H{" "}
               <span className={exchangeThemes[exchange]["titleFont"]}>
                 {exchange.toUpperCase()}
@@ -82,7 +83,10 @@ export default function Stats({ maxCharts }) {
                 <p className="text-right pr-2">Change</p>
               </div>
 
-              {stats && stats !== undefined && Object.keys(stats).length ? (
+              {stats &&
+              stats !== undefined &&
+              Object.keys(stats).length &&
+              maxCharts ? (
                 Object.values(
                   orderBySubKey(stats, "percentage_change", sortAscending)
                 ).map(

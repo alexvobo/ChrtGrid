@@ -9,7 +9,7 @@ import GRID from "../public/grid-nav.svg";
 import useSWR from "swr";
 
 const navigation = [
-  { name: "Home", href: "/", current: true },
+  { name: "Help", href: "/", current: true },
   // { name: "Accounts", href: "/account", current: false },
   { name: "Bot", href: "/bot", current: false },
 ];

@@ -1,20 +1,24 @@
-import { useMoralis } from "react-moralis";
+import { useMoralis, useChain } from "react-moralis";
 import useETHBalance from "../hooks/useETHBalance";
-import Image from "next/image";
-import avax from "../public/avax.svg";
+
 import { parseBalance } from "../util";
+import { useData } from "../contexts/DataContext";
 
 type ETHBalanceProps = {
   className: string;
 };
 const ETHBalance = ({ className }) => {
   const { account } = useMoralis();
+  const { chain } = useChain();
   const { data } = useETHBalance(account);
-
+  const { networks } = useData();
   return (
     <div className={className}>
-      <span className="mr-1 pb-">{parseBalance(data ?? 0)}</span>
-      <Image className="" src={avax} height={17} width={17} alt="AVAX" />
+      <div className="mr-1 inline ">{parseBalance(data ?? 0)}</div>
+      <div className="inline">
+        {networks?.find((network) => network.chainID === chain?.chainId)
+          ?.currencyLogo ?? ""}
+      </div>
     </div>
   );
 };

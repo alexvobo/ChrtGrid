@@ -1,21 +1,49 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import useSWR from "swr";
-
+import Image from "next/image";
+import avax from "../public/avax.svg";
 // Create two context:
 // DataContext: to query the context state
 // DataDispatchContext: to mutate the context state
 const DataContext = createContext();
 const DataUpdatecontext = createContext();
 
-function useData() {
+export function useData() {
   return useContext(DataContext);
 }
-function useDataUpdate() {
+export function useDataUpdate() {
   return useContext(DataUpdatecontext);
 }
 // A "provider" is used to encapsulate only the
 // components that needs the state in this context
-function DataProvider({ children }) {
+export function DataProvider({ children }) {
+  const networks = [
+    {
+      name: "Avalanche Testnet",
+      currencyName: "AVAX",
+      chainID: "0xa869",
+      unavailable: false,
+      currencyLogo: (
+        <Image className="" src={avax} height={17} width={17} alt="AVAX" />
+      ),
+    },
+    {
+      name: "Avalanche",
+      currencyName: "AVAX",
+      chainID: "0xa86a",
+      unavailable: false,
+      currencyLogo: (
+        <Image className="" src={avax} height={17} width={17} alt="AVAX" />
+      ),
+    },
+    {
+      name: "Ethereum",
+      currencyName: "ETH",
+      chainID: "0x1",
+      unavailable: false,
+      currencyLogo: <p className="inline">Ξ</p>,
+    },
+  ];
   const [exchange, setExchange] = useState("coinbase");
   const [market, setMarket] = useState("stats");
   const [coins, setCoins] = useState([]);
@@ -47,7 +75,7 @@ function DataProvider({ children }) {
   }, [exchange, market]);
 
   return (
-    <DataContext.Provider value={{ exchange, market, coins, stats }}>
+    <DataContext.Provider value={{ exchange, market, coins, stats, networks }}>
       <DataUpdatecontext.Provider value={{ switchExchange, switchMarket }}>
         {children}
       </DataUpdatecontext.Provider>
@@ -55,4 +83,4 @@ function DataProvider({ children }) {
   );
 }
 
-export { DataProvider, useData, useDataUpdate };
+// export { DataProvider, useData, useDataUpdate };

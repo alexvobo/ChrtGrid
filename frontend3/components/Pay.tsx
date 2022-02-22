@@ -19,22 +19,22 @@ export default function Pay({ amount, receiver, tier }) {
   const { chain } = useChain();
   const { data } = useETHBalance(account);
   const [balance, setBalance] = useState(0);
-
+  const [clickedPay, setClickedPay] = useState(false);
   const { fetch, error, isFetching } = useWeb3Transfer({
     amount: Moralis.Units.ETH(amount),
     receiver: receiver,
     type: "native",
   });
-
   useEffect(() => {
     if (data) {
       setBalance(parseFloat(parseBalance(data ?? 0)));
     }
-  }, [data]);
+  }, [chain, data]);
 
   async function payNow() {
     //Get payment data from DB, then create transaction
     try {
+      setClickedPay(true);
       const id = toast.loading("Processing Payment...", {
         position: "top-center",
         autoClose: 5000,
@@ -44,6 +44,7 @@ export default function Pay({ amount, receiver, tier }) {
         draggable: true,
         progress: undefined,
       });
+
       fetch({
         throwOnError: false,
         onComplete: () => {
@@ -108,6 +109,7 @@ export default function Pay({ amount, receiver, tier }) {
           // toast("error");
         },
       });
+      setClickedPay(false);
     } catch (error) {
       console.log(error);
     }
@@ -124,7 +126,9 @@ export default function Pay({ amount, receiver, tier }) {
   ) : (
     <button
       type="button"
-      className=" px-4 py-2 text-lg font-bold text-black bg-yellow-500 border border-transparent rounded-md hover:bg-black hover:text-yellow-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
+      className={`px-4 py-2 text-lg font-bold text-black bg-yellow-500 border border-transparent rounded-md hover:bg-black hover:text-yellow-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 ${
+        clickedPay ? "invisible" : null
+      }`}
       disabled={isFetching}
       onClick={payNow}>
       Buy Now
