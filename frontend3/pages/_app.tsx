@@ -4,8 +4,9 @@ import type { AppProps } from "next/app";
 import { MoralisProvider } from "react-moralis";
 import { DataProvider } from "../contexts/DataContext";
 import { AccountProvider } from "../contexts/AccountContext";
-
+import { ToastContainer } from "react-toastify";
 import "../styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -26,6 +27,7 @@ export default function NextWeb3App({
       serverUrl="https://aioslfluudst.usemoralis.com:2053/server">
       <AccountProvider>
         <DataProvider>
+          <ToastContainer />
           <Component {...pageProps} />
         </DataProvider>
       </AccountProvider>

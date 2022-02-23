@@ -44,7 +44,7 @@ export default function ChartGrid() {
                   exchangeThemes[exchange]["gridColor"]
                 }
                 key={i}>
-                {/* <div className="text-white">{item}</div> */}
+                <div className="text-white">{item}</div>
                 {/* <AdvancedRealTimeChart
                   symbol={item}
                   theme="dark"

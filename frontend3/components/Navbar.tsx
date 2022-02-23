@@ -9,8 +9,8 @@ import GRID from "../public/grid-nav.svg";
 import useSWR from "swr";
 
 const navigation = [
-  { name: "Home", href: "/", current: true },
-  { name: "Help", href: "/help", current: false },
+  { name: "Home", href: "/", current: false },
+  { name: "FAQ", href: "/help", current: false },
   // { name: "Accounts", href: "/account", current: false },
   // { name: "Bot", href: "/bot", current: false },
 ];
@@ -89,30 +89,30 @@ export default function Navbar() {
                 <div className="hidden sm:block sm:ml-6 md:mt-6">
                   <div className="flex space-x-4 ">
                     {navigation?.map((item, idx) => (
-                      <>
-                        <Link key={item.name} href={item.href}>
+                      <div key={item.name} className="contents">
+                        <Link href={item.href}>
                           <a
                             className={classNames(
                               item.current
                                 ? " text-white "
                                 : "text-gray-300 hover:border-2 hover:border-pink-500 hover:text-white shadow-md hover:shadow-blue-500 ",
-                              "px-2 py-2 rounded-md  font-medium text-md "
+                              "hover:animate-pulse px-2 py-2 rounded-md  font-medium text-md "
                             )}
                             aria-current={item.current ? "page" : undefined}>
                             {item.name}
                           </a>
                         </Link>
-                        {item.name === "Help" && (
+                        {item.name === "FAQ" && (
                           <div
                             key={item.name + String(idx)}
-                            className="relative right-7">
+                            className="relative right-2">
                             <span className="flex h-3 w-3 ">
                               <span className="animate-ping absolute h-3 w-3 rounded-full bg-sky-400 opacity-75"></span>
                               <span className="relative rounded-full h-3 w-3 bg-sky-500"></span>
                             </span>
                           </div>
                         )}
-                      </>
+                      </div>
                     ))}
                   </div>
                 </div>

@@ -23,21 +23,21 @@ export default function Footer() {
         </a>
       </div>
       <div className="mx-auto text-center text-white pt-5 mb-5  ">
-        © 2022 Copyright{" "}
-        <a
-          className="hover:underline  text-yellow-500"
-          href="https://chrtgrid.com/"
-          target="_blank"
-          rel="noreferrer">
-          chrtGrid
-        </a>{" "}
+        <Link href="/contact">
+          <a className="hover:underline  text-yellow-500">Contact Us</a>
+        </Link>{" "}
+        |{" "}
+        <Link href="/help">
+          <a className="hover:underline text-yellow-500">FAQ</a>
+        </Link>{" "}
         |{" "}
         <Link href="/terms">
           <a className="hover:underline text-yellow-500">ToS</a>
         </Link>
       </div>
       <div className="mx-auto text-center text-white pt-5 mb-5  ">
-        Made with <HeartIcon className="text-pink-500 inline mb-1 h-5 w-5" />
+        Made with{" "}
+        <HeartIcon className="animate-pulse text-pink-500 inline mb-1 h-5 w-5" />
       </div>
     </div>
   );

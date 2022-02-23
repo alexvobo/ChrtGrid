@@ -4,14 +4,12 @@ export default async function handler(req, res) {
   const { query: params } = req;
 
   const tier = params["tier"].toLowerCase();
-
   if (tier === "" || !tier) {
     return res.status(400).json({
       error: "Error with parameters",
       message: "Try again",
     });
   }
-
   try {
     const { db } = await connectToDatabase();
 

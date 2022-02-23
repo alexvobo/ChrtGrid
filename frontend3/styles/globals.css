@@ -12,6 +12,17 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px rgb(15 23 42) inset !important;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: yellow !important;
+}
+
 ::-webkit-scrollbar {
   width: 15px;
   height: 10px;

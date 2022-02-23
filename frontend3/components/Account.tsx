@@ -44,7 +44,7 @@ const Account = () => {
           <div className="grid grid-rows-4 text-center mb-3 gap-3">
             <div className="">
               <h3 className="text-xl font-medium   text-yellow-500">Account</h3>
-              <div className="w-2/3 mx-auto   ">
+              <div className="w-2/3 mx-auto font-medium   ">
                 <AddressBar
                   account={account}
                   chainId={chainId}
@@ -57,7 +57,7 @@ const Account = () => {
               <h3 className="text-xl font-medium text-yellow-500 mb-2">
                 Balance
               </h3>
-              <ETHBalance className="text-lg mt-2 " />
+              <ETHBalance className="text-lg font-medium mt-2 " />
             </div>
 
             <div className="">
@@ -75,7 +75,7 @@ const Account = () => {
                 <button
                   type="button"
                   onClick={() => setOpenModal(true)}
-                  className="mt-3 mb-1 bg-transparent hover:bg-red-600 text-yellow-400 font-bold hover:text-black py-2 px-4 border-2 border-red-600 hover:border-transparent rounded">
+                  className=" hover:animate-pulse mt-3 mb-1 bg-transparent hover:bg-red-600 text-yellow-400 font-bold hover:text-black py-2 px-4 border-2 border-red-600 hover:border-transparent rounded">
                   Go Pro
                 </button>
                 <Pro isOpen={openModal} setIsOpen={setOpenModal} />

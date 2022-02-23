@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
-import Moralis, { useWeb3Transfer, useMoralis, useChain } from "react-moralis";
-import useSWR from "swr";
+import { useWeb3Transfer, useMoralis, useChain } from "react-moralis";
 import axios from "axios";
-
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 import useETHBalance from "../hooks/useETHBalance";
 import { parseBalance } from "../util";
-
+import { useData } from "../contexts/DataContext";
+import { useAccount } from "../contexts/AccountContext";
 type PaymentData = {
   amount: string;
   receiver: string;
   tier: string;
 };
-export default function Pay({ amount, receiver, tier }) {
+export default function Pay({ amount, receiver, tier, modalController }) {
   const { account, Moralis } = useMoralis();
   const { chain } = useChain();
   const { data } = useETHBalance(account);
+  const { networks } = useData();
+  const { mutateUser } = useAccount();
   const [balance, setBalance] = useState(0);
   const [clickedPay, setClickedPay] = useState(false);
   const { fetch, error, isFetching } = useWeb3Transfer({
@@ -37,7 +37,7 @@ export default function Pay({ amount, receiver, tier }) {
       setClickedPay(true);
       const id = toast.loading("Processing Payment...", {
         theme: "dark",
-        position: "top-center",
+        position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -80,6 +80,8 @@ export default function Pay({ amount, receiver, tier }) {
                 type: "success",
                 isLoading: false,
               });
+              mutateUser();
+              modalController(false);
             } else {
               toast.update(id, {
                 render: "Failed to Update Database",
@@ -117,11 +119,14 @@ export default function Pay({ amount, receiver, tier }) {
   }
 
   return balance < parseFloat(amount) ? (
-    <a href="https://www.google.com" target="_blank" rel="noreferrer">
+    <a href="https://www.coinbase.com" target="_blank" rel="noreferrer">
       <button
         type="button"
         className=" px-4 py-2 text-lg font-bold text-black bg-yellow-500 border border-transparent rounded-md hover:bg-black hover:text-yellow-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500">
-        Reload Balance
+        <span>Need {parseFloat(amount) - balance} more </span>
+        <span>
+          {networks?.find((n) => n?.chainID === chain?.chainId)?.currencyName}
+        </span>
       </button>
     </a>
   ) : (

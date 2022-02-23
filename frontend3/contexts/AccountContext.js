@@ -17,18 +17,18 @@ function AccountProvider({ children }) {
   const { data: memberships } = useSWR("/api/memberships/", (url) =>
     fetch(url).then((r) => r.json())
   );
-  const { data: userData } = useSWR(
+  const { data: userData, mutate: mutateUser } = useSWR(
     account ? "/api/user/" + account : null,
     (url) => fetch(url).then((r) => r.json())
   );
   function getMaxCharts(userData) {
     if (userData && userData !== undefined) {
-      console.log(userData);
+      // console.log(userData);
       let maxCharts = memberships?.memberships?.filter(
         (m) => m.tier === userData.membership
       );
       if (maxCharts != null && Object.keys(maxCharts)?.length) {
-        console.log("MAX CHARTS:", maxCharts);
+        // console.log("MAX CHARTS:", maxCharts);
         setMaxCharts(maxCharts[0]["maxCharts"]);
       }
     }
@@ -42,7 +42,7 @@ function AccountProvider({ children }) {
   }, [userData]);
 
   return (
-    <AccountContext.Provider value={{ userData, maxCharts }}>
+    <AccountContext.Provider value={{ userData, maxCharts, mutateUser }}>
       {children}
     </AccountContext.Provider>
   );

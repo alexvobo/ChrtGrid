@@ -11,10 +11,8 @@ import Layout from "../components/Layout";
 import ChartGrid from "../components/ChartGrid";
 import Stats from "../components/Stats";
 import ExchangeMarketSelect from "../components/ExchangeMarketSelect";
-// import SelectNetwork from "../components/SelectNetwork";
-import { ToastContainer } from "react-toastify";
 import GRID from "../public/grid.svg";
-import LoadingIcons from "react-loading-icons";
+
 const exchangeThemes = {
   coinbase: {
     gridColor: "border-blue-600 ",
@@ -30,7 +28,6 @@ export default function Home() {
   const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn", "");
   const { exchange, networks } = useData();
   const [supported, setSupported] = useState(false);
-  const [showAccount, setShowAccount] = useState(false);
   const { enableWeb3, isWeb3Enabled, deactivateWeb3, chainId } = useMoralis();
   const { chain } = useChain();
 
@@ -52,7 +49,6 @@ export default function Home() {
         <meta name="description" content="gridly.xyz" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <ToastContainer className="border-b-2 border-r-2 border-pink-600 rounded-md" />
       <main>
         <div className=" mt-2 items-center grid md:grid-cols-3 md:gap-3 lg:gap-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 ">
           <div className="mx-auto grid grid-flow-row">
@@ -74,7 +70,6 @@ export default function Home() {
                   onClick={async () => {
                     await enableWeb3();
                     setLoggedIn("true");
-                    setShowAccount(!showAccount);
                   }}>
                   Connect to MetaMask
                 </button>
@@ -86,7 +81,7 @@ export default function Home() {
                   enterTo="opacity-100 rotate-0 scale-100"
                   leave="transform duration-200 transition ease-in-out"
                   leaveFrom="opacity-100 rotate-0 scale-100 "
-                  leaveTo="opacity-0 rotate-[-120deg] scale-50">
+                  leaveTo="opacity-0 rotate-[-120deg] scale-95 ">
                   <div className="mt-8 grid grid-flow-col mb-6 mr-6">
                     {/* <SelectNetwork /> */}
                     <a
@@ -94,26 +89,25 @@ export default function Home() {
                       target="_blank"
                       rel="noreferrer">
                       <button
-                        className="h-11 m rounded-lg  bg-transparent hover:bg-yellow-400 text-yellow-400 font-medium hover:text-black py-1 px-4 border-2 border-red-600 hover:border-transparent "
+                        className=" h-11 m rounded-lg  bg-transparent hover:bg-yellow-400 text-yellow-400 font-medium hover:text-black py-1 px-4 border-2 border-red-600 hover:border-transparent "
                         disabled={!isWeb3Enabled}>
                         I&apos;ve had enough
                       </button>
                     </a>
                     <button
-                      className="h-11 m rounded-lg  bg-transparent hover:bg-yellow-400 text-yellow-400 font-medium hover:text-black py-1 px-4 border-2 border-red-600 hover:border-transparent "
+                      className=" h-11 m rounded-lg  bg-transparent hover:bg-yellow-400 text-yellow-400 font-medium hover:text-black py-1 px-4 border-2 border-red-600 hover:border-transparent "
                       disabled={!isWeb3Enabled}
                       onClick={async () => {
                         await deactivateWeb3();
                         setLoggedIn("false");
-                        setShowAccount(!showAccount);
                       }}>
                       Logout
                     </button>
                   </div>
-                  <Account showAccount={showAccount} />
+                  <Account />
                 </Transition>
               ) : (
-                <div className="text-lg font-bold text-red-700">
+                <div className="text-2xl font-bold text-red-700 animate-pulse">
                   Please switch networks
                 </div>
               )}

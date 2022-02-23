@@ -115,7 +115,7 @@ export default function Example() {
         {
           name: "Custom Lists",
           market: "custom",
-          description: "Lifetime/Pro Only",
+          description: "Premium Only",
           disabled: true,
           url: (
             <>
@@ -147,14 +147,14 @@ export default function Example() {
             setLoading(false);
           }, cooldown);
         }}>
-        <Tab.List className="flex p-1 space-x-1 bg-blue-900/20 rounded-xl">
+        <Tab.List className="flex p-1 space-x-1 bg-blue-900/20 rounded-xl ">
           {Object.keys(exchanges).map((e) => (
             <Tab
               disabled={loading}
               key={e}
               className={({ selected }) =>
                 classNames(
-                  "w-full py-2.5 text-sm leading-5 font-medium rounded-lg",
+                  "w-full py-2.5 text-md leading-5 font-medium rounded-lg",
 
                   selected
                     ? ` ${exchangeInfo[e]["exchangeStyle"]} shadow`
@@ -173,8 +173,10 @@ export default function Example() {
                   <li
                     key={m.name + i}
                     className={classNames(
-                      `${exchangeInfo[e]["marketStyle"]} relative p-3 rounded-md hover:bg-coolGray-100`,
-                      m?.market === market ? "bg-indigo-800/50" : ""
+                      `${exchangeInfo[e]["marketStyle"]} relative p-3 rounded-md hover:bg-coolGray-100 `,
+                      m?.market === market
+                        ? "bg-indigo-800/50"
+                        : "hover:animate-pulse"
                     )}>
                     <button
                       className={m?.disabled ? "cursor-not-allowed" : null}
@@ -203,7 +205,7 @@ export default function Example() {
                         className={classNames(
                           m?.disabled ? "cursor-not-allowed" : null,
                           "absolute inset-0 rounded-md",
-                          "focus:z-10 focus:outline-none focus:ring-2 ring-red-600"
+                          "focus:z-10 focus:outline-none focus:ring-1 ring-red-600"
                         )}
                       />
                     </button>

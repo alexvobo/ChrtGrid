@@ -2,15 +2,12 @@ import React from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState, useEffect } from "react";
 import Pay from "./Pay";
-import {} from "@heroicons/react/solid";
+import { PlusIcon } from "@heroicons/react/solid";
 import {
   RefreshIcon,
   PresentationChartLineIcon,
   CashIcon,
-  ChartBarIcon,
-  DatabaseIcon,
   ArrowSmRightIcon,
-  ViewListIcon,
   KeyIcon,
 } from "@heroicons/react/outline";
 import LoadingIcons from "react-loading-icons";
@@ -35,14 +32,14 @@ export default function Pro({ isOpen, setIsOpen }) {
   useEffect(() => {
     setLoading(true);
     if (Object.keys(paymentData).length === 0 && chain && membershipTier) {
-      console.log("Fetching payment data");
+      // console.log("Fetching payment data");
       fetch(
         `/api/user/${account}/paymentInfo?network=${chain.chainId}&tier=${membershipTier}`
       )
         .then((res) => res.json())
         .then((data) => {
           setPaymentData(data);
-          console.log(data);
+          // console.log(data);
           setLoading(false);
         })
         .catch((err) => {
@@ -54,9 +51,10 @@ export default function Pro({ isOpen, setIsOpen }) {
   useEffect(() => {
     if (membershipCount === null && membershipMax === null && membershipTier) {
       console.log("Fetching membership data");
-      fetch(`/api/user/membershipCount?tier=${membershipTier}`)
+      fetch(`/api/membershipCount?tier=${membershipTier}`)
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
           setMembershipCount(data["count"]);
           setMembershipMax(data["max"]);
         })
@@ -65,6 +63,7 @@ export default function Pro({ isOpen, setIsOpen }) {
         });
     }
   }, [membershipCount, membershipMax, membershipTier]);
+
   if (chain?.chainId === undefined || account === null) {
     return null;
   }
@@ -101,16 +100,19 @@ export default function Pro({ isOpen, setIsOpen }) {
               leave="ease-in duration-200"
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95">
-              <div className="inline-block w-full max-w-max h-[550px] py-8 px-4  overflow-hidden text-left align-middle transition-all transform bg-blue-900/90 shadow-xl rounded-2xl">
+              <div className="inline-block w-full max-w-max h-[550px] py-8 px-7  overflow-hidden text-left align-middle transition-all transform bg-blue-900/90 shadow-xl rounded-2xl">
                 <Dialog.Title
                   as="h3"
                   className="border-b-2 border-yellow-500 pb-4 text-4xl text-center font-medium leading-6 text-white">
-                  Go Pro Today!
+                  Get Pro Today!
                 </Dialog.Title>
                 <div className="">
                   <div className=" w-full  ">
                     <p className="text-2xl  text-center text-white mt-2 mb-4">
-                      Unlock extra features on GRID with Pro
+                      Unlock extra features on GRID with{" "}
+                      <span className="animate-pulse text-pink-500 font-bold">
+                        {membershipTier.toUpperCase()}
+                      </span>
                     </p>
 
                     <ul className=" leading-loose  text-center text-xl marker:text-white text-yellow-500">
@@ -145,8 +147,14 @@ export default function Pro({ isOpen, setIsOpen }) {
                       </li>
 
                       <li>
-                        <ArrowSmRightIcon className="inline h-7 w-7  ml-2" />+
-                        New Features
+                        <ArrowSmRightIcon className="inline h-7 w-7  ml-2" />
+                        New{" "}
+                        <span className="mx-2  before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block">
+                          <span className=" relative text-white font-bold text-xl">
+                            PREMIUM
+                          </span>
+                        </span>{" "}
+                        features
                       </li>
                     </ul>
                   </div>
@@ -157,17 +165,9 @@ export default function Pro({ isOpen, setIsOpen }) {
                   {paymentData &&
                   networks &&
                   membershipTier &&
-                  membershipCount <= membershipMax &&
                   paymentData["payment_amount"] &&
                   paymentData["payment_to"] ? (
                     <>
-                      {/* <button
-                    type="button"
-                    className="px-4 py-2 text-md font-bold text-blue-900 bg-blue-300 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                    onClick={closeModal}>
-                    Maybe Later
-                  </button> */}
-
                       <div className="text-white text-lg py-2 grid grid-flow-row w-1/2 text-center mx-auto bg-slate-900 rounded-md ">
                         <span className=" border-b-2 border-yellow-500 font-bold text-red-600 mb-2">
                           Please Verify:
@@ -182,12 +182,10 @@ export default function Pro({ isOpen, setIsOpen }) {
                           {" "}
                           Price: {paymentData["payment_amount"]}{" "}
                           {
-                            networks.find((n) => n.chainID === chain.chainId)
+                            networks?.find((n) => n?.chainID === chain?.chainId)
                               ?.currencyName
                           }
                         </span>
-
-                        {/* <span> Address: {paymentData["payment_to"]}</span> */}
                       </div>
 
                       <div className="mt-5 ">
@@ -195,6 +193,7 @@ export default function Pro({ isOpen, setIsOpen }) {
                           amount={paymentData["payment_amount"]}
                           receiver={paymentData["payment_to"]}
                           tier={membershipTier}
+                          modalController={setIsOpen}
                         />
                       </div>
                     </>

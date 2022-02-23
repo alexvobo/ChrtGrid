@@ -24,7 +24,7 @@ export function DataProvider({ children }) {
       chainID: "0xa869",
       unavailable: false,
       currencyLogo: (
-        <Image className="" src={avax} height={17} width={17} alt="AVAX" />
+        <Image className="" src={avax} height={20} width={20} alt="AVAX" />
       ),
     },
     {
@@ -33,7 +33,7 @@ export function DataProvider({ children }) {
       chainID: "0xa86a",
       unavailable: false,
       currencyLogo: (
-        <Image className="" src={avax} height={17} width={17} alt="AVAX" />
+        <Image className="" src={avax} height={20} width={20} alt="AVAX" />
       ),
     },
     {
