@@ -15,6 +15,8 @@ import AddressBar from "./AddressBar";
 import { useMoralis } from "react-moralis";
 import { useChain } from "react-moralis";
 import { useData } from "../contexts/DataContext";
+import { titleCase } from "../util";
+
 export default function Pro({ isOpen, setIsOpen }) {
   function closeModal() {
     setIsOpen(false);
@@ -50,11 +52,11 @@ export default function Pro({ isOpen, setIsOpen }) {
 
   useEffect(() => {
     if (membershipCount === null && membershipMax === null && membershipTier) {
-      console.log("Fetching membership data");
+      // console.log("Fetching membership data");
       fetch(`/api/membershipCount?tier=${membershipTier}`)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           setMembershipCount(data["count"]);
           setMembershipMax(data["max"]);
         })
@@ -104,12 +106,20 @@ export default function Pro({ isOpen, setIsOpen }) {
                 <Dialog.Title
                   as="h3"
                   className="border-b-2 border-yellow-500 pb-4 text-4xl text-center font-medium leading-6 text-white">
-                  Get Pro Today!
+                  Get{" "}
+                  <span className="text-pink-500 ">
+                    {membershipTier.toUpperCase()}
+                  </span>{" "}
+                  Today!
                 </Dialog.Title>
                 <div className="">
                   <div className=" w-full  ">
                     <p className="text-2xl  text-center text-white mt-2 mb-4">
-                      Unlock extra features on GRID with{" "}
+                      Unlock extra features on{" "}
+                      <span className=" font-bold text-transparent bg-clip-text bg-gradient-to-br from-yellow-400 to-pink-600">
+                        GRID
+                      </span>{" "}
+                      with{" "}
                       <span className="animate-pulse text-pink-500 font-bold">
                         {membershipTier.toUpperCase()}
                       </span>
@@ -149,7 +159,7 @@ export default function Pro({ isOpen, setIsOpen }) {
                       <li>
                         <ArrowSmRightIcon className="inline h-7 w-7  ml-2" />
                         New{" "}
-                        <span className="mx-2  before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-500 relative inline-block">
+                        <span className="mx-2  before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-700 relative inline-block">
                           <span className=" relative text-white font-bold text-xl">
                             PREMIUM
                           </span>

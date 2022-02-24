@@ -1,10 +1,7 @@
 from flask import Flask, jsonify
 from pymongo import MongoClient
 from pprint import pprint
-import requests
-import random
-import json
-import time
+
 import scrapers.coinbaseScraper as CoinbaseScraper
 import scrapers.sandwichScraper as SandwichScraper
 import scrapers.twitterScraper as TwitterScraper

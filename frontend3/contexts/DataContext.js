@@ -18,15 +18,15 @@ export function useDataUpdate() {
 // components that needs the state in this context
 export function DataProvider({ children }) {
   const networks = [
-    {
-      name: "Avalanche Testnet",
-      currencyName: "AVAX",
-      chainID: "0xa869",
-      unavailable: false,
-      currencyLogo: (
-        <Image className="" src={avax} height={20} width={20} alt="AVAX" />
-      ),
-    },
+    // {
+    //   name: "Avalanche Testnet",
+    //   currencyName: "AVAX",
+    //   chainID: "0xa869",
+    //   unavailable: false,
+    //   currencyLogo: (
+    //     <Image className="" src={avax} height={20} width={20} alt="AVAX" />
+    //   ),
+    // },
     {
       name: "Avalanche",
       currencyName: "AVAX",
@@ -61,7 +61,6 @@ export function DataProvider({ children }) {
 
   function switchExchange(exchangeName) {
     setExchange(exchangeName);
-    fetchCoins();
   }
   function switchMarket(marketName) {
     setMarket(marketName);

@@ -18,7 +18,7 @@ const QA = [
     question: "Wen giveaway?",
     answers: [
       <span key={0}>
-        We will be doing up to <span className="font-semibold">4</span>{" "}
+        We will be doing up to <span className="font-semibold">5</span>{" "}
         <span className="font-bold text-pink-500">PREMIUM</span> NFT (tubby
         cats, cryptoadz, etc.) giveaways for{" "}
         <span className="font-bold text-yellow-400 underline animate-pulse">
@@ -33,7 +33,7 @@ const QA = [
   {
     question: (
       <span key={1}>
-        Dafuq is{" "}
+        What is{" "}
         <span className="animate-pulse font-semibold text-pink-500">
           LIFETIME
         </span>

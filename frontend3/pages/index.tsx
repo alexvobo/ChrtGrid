@@ -108,7 +108,7 @@ export default function Home() {
                 </Transition>
               ) : (
                 <div className="text-2xl font-bold text-red-700 animate-pulse">
-                  Please switch networks
+                  Please switch to Avalanche or Ethereum
                 </div>
               )}
             </div>

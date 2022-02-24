@@ -29,7 +29,7 @@ export default async function handler(req, res) {
 
       return res.status(200).json({ message: "User Updated" });
     } catch (error) {
-      console.log("here", error);
+      console.log(error);
       return res.status(404).json({ error: "Failed to connect to DB" });
     }
   }

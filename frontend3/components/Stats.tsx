@@ -57,9 +57,6 @@ export default function Stats() {
   const [sortAscending, setSortAscending] = useState(false);
   const { exchange, stats } = useData();
   const { maxCharts } = useAccount();
-  // const { data, error } = useSWR(`/api/${exchange}/stats`, {
-  //   refreshInterval: 1000 * 60,
-  // });
   // Set Timeout, if timeout then ping = false
 
   return (

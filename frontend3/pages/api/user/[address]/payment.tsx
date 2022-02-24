@@ -1,17 +1,15 @@
 import { connectToDatabase } from "../../../../lib/mongodb";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { parseBalance } from "../../../../util";
-import Moralis from "moralis/node";
+
 const MORALIS_API_KEY = process.env.MORALIS_API;
-import utils from "web3-utils";
-import axios from "axios";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const { query: params } = req;
-  console.log(params);
+  // console.log(params);
 
   const receipt = JSON.parse(params["receipt"] as string);
   const network = params["network"] as string;
@@ -44,7 +42,7 @@ export default async function handler(
       membership[0]["subscription_period"]
     );
 
-    console.log(db_membership_data);
+    // console.log(db_membership_data);
 
     //make sure tx isnt trying to scam us by being unequal to database data
     if (
@@ -65,7 +63,7 @@ export default async function handler(
     //   chain: "0xa869",
     //   transaction_hash: transactionHash,
     // });
-    console.log("adding to db");
+    // console.log("adding to db");
 
     const date = new Date();
     const subscriptionEnds = date.setDate(

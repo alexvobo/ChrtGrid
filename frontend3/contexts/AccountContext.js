@@ -25,7 +25,7 @@ function AccountProvider({ children }) {
     if (userData && userData !== undefined) {
       // console.log(userData);
       let maxCharts = memberships?.memberships?.filter(
-        (m) => m.tier === userData.membership
+        (m) => m?.tier === userData?.membership
       );
       if (maxCharts != null && Object.keys(maxCharts)?.length) {
         // console.log("MAX CHARTS:", maxCharts);

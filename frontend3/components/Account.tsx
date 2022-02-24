@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import ETHBalance from "../components/ETHBalance";
-
+import LoadingIcons from "react-loading-icons";
 import Pro from "./Pro";
 
 import useENSName from "../hooks/useENSName";
@@ -29,13 +29,10 @@ const Account = () => {
     }
   }, [account]);
 
-  if (
-    account === undefined ||
-    account === null ||
-    userData === undefined ||
-    userData === null
-  ) {
-    return null;
+  if (userData === undefined || userData === null) {
+    <div className="flex justify-center items-center">
+      <LoadingIcons.Bars height="5em" fill="white" speed={0.75} />
+    </div>;
   }
   return (
     <>

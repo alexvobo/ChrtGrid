@@ -59,7 +59,7 @@ export default function Pay({ amount, receiver, tier, modalController }) {
           }
         },
         onSuccess: async (receipt) => {
-          console.log(receipt);
+          // console.log(receipt);
 
           try {
             const res = await axios.post(
@@ -76,7 +76,7 @@ export default function Pay({ amount, receiver, tier, modalController }) {
             // console.log(res.data);
             if (res.status === 200) {
               toast.update(id, {
-                render: "Payment Successful",
+                render: "Payment Successful. Thank you!",
                 type: "success",
                 isLoading: false,
               });

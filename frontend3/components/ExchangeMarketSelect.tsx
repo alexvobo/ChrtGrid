@@ -140,7 +140,7 @@ export default function Example() {
       <Tab.Group
         defaultIndex={0}
         onChange={(index) => {
-          console.log(exchange, market);
+          // console.log(exchange, market);
           setLoading(true);
           switchExchange(Object.keys(exchanges)[index]);
           setTimeout(() => {
