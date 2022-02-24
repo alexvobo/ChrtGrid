@@ -1,7 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import useSWR from "swr";
-import useENSName from "../hooks/useENSName";
 
 const AccountContext = createContext();
 
