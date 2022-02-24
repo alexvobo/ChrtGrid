@@ -4,7 +4,6 @@ import Image from "next/image";
 import { Disclosure } from "@headlessui/react";
 import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import Blob from "./Blob";
-import GRID from "../public/grid-nav.svg";
 import useSWR from "swr";
 
 const navigation = [
@@ -80,7 +79,7 @@ export default function Navbar() {
                     className="rotate-180 "
                     height={80}
                     width={80}
-                    src={GRID}
+                    src="/grid-nav.svg"
                     alt="GRID"
                   />
                 </div>

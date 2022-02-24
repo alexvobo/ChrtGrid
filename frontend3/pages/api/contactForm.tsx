@@ -1,4 +1,3 @@
-import { connectToDatabase } from "../../lib/mongodb";
 const nodemailer = require("nodemailer");
 
 export default async function handler(req, res) {

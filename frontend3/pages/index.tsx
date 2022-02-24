@@ -11,7 +11,6 @@ import Layout from "../components/Layout";
 import ChartGrid from "../components/ChartGrid";
 import Stats from "../components/Stats";
 import ExchangeMarketSelect from "../components/ExchangeMarketSelect";
-import GRID from "../public/grid.svg";
 
 const exchangeThemes = {
   coinbase: {
@@ -57,7 +56,7 @@ export default function Home() {
                 className=""
                 height={250}
                 width={300}
-                src={GRID}
+                src="/grid.svg"
                 alt="GRID"
               />
             ) : null}

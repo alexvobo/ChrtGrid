@@ -1,9 +1,7 @@
-import { useState, useContext, useEffect } from "react";
+import { useState } from "react";
 import { Tab } from "@headlessui/react";
 import Image from "next/image";
-import CoinbaseLogo from "../public/coinbase.svg";
-import KucoinLogo from "../public/kucoin.svg";
-import BinanceLogo from "../public/binance.svg";
+
 import { titleCase } from "../util";
 import LoadingIcons from "react-loading-icons";
 import { useData, useDataUpdate } from "../contexts/DataContext";
@@ -15,7 +13,7 @@ export default function Example() {
   const exchangeInfo = {
     coinbase: {
       name: "Coinbase",
-      logo: CoinbaseLogo,
+      logo: "/coinbase.svg",
       exchangeStyle: "bg-blue-700 text-white",
       marketStyle: "border-2 border-blue-700 text-white",
 
@@ -24,7 +22,7 @@ export default function Example() {
     },
     kucoin: {
       name: "Kucoin",
-      logo: KucoinLogo,
+      logo: "/kucoin.svg",
       exchangeStyle: "bg-[#23af91] text-white",
       marketStyle: "border-2 border-[#23af91] text-white",
       url: "https://www.kucoin.com/",
@@ -33,7 +31,7 @@ export default function Example() {
 
     binance: {
       name: "Binance",
-      logo: BinanceLogo,
+      logo: "/binance.svg",
       exchangeStyle: "bg-yellow-500 text-black",
       marketStyle: "border-2 border-yellow-500 text-white",
 
@@ -131,7 +129,7 @@ export default function Example() {
     kucoin: listOptions(exchangeInfo["kucoin"]),
     binance: listOptions(exchangeInfo["binance"]),
   });
-  const { exchange, market } = useData();
+  const { market } = useData();
   const { switchExchange, switchMarket } = useDataUpdate();
   const [loading, setLoading] = useState(false);
 

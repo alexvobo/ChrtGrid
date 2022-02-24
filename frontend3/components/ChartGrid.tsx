@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect } from "react";
 import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
 import LoadingIcons from "react-loading-icons";
 import { useData } from "../contexts/DataContext";
@@ -18,9 +18,9 @@ const exchangeThemes = {
 export default function ChartGrid() {
   const { coins, exchange } = useData();
   const { maxCharts } = useAccount();
-  // useEffect(() => {
-  //   console.log(coins);
-  // }, [coins]);
+  useEffect(() => {
+    console.log(coins);
+  }, [coins]);
 
   if (
     coins === undefined ||

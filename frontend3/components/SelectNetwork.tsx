@@ -1,8 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useMoralis, useChain } from "react-moralis";
 import { Listbox, Transition } from "@headlessui/react";
-import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
+import { SelectorIcon } from "@heroicons/react/solid";
 
 import { useData } from "../contexts/DataContext";
 

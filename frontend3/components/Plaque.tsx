@@ -1,5 +1,4 @@
 import React from "react";
-import { titleCase } from "../util";
 
 function Plaque({ membership }) {
   const memberships = {

@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import useSWR from "swr";
 import Image from "next/image";
-import avax from "../public/avax.svg";
 // Create two context:
 // DataContext: to query the context state
 // DataDispatchContext: to mutate the context state
@@ -33,7 +32,7 @@ export function DataProvider({ children }) {
       chainID: "0xa86a",
       unavailable: false,
       currencyLogo: (
-        <Image className="" src={avax} height={20} width={20} alt="AVAX" />
+        <Image className="" src="/avax.svg" height={20} width={20} alt="AVAX" />
       ),
     },
     {

@@ -2,7 +2,6 @@ import React from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState, useEffect } from "react";
 import Pay from "./Pay";
-import { PlusIcon } from "@heroicons/react/solid";
 import {
   RefreshIcon,
   PresentationChartLineIcon,
@@ -15,7 +14,6 @@ import AddressBar from "./AddressBar";
 import { useMoralis } from "react-moralis";
 import { useChain } from "react-moralis";
 import { useData } from "../contexts/DataContext";
-import { titleCase } from "../util";
 
 export default function Pro({ isOpen, setIsOpen }) {
   function closeModal() {
