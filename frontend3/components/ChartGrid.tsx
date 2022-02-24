@@ -18,9 +18,9 @@ const exchangeThemes = {
 export default function ChartGrid() {
   const { coins, exchange } = useData();
   const { maxCharts } = useAccount();
-  useEffect(() => {
-    console.log(coins);
-  }, [coins]);
+  // useEffect(() => {
+  //   console.log(coins);
+  // }, [coins]);
 
   if (
     coins === undefined ||

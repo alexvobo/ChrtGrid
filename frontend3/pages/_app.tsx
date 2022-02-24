@@ -23,8 +23,8 @@ export default function NextWeb3App({
 
   return getLayout(
     <MoralisProvider
-      appId="JoWO28LE3kEDAVWhkaVLoxA8wRGnB5RMTdsJaZ8A"
-      serverUrl="https://aioslfluudst.usemoralis.com:2053/server">
+      appId={process.env.MORALIS_APPID}
+      serverUrl={process.env.MORALIS_SERVERURL}>
       <AccountProvider>
         <DataProvider>
           <ToastContainer />
