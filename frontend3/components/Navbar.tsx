@@ -1,9 +1,8 @@
-import { Fragment, useState } from "react";
 import { TickerTape, TickerTapeSymbol } from "react-ts-tradingview-widgets";
 import Link from "next/link";
 import Image from "next/image";
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import { Disclosure } from "@headlessui/react";
+import { MenuIcon, XIcon } from "@heroicons/react/outline";
 import Blob from "./Blob";
 import GRID from "../public/grid-nav.svg";
 import useSWR from "swr";
