@@ -63,15 +63,17 @@ export default function Home() {
 
             <div className=" text-center mb-2">
               {!isWeb3Enabled ? (
-                <button
-                  className="bg-transparent hover:bg-red-600 text-yellow-400 font-semibold hover:text-black py-2 px-4 border-2 border-red-600 hover:border-transparent rounded "
-                  disabled={isWeb3Enabled}
-                  onClick={async () => {
-                    await enableWeb3();
-                    setLoggedIn("true");
-                  }}>
-                  Connect to MetaMask
-                </button>
+                <>
+                  <button
+                    className="bg-transparent hover:bg-red-600 text-yellow-400 font-semibold hover:text-black py-2 px-4 border-2 border-red-600 hover:border-transparent rounded "
+                    disabled={isWeb3Enabled}
+                    onClick={async () => {
+                      await enableWeb3();
+                      setLoggedIn("true");
+                    }}>
+                    Connect to MetaMask
+                  </button>
+                </>
               ) : loggedIn === "true" && supported === true ? (
                 <Transition
                   show={loggedIn === "true" && supported === true}

@@ -28,6 +28,19 @@ export default async function handler(req, res) {
       },
       secureConnection: true,
     });
+
+    await new Promise((resolve, reject) => {
+      transporter.verify(function (error, success) {
+        if (error) {
+          console.log(error);
+          reject(error);
+        } else {
+          console.log("Server is ready to take our messages");
+          resolve(success);
+        }
+      });
+    });
+
     const mailData = {
       from: process.env.NODEMAILER_EMAIL,
       to: process.env.NODEMAILER_EMAIL,
@@ -59,27 +72,28 @@ export default async function handler(req, res) {
                 <span style="font-weight:bold; ">IP</span>:
                 ${ip}
                 </li>
-                <br>
                 <li>
                 <span style="font-weight:bold; ">Question</span>:
+                <br>
                 ${form.question}
                 </li>
             </ol>
           </div>
         </div>`,
     };
-
-    try {
-      await transporter.sendMail(mailData, function (err, info) {
-        if (err) throw Error(err);
-        else {
+    await new Promise((resolve, reject) => {
+      transporter.sendMail(mailData, (err, info) => {
+        if (err) {
+          console.error(err);
+          reject(err);
+          return res.status(400).json({ status: "Error" });
+        } else {
           console.log(info);
+          resolve(info);
         }
       });
-      return res.status(200).json({ status: "submitted" });
-    } catch (error) {
-      return res.status(400).json({ status: "Error" });
-    }
+    });
+    return res.status(200).json({ status: "submitted" });
   }
   return res.status(500).json({ status: "POST only" });
 }

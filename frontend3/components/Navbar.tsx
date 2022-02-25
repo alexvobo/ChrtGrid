@@ -30,20 +30,28 @@ const tickers: TickerTapeSymbol[] = [
     title: "Oil",
   },
   {
-    proName: "NASDAQ:AAPL",
-    title: "Apple",
+    proName: "TVC:GOLD",
+    title: "Gold",
+  },
+  {
+    proName: "TVC:SILVER",
+    title: "Silver",
+  },
+  {
+    proName: "TVC:PLATINUM",
+    title: "Platinum",
   },
   {
     proName: "INDEX:BTCUSD",
     title: "Bitcoin",
   },
   {
-    proName: "CRYPTOCAP:BTC.D",
-    title: "BTC Dominance",
-  },
-  {
     proName: "INDEX:ETHUSD",
     title: "Ethereum",
+  },
+  {
+    proName: "CRYPTOCAP:BTC.D",
+    title: "BTC Dominance",
   },
 ];
 function classNames(...classes) {

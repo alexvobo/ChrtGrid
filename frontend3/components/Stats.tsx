@@ -90,7 +90,11 @@ export default function Stats() {
                   (item, i) =>
                     i < maxCharts && (
                       <a
-                        // href={`https://pro.coinbase.com/trade/${stats[item][1]["key"]}-USD`}
+                        href={`https://www.tradingview.com/symbols/${
+                          item["key"]
+                        }${
+                          exchange === "coinbase" ? "USD" : "USDT"
+                        }/?exchange=${exchange}`}
                         target="_blank"
                         rel="noreferrer"
                         className={`${exchangeThemes[exchange]["font"]}`}

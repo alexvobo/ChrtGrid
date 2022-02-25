@@ -100,7 +100,7 @@ export default function Pro({ isOpen, setIsOpen }) {
               leave="ease-in duration-200"
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95">
-              <div className="inline-block w-full max-w-max h-[550px] py-8 px-7  overflow-hidden text-left align-middle transition-all transform bg-blue-900/90 shadow-xl rounded-2xl">
+              <div className="inline-block w-full max-w-max h-[600px] py-8 px-7  overflow-hidden text-left align-middle transition-all transform bg-blue-900/90 shadow-xl rounded-2xl">
                 <Dialog.Title
                   as="h3"
                   className="border-b-2 border-yellow-500 pb-4 text-4xl text-center font-medium leading-6 text-white">
@@ -165,6 +165,18 @@ export default function Pro({ isOpen, setIsOpen }) {
                         features
                       </li>
                     </ul>
+                    <h1 className="text-pink-500 mt-2 text-md text-center font-medium">
+                      <span className="text-green-500 px-1">
+                        We accept <span className="text-pink-500">ETH</span> and{" "}
+                        <span className="text-pink-500">AVAX</span>
+                        <span className="text-purple-400">*</span>
+                      </span>
+                    </h1>
+                    <div className="mx-auto text-center">
+                      <small className=" text-purple-400 font-medium ">
+                        * Please switch networks
+                      </small>
+                    </div>
                   </div>
                 </div>
                 <div></div>
