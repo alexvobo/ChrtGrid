@@ -11,7 +11,7 @@ export default function Custom404() {
         />
         <div className="border-b-2 border-yellow-400 my-6" />
         <h1 className="text-white text-2xl">
-          404 - We'll be right back. Thanks for waiting!
+          404 - We&apos;ll be right back. Thanks for waiting!
         </h1>
       </div>
     </div>
