@@ -3,7 +3,6 @@ import { useChain } from "react-moralis";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useData } from "../contexts/DataContext";
 import { useMoralis } from "react-moralis";
-import Head from "next/head";
 import Image from "next/image";
 import { Transition } from "@headlessui/react";
 import Account from "../components/Account";
@@ -42,12 +41,6 @@ export default function Home() {
   }, [chain, , chainId, networks]);
   return (
     <div>
-      <Head>
-        {/* https://www.toptal.com/designers/htmlarrows/symbols/ */}
-        <title>chrtGrid</title>
-        <meta name="description" content="gridly.xyz" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <main>
         <div className=" mt-2 items-center grid md:grid-cols-3 md:gap-3 lg:gap-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 ">
           <div className="mx-auto grid grid-flow-row">
