@@ -9,7 +9,7 @@ function useAccount() {
 }
 
 function AccountProvider({ children }) {
-  const { account, chainId, isLoggingOut } = useMoralis();
+  const { account } = useMoralis();
   const [maxCharts, setMaxCharts] = useState(9);
   // const [exchangePreference, setExchangePreference] = useState(0); //paywall
 

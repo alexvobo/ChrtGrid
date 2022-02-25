@@ -4,7 +4,9 @@ import Image from "next/image";
 
 import { titleCase } from "../util";
 import LoadingIcons from "react-loading-icons";
+import Pro from "./Pro";
 import { useData, useDataUpdate } from "../contexts/DataContext";
+import { useAccount } from "../contexts/AccountContext";
 
 export default function Example() {
   function classNames(...classes) {
@@ -17,7 +19,7 @@ export default function Example() {
       exchangeStyle: "bg-blue-700 text-white",
       marketStyle: "border-2 border-blue-700 text-white",
 
-      url: "https://www.coinbase.com/",
+      url: "https://www.coinbase.com/price",
       twitter: "https://twitter.com/CoinbaseAssets",
     },
     kucoin: {
@@ -47,7 +49,7 @@ export default function Example() {
           name: "Best/Worst Gainers",
           market: "stats",
           description: "Pumps & Dumps pls",
-          disabled: false,
+          premium: false,
           url: (
             <>
               <a href={exchInfo.url} target="_blank" rel="noreferrer">
@@ -68,24 +70,10 @@ export default function Example() {
         },
 
         {
-          name: "Latest",
-          market: "latest",
-          description: "Straight from the sauce",
-          disabled: false,
-          url: (
-            <>
-              <a href={exchInfo.twitter} target="_blank" rel="noreferrer">
-                @{exchInfo["twitter"].split("/")[3]}
-              </a>
-            </>
-          ),
-        },
-
-        {
           name: "Random",
           market: "random",
           description: "Random Picks",
-          disabled: false,
+          premium: false,
           url: (
             <>
               {" "}
@@ -111,10 +99,24 @@ export default function Example() {
           ),
         },
         {
+          name: "Latest",
+          market: "latest",
+          description: "Most Recent Listings",
+          premium: true,
+          url: (
+            <>
+              <a href={exchInfo.twitter} target="_blank" rel="noreferrer">
+                @{exchInfo["twitter"].split("/")[3]}
+              </a>
+            </>
+          ),
+        },
+
+        {
           name: "Custom Lists",
           market: "custom",
-          description: "Premium Only",
-          disabled: true,
+          description: "Create Your Own",
+          premium: true,
           url: (
             <>
               <p>Coming soon...</p>
@@ -130,7 +132,9 @@ export default function Example() {
     binance: listOptions(exchangeInfo["binance"]),
   });
   const { market } = useData();
+  const { userData } = useAccount();
   const { switchExchange, switchMarket } = useDataUpdate();
+  const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
   return (
@@ -176,37 +180,88 @@ export default function Example() {
                         ? "bg-indigo-800/50"
                         : "hover:animate-pulse"
                     )}>
-                    <button
-                      className={m?.disabled ? "cursor-not-allowed" : null}
-                      disabled={loading || m?.disabled}
-                      onClick={() => {
-                        setLoading(true);
-                        switchMarket(m?.market);
-                        setTimeout(() => {
-                          setLoading(false);
-                        }, cooldown);
-                      }}>
-                      <h3 className="text-yellow-500 mb-2 text-md text-left font-medium leading-5">
-                        {m?.name}
-                      </h3>
+                    {/* If the user is not logged in */}
+                    {!userData || userData === undefined ? (
+                      <button
+                        disabled={loading || m?.premium}
+                        onClick={() => {
+                          // if not logged in and it's loading or it's a premium option, do nothing, else switch market
+                          setLoading(true);
+                          switchMarket(m?.market);
+                          setTimeout(() => {
+                            setLoading(false);
+                          }, cooldown);
+                        }}>
+                        <h3 className="text-yellow-500 mb-2 text-md text-left font-medium leading-5">
+                          {m?.name}
+                        </h3>
+                        <ul className="flex mt-1 space-x-1 text-sm font-normal leading-4 text-coolGray-500">
+                          <li>{m?.description}</li>
+                          <li>&middot;</li>{" "}
+                          {!m?.premium ? (
+                            <li className="text-blue-500 hover:underline z-10">
+                              {m?.url}
+                            </li>
+                          ) : (
+                            <li className="text-red-500  z-10">
+                              Please connect your wallet
+                            </li>
+                          )}
+                        </ul>
 
-                      <ul className="flex mt-1 space-x-1 text-sm font-normal leading-4 text-coolGray-500">
-                        <li>{m?.description}</li>
-                        <li>&middot;</li>
-                        <li className="text-blue-500 hover:underline z-10">
-                          {m?.url}
-                        </li>
-                      </ul>
+                        <a
+                          href="#"
+                          className={classNames(
+                            m?.premium ? "cursor-not-allowed" : null,
+                            "absolute inset-0 rounded-md",
+                            "focus:z-10 focus:outline-none focus:ring-1 ring-red-600"
+                          )}
+                        />
+                      </button>
+                    ) : (
+                      <button
+                        disabled={loading}
+                        onClick={() => {
+                          // If the user is logged in and it's loading, disable option.
+                          // If the user is logged in and it's premium and user doesnt have premium, load modal, else switch market
 
-                      <a
-                        href="#"
-                        className={classNames(
-                          m?.disabled ? "cursor-not-allowed" : null,
-                          "absolute inset-0 rounded-md",
-                          "focus:z-10 focus:outline-none focus:ring-1 ring-red-600"
-                        )}
-                      />
-                    </button>
+                          if (m?.premium && userData?.membership === "free") {
+                            setOpenModal(true);
+                          } else {
+                            setLoading(true);
+                            switchMarket(m?.market);
+                            setTimeout(() => {
+                              setLoading(false);
+                            }, cooldown);
+                          }
+                        }}>
+                        <h3 className="text-yellow-500 mb-2 text-md text-left font-medium leading-5">
+                          {m?.name}
+                        </h3>
+
+                        <ul className="flex mt-1 space-x-1 text-sm font-normal leading-4 text-coolGray-500">
+                          <li>{m?.description}</li>
+                          <li>&middot;</li>
+                          {m?.premium && userData?.membership === "free" ? (
+                            <li className="text-red-500  z-10">
+                              Click to purchase premium
+                            </li>
+                          ) : (
+                            <li className="text-blue-500 hover:underline z-10">
+                              {m?.url}
+                            </li>
+                          )}
+                        </ul>
+
+                        <a
+                          href="#"
+                          className={classNames(
+                            "absolute inset-0 rounded-md",
+                            "focus:z-10 focus:outline-none focus:ring-1 ring-red-600"
+                          )}
+                        />
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -214,6 +269,7 @@ export default function Example() {
           ))}
         </Tab.Panels>
       </Tab.Group>
+      <Pro isOpen={openModal} setIsOpen={setOpenModal} />
       <div className="text-center font-medium text-white mx-auto">
         {loading ? (
           <div>
