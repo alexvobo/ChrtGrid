@@ -10,7 +10,7 @@ export default function Custom404() {
           className="mx-auto animate-pulse "
         />
         <div className="border-b-2 border-yellow-400 my-6" />
-        <h1 className="text-white text-2xl">404 - We&apos;ll be right back.</h1>
+        <h1 className="text-white text-2xl">404 - Page not found.</h1>
       </div>
     </div>
   );

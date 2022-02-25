@@ -10,7 +10,7 @@ const TERMS = [
 ];
 export default function Terms() {
   return (
-    <div className=" border-2 border-pink-800/80 shadow-md shadow-pink-800 w-1/2 mt-4 rounded mx-auto p-4">
+    <div className=" border-2 border-pink-800/80 shadow-md shadow-pink-800 w-full md:w-2/3 lg:w-1/2 xl:w-1/3 mt-4 rounded mx-auto p-4">
       {" "}
       <div className="text-center  text-blue-500 text-5xl mt-4 mb-12">
         Terms of Service

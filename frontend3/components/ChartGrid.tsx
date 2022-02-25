@@ -37,19 +37,15 @@ export default function ChartGrid() {
   }
   return (
     <>
-      <div
-        className={`grid xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 grid-cols-3 `}>
+      <div className="grid grid-cols-2  md:grid-cols-3 ">
         {coins?.map(
           (item, i) =>
             i < maxCharts && (
               <div
-                className={
-                  `h-[300px] border-2 w-full overflow-hidden ` +
-                  exchangeThemes[exchange]["gridColor"]
-                }
+                className={`h-[320px] border w-full overflow-hidden ${exchangeThemes[exchange]["gridColor"]}`}
                 key={i}>
                 {/* <div className="text-white">{item}</div> */}
-                {/* <AdvancedRealTimeChart
+                <AdvancedRealTimeChart
                   symbol={item}
                   theme="dark"
                   hide_side_toolbar={true}
@@ -57,7 +53,7 @@ export default function ChartGrid() {
                   interval="240"
                   autosize
                   withdateranges={true}
-                /> */}
+                />
               </div>
             )
         )}

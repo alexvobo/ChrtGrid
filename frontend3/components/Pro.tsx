@@ -3,12 +3,13 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState, useEffect } from "react";
 import Pay from "./Pay";
 import {
-  RefreshIcon,
-  PresentationChartLineIcon,
+  ViewGridAddIcon,
   CashIcon,
   ArrowSmRightIcon,
   KeyIcon,
+  PresentationChartLineIcon,
 } from "@heroicons/react/outline";
+import { ViewListIcon, FireIcon, LockClosedIcon } from "@heroicons/react/solid";
 import LoadingIcons from "react-loading-icons";
 import AddressBar from "./AddressBar";
 import { useMoralis } from "react-moralis";
@@ -103,16 +104,16 @@ export default function Pro({ isOpen, setIsOpen }) {
               <div className="inline-block w-full max-w-max h-[600px] py-8 px-7  overflow-hidden text-left align-middle transition-all transform bg-blue-900/90 shadow-xl rounded-2xl">
                 <Dialog.Title
                   as="h3"
-                  className="border-b-2 border-yellow-500 pb-4 text-4xl text-center font-medium leading-6 text-white">
+                  className="border-b-2 border-yellow-500 pb-4 text-3xl md:text-4xl text-center font-medium leading-6 text-white">
                   Get{" "}
-                  <span className="text-pink-500 ">
+                  <span className="text-pink-500 animate-pulse ">
                     {membershipTier.toUpperCase()}
                   </span>{" "}
                   Today!
                 </Dialog.Title>
                 <div className="">
                   <div className=" w-full  ">
-                    <p className="text-2xl  text-center text-white mt-2 mb-4">
+                    {/* <p className="text-lg lg:text-2xl  text-center text-white mt-2 md:mb-4">
                       Unlock extra features on{" "}
                       <span className=" font-bold text-transparent bg-clip-text bg-gradient-to-br from-yellow-400 to-pink-600">
                         GRID
@@ -121,48 +122,44 @@ export default function Pro({ isOpen, setIsOpen }) {
                       <span className="animate-pulse text-pink-500 font-bold">
                         {membershipTier.toUpperCase()}
                       </span>
-                    </p>
-
-                    <ul className=" leading-loose  text-center text-xl marker:text-white text-yellow-500">
+                    </p> */}
+                    <div className=" text-center font-medium text-xl  text-green-400 mt-1 ml-4">
+                      [{membershipCount}/{membershipMax} Claimed]
+                      {/* <KeyIcon className="inline h-7 w-7 mb-1 ml-2 " />{" "} */}
+                    </div>
+                    <ul className=" leading-loose  text-center text-lg lg:text-xl marker:text-white text-yellow-500">
                       <li>
                         <ArrowSmRightIcon className="inline h-7 w-7  ml-2" />
-                        Whitelist Priority & Lifetime Access [{membershipCount}/
-                        {membershipMax} Claimed]
-                        <KeyIcon className="inline h-7 w-7 mb-1 ml-2" />{" "}
+                        Lifetime Access
+                        <FireIcon className="inline mb-1 h-7 w-7 ml-2" />
                       </li>
 
                       <li>
                         <ArrowSmRightIcon className="inline h-7 w-7  ml-2" />
-                        Premium NFT Giveaways
-                        <CashIcon className="inline h-7 w-7  ml-2" />{" "}
+                        Whitelist Priority
+                        <LockClosedIcon className="inline mb-1 h-7 w-7 ml-2" />
                       </li>
-                      {/* <li>
+                      <li>
                         <ArrowSmRightIcon className="inline h-7 w-7  ml-2" />
-                        Latest Listings
-                        <ViewListIcon className="inline h-7 w-7 mb-1 ml-2" />{" "}
-                      </li> */}
+                        Custom Coin Lists
+                        <PresentationChartLineIcon className="inline mb-1 h-7 w-7 ml-2" />
+                      </li>
                       <li>
                         <ArrowSmRightIcon className="inline  h-7 w-7  ml-2" />
-                        More Charts [9 &#8594; 12]
+                        More Charts (9 &#8594; 12)
                         {
-                          <PresentationChartLineIcon className="inline mb-1 h-7 w-7 ml-2" />
+                          <ViewGridAddIcon className="inline mb-1 h-7 w-7 ml-2" />
                         }
                       </li>
                       <li>
                         <ArrowSmRightIcon className="inline h-7 w-7  ml-2" />
-                        Automatic Chart Refreshing
-                        <RefreshIcon className="inline h-7 w-7 ml-2" />{" "}
+                        Latest Exchange Listings
+                        <ViewListIcon className="inline h-7 w-7 ml-2" />{" "}
                       </li>
-
                       <li>
                         <ArrowSmRightIcon className="inline h-7 w-7  ml-2" />
-                        New{" "}
-                        <span className="mx-2  before:block before:absolute before:-inset-1 before:-skew-y-3 before:bg-pink-700 relative inline-block">
-                          <span className=" relative text-white font-bold text-xl">
-                            PREMIUM
-                          </span>
-                        </span>{" "}
-                        features
+                        Premium NFT Giveaways
+                        <CashIcon className="inline h-7 w-7  ml-2" />{" "}
                       </li>
                     </ul>
                     <h1 className="text-pink-500 mt-2 text-md text-center font-medium">
@@ -173,9 +170,9 @@ export default function Pro({ isOpen, setIsOpen }) {
                       </span>
                     </h1>
                     <div className="mx-auto text-center">
-                      <small className=" text-purple-400 font-medium ">
+                      <span className=" text-purple-400 text-sm font-medium ">
                         * Please switch networks
-                      </small>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -188,7 +185,7 @@ export default function Pro({ isOpen, setIsOpen }) {
                   paymentData["payment_amount"] &&
                   paymentData["payment_to"] ? (
                     <>
-                      <div className="text-white text-lg py-2 grid grid-flow-row w-1/2 text-center mx-auto bg-slate-900 rounded-md ">
+                      <div className="text-white text-lg py-2 grid grid-flow-row w-full md:w-2/3 text-center mx-auto bg-slate-900 rounded-md ">
                         <span className=" border-b-2 border-yellow-500 font-bold text-red-600 mb-2">
                           Please Verify:
                         </span>

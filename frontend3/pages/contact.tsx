@@ -108,19 +108,22 @@ export default function Contact() {
         contact us
       </div>
       <form action="#" method="POST">
-        <div className="shadow overflow-hidden ">
-          <div className="h-[700px]  px-4 py-5  border-2 border-pink-700 shadow-xl shadow-pink-600 sm:p-6 w-2/3 md:w-1/2 mx-auto sm:rounded-md">
-            <div className="w-4/5 mx-auto grid grid-flow-row gap-4 mt-8  ">
+        <div className="shadow overflow-hidden  ">
+          <div className="h-[720px]  md:px-4 md:py-5  sm:p-6  border-2 border-pink-700 shadow-xl shadow-pink-600  w-full lg:w-2/3 mx-auto sm:rounded-md">
+            <div className=" w-2/3 md:w-1/2 mx-auto grid grid-flow-row gap-4 mt-8  ">
+              <label
+                htmlFor="name"
+                className="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-gray-200">
+                Inquiry type
+              </label>
               <Listbox value={selected} onChange={setSelected}>
-                <div className="relative mt-1">
-                  <Listbox.Button className=" border-2 border-blue-500 relative w-full py-2 pl-3 pr-10 text-left bg-transparent rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
+                <div className="relative ">
+                  <Listbox.Button className=" border-2 border-pink-700 relative w-full py-2 pl-3 pr-10 text-left bg-transparent rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
                     <span
                       className={`${
                         selected?.name === "" ? "text-white" : "text-blue-200"
                       } block truncate text-md font-medium`}>
-                      {selected?.name !== ""
-                        ? selected?.name
-                        : "What is your inquiry type?"}
+                      {selected?.name !== "" ? selected?.name : "Please select"}
                     </span>
                     <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                       <SelectorIcon
@@ -134,7 +137,7 @@ export default function Contact() {
                     leave="transition ease-in duration-100"
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0">
-                    <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-slate-900 rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                    <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-slate-900 rounded-md shadow-lg max-h-60 ring-1 ring-slate-300 ring-opacity-5 focus:outline-none sm:text-sm">
                       {inquiry.map((q, qId) => (
                         <Listbox.Option
                           key={qId}
