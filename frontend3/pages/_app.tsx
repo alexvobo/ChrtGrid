@@ -47,7 +47,7 @@ export default function NextWeb3App({
                 description: "The Ultimate Trading Companion",
                 images: [
                   {
-                    url: "https://chrtgrid.com/grid-nav.png",
+                    url: "https://chrtgrid.com/GRID-NAV.png",
                     alt: "chrtGrid",
                     width: 400,
                     height: 300,
