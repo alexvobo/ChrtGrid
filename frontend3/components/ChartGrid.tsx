@@ -17,7 +17,7 @@ const exchangeThemes = {
 };
 export default function ChartGrid() {
   const { coins, exchange } = useData();
-  const { maxCharts } = useAccount();
+  const { maxCharts } = useAccount(); //this is prob triggering a rerender on refocus
   // useEffect(() => {
   //   console.log(coins);
   // }, [coins]);
@@ -45,7 +45,7 @@ export default function ChartGrid() {
                 className={`h-[320px] border w-full overflow-hidden ${exchangeThemes[exchange]["gridColor"]}`}
                 key={i}>
                 {/* <div className="text-white">{item}</div> */}
-                <AdvancedRealTimeChart
+                {/* <AdvancedRealTimeChart
                   symbol={item}
                   theme="dark"
                   hide_side_toolbar={true}
@@ -53,7 +53,7 @@ export default function ChartGrid() {
                   interval="240"
                   autosize
                   withdateranges={true}
-                />
+                /> */}
               </div>
             )
         )}

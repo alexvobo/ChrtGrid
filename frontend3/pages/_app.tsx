@@ -32,7 +32,9 @@ export default function NextWeb3App({
           <DataProvider>
             <ToastContainer />
             <DefaultSeo
-              title="chrtGrid"
+              title="chrtGrid | Elevate Your Trading"
+              description="The Ultimate Trading Companion"
+              canonical="https://chrtgrid.com"
               additionalLinkTags={[
                 {
                   rel: "icon",
@@ -45,7 +47,7 @@ export default function NextWeb3App({
                 description: "The Ultimate Trading Companion",
                 images: [
                   {
-                    url: "/grid.svg",
+                    url: "/GRID-NAV.png",
                     alt: "chrtGrid",
                     width: 400,
                     height: 300,
