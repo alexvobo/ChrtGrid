@@ -76,7 +76,12 @@ export default function Pay({ amount, receiver, tier, modalController }) {
             // console.log(res.data);
             if (res.status === 200) {
               toast.update(id, {
-                render: "Payment Successful. Thank you!",
+                render: (
+                  <span>
+                    Payment Successful.
+                    <br /> Thank you!
+                  </span>
+                ),
                 type: "success",
                 isLoading: false,
               });
@@ -122,7 +127,7 @@ export default function Pay({ amount, receiver, tier, modalController }) {
     <a href="https://www.coinbase.com" target="_blank" rel="noreferrer">
       <button
         type="button"
-        className=" px-4 py-2 text-lg font-bold text-black bg-yellow-500 border border-transparent rounded-md hover:bg-black hover:text-yellow-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500">
+        className=" px-4 py-2 text-lg font-bold text-black bg-yellow-500 border border-transparent rounded-md hover:bg-transparent hover:border hover:border-yellow-500 hover:text-yellow-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500">
         <span>Need {parseFloat(amount) - balance} more </span>
         <span>
           {networks?.find((n) => n?.chainID === chain?.chainId)?.currencyName}
@@ -132,7 +137,7 @@ export default function Pay({ amount, receiver, tier, modalController }) {
   ) : (
     <button
       type="button"
-      className={`px-4 py-2 text-lg font-bold text-black bg-yellow-500 border border-transparent rounded-md hover:bg-black hover:text-yellow-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 ${
+      className={`px-4 py-2 text-lg font-bold text-black bg-yellow-500 border border-transparent rounded-md hover:bg-transparent hover:border hover:border-yellow-500 hover:text-yellow-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500 ${
         clickedPay ? "invisible" : null
       }`}
       disabled={isFetching}

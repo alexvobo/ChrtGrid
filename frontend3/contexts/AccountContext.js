@@ -11,6 +11,7 @@ function useAccount() {
 function AccountProvider({ children }) {
   const { account } = useMoralis();
   const [maxCharts, setMaxCharts] = useState(9);
+  const [customListDB, setCustomListDB] = useState(null);
   // const [exchangePreference, setExchangePreference] = useState(0); //paywall
 
   const { data: memberships } = useSWR("/api/memberships/", (url) =>
@@ -20,6 +21,7 @@ function AccountProvider({ children }) {
     account ? "/api/user/" + account : null,
     (url) => fetch(url).then((r) => r.json())
   );
+
   function getMaxCharts(userData) {
     if (userData && userData !== undefined) {
       // console.log(userData);
@@ -32,16 +34,28 @@ function AccountProvider({ children }) {
       }
     }
   }
+  function getCustomList(userData) {
+    if (userData && userData !== undefined) {
+      if (userData.customList?.length) {
+        console.log(userData.customList);
+        setCustomListDB(userData.customList);
+      } else {
+        console.log("No list found");
+      }
+    }
+  }
   useEffect(() => {
     getMaxCharts(userData);
-
+    getCustomList(userData);
     return () => {
       setMaxCharts(9);
+      setCustomListDB([]);
     };
   }, [userData]);
 
   return (
-    <AccountContext.Provider value={{ userData, maxCharts, mutateUser }}>
+    <AccountContext.Provider
+      value={{ userData, maxCharts, customListDB, mutateUser }}>
       {children}
     </AccountContext.Provider>
   );

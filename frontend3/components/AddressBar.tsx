@@ -14,7 +14,7 @@ export default function AddressBar({ account, chainId, ENSName, copyAddress }) {
   }
 
   return (
-    <div className=" hover:bg-blue-800  bg-blue-800/70 mx-auto px-7 hover:cursor-pointer rounded-sm ">
+    <div className="grid grid-flow-col hover:bg-blue-800   bg-blue-800/70 mx-auto px-7 hover:cursor-pointer rounded-sm ">
       <a
         onClick={() => (copyAddress ? copy(account) : null)}
         className="text-lg"
@@ -29,9 +29,9 @@ export default function AddressBar({ account, chainId, ENSName, copyAddress }) {
         <span className=" border-l-2  border-yellow-600  text-center ml-2 ">
           {" "}
           {copyAddress ? (
-            <ClipboardCopyIcon className=" inline h-5 w-5 mb-1 text-center ml-2" />
+            <ClipboardCopyIcon className=" inline h-5 w-5 mb-1 text-center ml-4" />
           ) : (
-            <ExternalLinkIcon className=" inline h-5 w-5 mb-1 text-center ml-2" />
+            <ExternalLinkIcon className=" inline h-5 w-5 mb-1 text-center ml-4" />
           )}
         </span>
       </a>{" "}

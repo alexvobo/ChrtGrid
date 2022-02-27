@@ -151,6 +151,7 @@ a {
   animation: pulse-red 2s infinite;
 }
 
+
 @keyframes pulse-red {
   0% {
     transform: scale(0.95);

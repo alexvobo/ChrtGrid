@@ -102,7 +102,7 @@ export default function Help() {
     <div className=" border-2 border-pink-800/80 shadow-md shadow-pink-800 w-full  xl:w-3/5 mt-4 rounded mx-auto p-4">
       {" "}
       <div className="text-center  text-blue-500 text-5xl mt-4 mb-12">
-        help bls
+        Help Bls
       </div>
       <div className="px-8 mb-4 mx-auto">
         <ul>

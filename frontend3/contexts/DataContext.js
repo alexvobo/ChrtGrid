@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import useSWR from "swr";
 import Image from "next/image";
+import { useAccount } from "./AccountContext";
 // Create two context:
 // DataContext: to query the context state
 // DataDispatchContext: to mutate the context state
@@ -23,7 +24,7 @@ export function DataProvider({ children }) {
     //   chainID: "0xa869",
     //   unavailable: false,
     //   currencyLogo: (
-    //     <Image className="" src={avax} height={20} width={20} alt="AVAX" />
+    //     <Image className="" src="/avax.svg" height={20} width={20} alt="AVAX" />
     //   ),
     // },
     {
@@ -46,16 +47,19 @@ export function DataProvider({ children }) {
   const [exchange, setExchange] = useState("coinbase");
   const [market, setMarket] = useState("stats");
   const [coins, setCoins] = useState([]);
+  const { customListDB } = useAccount();
 
   const { data: stats } = useSWR(`/api/${exchange}/stats`, (url) =>
     fetch(url).then((r) => r.json())
   );
 
   const fetchCoins = async () => {
-    const data = await fetch(`/api/${exchange}/${market}/coins`).then((res) =>
-      res.json()
-    );
-    setCoins(data);
+    if (market !== "custom") {
+      const data = await fetch(`/api/${exchange}/${market}/coins`).then((res) =>
+        res.json()
+      );
+      setCoins(data);
+    }
   };
 
   function switchExchange(exchangeName) {
@@ -63,11 +67,20 @@ export function DataProvider({ children }) {
   }
   function switchMarket(marketName) {
     setMarket(marketName);
-    fetchCoins();
+    if (marketName === "custom") {
+      let coinList = [];
+      customListDB?.map((item) => {
+        coinList.push(`${item?.exchange}:${item?.symbol}${item?.pair}`);
+      });
+      console.log(coinList);
+      setCoins(coinList);
+    } else {
+      fetchCoins();
+    }
   }
 
   useEffect(() => {
-    if (exchange !== "" && market !== "") {
+    if (exchange !== "" && market !== "" && market !== "custom") {
       fetchCoins();
     }
   }, [exchange, market]);

@@ -134,7 +134,7 @@ export default function Example() {
   const { market } = useData();
   const { userData } = useAccount();
   const { switchExchange, switchMarket } = useDataUpdate();
-  const [openModal, setOpenModal] = useState(false);
+  const [openPro, setOpenPro] = useState(false);
   const [loading, setLoading] = useState(false);
 
   return (
@@ -157,7 +157,6 @@ export default function Example() {
               className={({ selected }) =>
                 classNames(
                   "w-full py-2.5 text-md leading-5 font-medium rounded-lg",
-
                   selected
                     ? ` ${exchangeInfo[e]["exchangeStyle"]} shadow`
                     : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
@@ -178,7 +177,7 @@ export default function Example() {
                       `${exchangeInfo[e]["marketStyle"]} relative p-3 rounded-md hover:bg-coolGray-100 `,
                       m?.market === market
                         ? "bg-indigo-800/50"
-                        : "hover:animate-pulse"
+                        : "hover:animate-pulse hover:bg-indigo-700/50"
                     )}>
                     {/* If the user is not logged in */}
                     {!userData || userData === undefined ? (
@@ -224,9 +223,8 @@ export default function Example() {
                         onClick={() => {
                           // If the user is logged in and it's loading, disable option.
                           // If the user is logged in and it's premium and user doesnt have premium, load modal, else switch market
-
                           if (m?.premium && userData?.membership === "free") {
-                            setOpenModal(true);
+                            setOpenPro(true);
                           } else {
                             setLoading(true);
                             switchMarket(m?.market);
@@ -269,7 +267,7 @@ export default function Example() {
           ))}
         </Tab.Panels>
       </Tab.Group>
-      <Pro isOpen={openModal} setIsOpen={setOpenModal} />
+      <Pro isOpen={openPro} setIsOpen={setOpenPro} />
       <div className="text-center font-medium text-white mx-auto">
         {loading ? (
           <div>

@@ -105,7 +105,7 @@ export default function Contact() {
     <div className="  w-full  xl:w-3/5 mt-4 rounded mx-auto p-4">
       {" "}
       <div className="text-center  text-blue-500 text-5xl mt-4 mb-12">
-        contact us
+        Contact Us
       </div>
       <form action="#" method="POST">
         <div className="shadow overflow-hidden  ">

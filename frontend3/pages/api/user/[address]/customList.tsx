@@ -14,10 +14,10 @@ export default async function handler(req, res) {
     const user = await db
       .collection("users")
       .find({ _id: address })
-      .project({ joined: 1, membership: 1, customList: 1 })
+      .project({ customList: 1 })
       .toArray();
     return res.status(200).json(user[0]);
   } catch (error) {
-    return res.status(404).json({ error: "Failed to get data from DB" });
+    return res.status(404).json({ error: "Failed to get custom list from DB" });
   }
 }

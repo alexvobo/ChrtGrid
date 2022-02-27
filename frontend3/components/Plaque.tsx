@@ -1,5 +1,4 @@
 import React from "react";
-
 function Plaque({ membership }) {
   const memberships = {
     lifetime: " shadow-lg shadow-pink-500 rainbow-effect ",

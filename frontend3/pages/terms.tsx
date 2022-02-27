@@ -5,7 +5,8 @@ const TERMS = [
   "We do not offer any financial services, nor do we offer any investment advice.",
   "We are not responsible for any loss you may incur as a result of using our platform, as we do not offer financial or investment services. This platform is purely for informational & educational purposes only, and any decision you make as a result of knowledge gained on this platform will be your own.",
 
-  "LIFETIME memberships are valid as long as we can afford to keep the servers running",
+  "LIFETIME memberships are defined as premium subscriptions that are valid as long as we can afford to keep the servers running",
+  "Pro memberships are defined as premium subscriptions that are valid for 30 days from purchasing date",
   "No refunds will be given for any reason. No exceptions.",
 ];
 export default function Terms() {

@@ -39,6 +39,19 @@ export default function Home() {
       }
     });
   }, [chain, , chainId, networks]);
+
+  useEffect(() => {
+    const connectWalletOnPageLoad = async () => {
+      if (loggedIn === "true") {
+        try {
+          await enableWeb3();
+        } catch (ex) {
+          console.log(ex);
+        }
+      }
+    };
+    connectWalletOnPageLoad();
+  }, []);
   return (
     <div>
       <main>
