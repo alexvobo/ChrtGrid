@@ -25,6 +25,7 @@ const exchangeThemes = {
 export default function Home() {
   const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn", "");
   const { exchange, networks } = useData();
+
   const [supported, setSupported] = useState(false);
   const { enableWeb3, isWeb3Enabled, deactivateWeb3, chainId } = useMoralis();
   const { chain } = useChain();
@@ -45,6 +46,8 @@ export default function Home() {
       if (loggedIn === "true") {
         try {
           await enableWeb3();
+          // switchExchange(storedExchange);
+          // switchMarket(storedMarket);
         } catch (ex) {
           console.log(ex);
         }

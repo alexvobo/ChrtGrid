@@ -119,7 +119,7 @@ export default function Example() {
           premium: true,
           url: (
             <>
-              <p>Coming soon...</p>
+              <p>Up to 12 Custom Charts</p>
             </>
           ),
         },

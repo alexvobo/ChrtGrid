@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useMoralis } from "react-moralis";
 import MultiSelect from "./MultiSelect";
 import { useAccount } from "../contexts/AccountContext";
+import { useDataUpdate } from "../contexts/DataContext";
 
 export default function CustomList({ isOpen, setIsOpen }) {
   function closeModal() {
@@ -13,7 +14,7 @@ export default function CustomList({ isOpen, setIsOpen }) {
   }
 
   const { account } = useMoralis();
-  const { customListDB, userData } = useAccount();
+  const { customListDB, userData, mutateUser } = useAccount();
   const [customList, setCustomList] = useState([]);
   const [clickedSave, setClickedSave] = useState(false);
   //pull this from api
@@ -64,6 +65,7 @@ export default function CustomList({ isOpen, setIsOpen }) {
           isLoading: false,
           autoClose: 3000,
         });
+        mutateUser();
       } else {
         toast.update(id, {
           render: "Failed to save. Please try again.",
