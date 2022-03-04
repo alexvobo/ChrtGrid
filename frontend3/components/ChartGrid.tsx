@@ -57,10 +57,12 @@ export default function ChartGrid() {
                 {/* <div className="text-white">{item}</div> */}
                 <AdvancedRealTimeChart
                   symbol={item}
+                  allow_symbol_change={false}
+                  show_popup_button={true}
                   theme="dark"
                   hide_side_toolbar={true}
                   hide_legend={true}
-                  interval="240"
+                  interval="60"
                   autosize
                   withdateranges={true}
                 />
