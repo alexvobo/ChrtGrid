@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState } from "react";
 import LoadingIcons from "react-loading-icons";
 import { useAccount } from "../contexts/AccountContext";
 import { useData } from "../contexts/DataContext";
@@ -53,11 +53,12 @@ const exchangeThemes = {
     font: " text-white hover:text-black ",
   },
 };
+
+//Displays the 24h stats for the selected exchange. Updates based on SWR.
 export default function Stats() {
   const [sortAscending, setSortAscending] = useState(false);
   const { exchange, stats } = useData();
   const { maxCharts } = useAccount();
-  // Set Timeout, if timeout then ping = false
 
   return (
     <>

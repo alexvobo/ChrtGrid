@@ -2,17 +2,16 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 import { useMoralis } from "react-moralis";
 import useSWR from "swr";
 
-const AccountContext = createContext();
+//Fetches userData and memberships available, and sets maxCharts based on what is set in the database for that membership tier.
 
+const AccountContext = createContext();
 function useAccount() {
   return useContext(AccountContext);
 }
-
 function AccountProvider({ children }) {
   const { account } = useMoralis();
   const [maxCharts, setMaxCharts] = useState(9);
   const [customListDB, setCustomListDB] = useState(null);
-  // const [exchangePreference, setExchangePreference] = useState(0); //paywall
 
   const { data: memberships } = useSWR("/api/memberships/", (url) =>
     fetch(url).then((r) => r.json())

@@ -2,9 +2,9 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import useSWR from "swr";
 import Image from "next/image";
 import { useAccount } from "./AccountContext";
-// Create two context:
-// DataContext: to query the context state
-// DataDispatchContext: to mutate the context state
+
+// Fetches coins & stats from the database. Handles switching exchanges & markets in the <ExchangeMarketSelect> component.
+
 const DataContext = createContext();
 const DataUpdatecontext = createContext();
 
@@ -14,8 +14,7 @@ export function useData() {
 export function useDataUpdate() {
   return useContext(DataUpdatecontext);
 }
-// A "provider" is used to encapsulate only the
-// components that needs the state in this context
+
 export function DataProvider({ children }) {
   const networks = [
     // {
@@ -93,5 +92,3 @@ export function DataProvider({ children }) {
     </DataContext.Provider>
   );
 }
-
-// export { DataProvider, useData, useDataUpdate };

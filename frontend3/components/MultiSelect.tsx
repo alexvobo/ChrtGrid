@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import LoadingIcons from "react-loading-icons";
+//Part of the <CustomList> component, displays and allows manipulation of a list of coins the user adds/removes. Actual saving happens in the <CustomList> component.
 export default function MultiSelect({ list, setList }) {
   const [selected, setSelected] = useState([]);
 

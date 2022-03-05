@@ -1,21 +1,22 @@
 import React from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState, useEffect } from "react";
+import { useMoralis } from "react-moralis";
+import { useChain } from "react-moralis";
+import { useData } from "../contexts/DataContext";
 import Pay from "./Pay";
+import AddressBar from "./AddressBar";
 import {
   ViewGridAddIcon,
   CashIcon,
   ArrowSmRightIcon,
-  KeyIcon,
   PresentationChartLineIcon,
 } from "@heroicons/react/outline";
 import { ViewListIcon, FireIcon, LockClosedIcon } from "@heroicons/react/solid";
 import LoadingIcons from "react-loading-icons";
-import AddressBar from "./AddressBar";
-import { useMoralis } from "react-moralis";
-import { useChain } from "react-moralis";
-import { useData } from "../contexts/DataContext";
 
+//Part of the <Account> component, displays the Premium membership modal when "Go Pro" is clicked.
+//Implements < Pay > for payments.
 export default function Pro({ isOpen, setIsOpen }) {
   function closeModal() {
     setIsOpen(false);

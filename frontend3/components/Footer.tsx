@@ -51,6 +51,12 @@ export default function Footer() {
         |{" "}
         <Link href="/terms">
           <a className="hover:underline text-yellow-500">ToS</a>
+        </Link>{" "}
+        |{" "}
+        <Link href="https://chrtgrid.medium.com/">
+          <a target="_blank" className="hover:underline text-yellow-500">
+            Medium
+          </a>
         </Link>
       </div>
       <div className="mx-auto text-center text-white  mt-2 ">

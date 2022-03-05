@@ -1,3 +1,4 @@
+//Returns a glowing orb (green or red) that will flash when the frontend has a connection to the database.
 export default function Blob({ color }) {
   return (
     <div className="grid grid-flow-col ">

@@ -15,11 +15,12 @@ const exchangeThemes = {
     gridColor: "border-yellow-500 ",
   },
 };
+// Displays a grid of charts for the user's selected exchanges and markets.
 export default function ChartGrid() {
   const { coins, exchange, market } = useData();
-  const { maxCharts } = useAccount(); //this is prob triggering a rerender on refocus
+  const { maxCharts } = useAccount();
 
-  const [interval, setInterval] = useLocalStorage("interval", "120");
+  const [interval, setInterval] = useLocalStorage("interval", "D");
 
   if (
     coins === undefined ||

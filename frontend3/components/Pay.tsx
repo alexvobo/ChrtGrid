@@ -12,6 +12,8 @@ type PaymentData = {
   receiver: string;
   tier: string;
 };
+//Displays the button that allows a user to pay and handles the transaction.
+//If the user doesnt have enough, display how much more is needed in the button.
 export default function Pay({ amount, receiver, tier, modalController }) {
   const { account, Moralis } = useMoralis();
   const { chain } = useChain();

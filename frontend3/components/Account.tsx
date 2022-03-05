@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 
-import ETHBalance from "../components/ETHBalance";
-import IntervalSelect from "../components/IntervalSelect";
-import Pro from "./Pro";
-
-import LoadingIcons from "react-loading-icons";
-import ReactTooltip from "react-tooltip";
-
 import useENSName from "../hooks/useENSName";
 import { useMoralis } from "react-moralis";
 import { useAccount } from "../contexts/AccountContext";
+
+import ETHBalance from "../components/ETHBalance";
+import IntervalSelect from "../components/IntervalSelect";
+import Pro from "./Pro";
 import Plaque from "./Plaque";
 import AddressBar from "./AddressBar";
 import CustomList from "./CustomList";
+
+import LoadingIcons from "react-loading-icons";
+import ReactTooltip from "react-tooltip";
 import { RefreshIcon } from "@heroicons/react/outline";
 
+// Account component, displays user data after login with metamask.
+// Shows address, balance, membership status, interval configuration, and allows the user to "Go Pro" or configure custom lists if they are already Pro.
 const Account = () => {
   const { account, chainId } = useMoralis();
   const ENSName = useENSName(account);

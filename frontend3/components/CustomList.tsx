@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 import { useMoralis } from "react-moralis";
 import MultiSelect from "./MultiSelect";
 import { useAccount } from "../contexts/AccountContext";
-import { useDataUpdate } from "../contexts/DataContext";
 
+// Allows premium members to configure a custom list of coins. Activated by clicking the "Custom List" button in the <Account> component.
 export default function CustomList({ isOpen, setIsOpen }) {
   function closeModal() {
     setIsOpen(false);
@@ -78,11 +78,6 @@ export default function CustomList({ isOpen, setIsOpen }) {
         setClickedSave(false);
       }, 5000);
     }
-    //toast stuff here
-    //call api here
-
-    //toast success or failure based on promise?
-    //send new list to api to update the db
   };
   const handleAdd = (e) => {
     e.preventDefault();
@@ -122,10 +117,6 @@ export default function CustomList({ isOpen, setIsOpen }) {
       console.log("adding");
     }
   };
-
-  //   useEffect(() => {
-  //     console.log(customList);
-  //   }, [customList]);
 
   useEffect(() => {
     if (customListDB && customListDB !== undefined) {

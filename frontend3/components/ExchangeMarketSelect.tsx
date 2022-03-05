@@ -8,6 +8,8 @@ import Pro from "./Pro";
 import { useData, useDataUpdate } from "../contexts/DataContext";
 import { useAccount } from "../contexts/AccountContext";
 
+// Allows a user to change exchanges and markets.
+
 export default function Example() {
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
