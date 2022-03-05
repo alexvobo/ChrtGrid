@@ -106,7 +106,7 @@ const Account = () => {
                   onClick={refreshPage}
                   data-tip="Refresh to change interval"
                   className="hover:cursor-pointer inline-block  absolute right-1/4 top-3 ">
-                  <RefreshIcon className="text-pink-600  absolute h-7 w-7 " />
+                  <RefreshIcon className="text-pink-500  absolute h-7 w-7 " />
                 </a>
                 <ReactTooltip place="bottom" type="info" effect="float" />
               </div>
