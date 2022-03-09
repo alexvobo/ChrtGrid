@@ -8,7 +8,7 @@ import useSWR from "swr";
 
 const navigation = [
   { name: "Home", href: "/", current: false },
-  { name: "FAQ", href: "/help", current: false },
+  // { name: "FAQ", href: "/help", current: false },
   // { name: "Accounts", href: "/account", current: false },
   // { name: "Bot", href: "/bot", current: false },
 ];

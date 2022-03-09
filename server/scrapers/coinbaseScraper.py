@@ -39,14 +39,14 @@ def get_topgainers():
                 coin_stats[symbol] = stats
                 coin_stats[symbol].update(
                     {"percentage_change": percentage_change(stats['open'], stats['last'])})
-        sorted_products = sorted(coin_stats,
-                                 key=lambda c: coin_stats[c]['percentage_change'], reverse=True)
+
         sorted_stats = dict(
             sorted(coin_stats.items(), key=lambda c: c[1]['percentage_change'], reverse=True))
 
-        return tradingview_formatter("coinbase", sorted_products), sorted_stats
+        return tradingview_formatter("coinbase", list(sorted_stats.keys())), sorted_stats
 
 
+# pprint(get_topgainers()[0])
 # def get_lowcaps():
 #     products = get_coinbase_products()
 
