@@ -5,7 +5,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 
 //Part of the <Account> Component, allows a user to select the interval for the charts and saves it to local storage.
 export default function IntervalSelect() {
-  const intervals = ["D", "15", "30", "60", "120", "240", "W"];
+  const intervals = ["120", "15", "30", "60", "240", "D", "W"];
   const [interval, setInterval] = useLocalStorage("interval", "D");
   return (
     <div className="w-36 absolute left-0 right-0 mx-auto ">

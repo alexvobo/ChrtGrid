@@ -58,7 +58,7 @@ const exchangeThemes = {
 export default function Stats() {
   const [sortAscending, setSortAscending] = useState(false);
   const { exchange, stats } = useData();
-  const { maxCharts } = useAccount();
+  const maxCharts = 8;
 
   return (
     <>
@@ -81,10 +81,7 @@ export default function Stats() {
                 <p className="text-right pr-2">Change</p>
               </div>
 
-              {stats &&
-              stats !== undefined &&
-              Object.keys(stats).length > 1 &&
-              maxCharts ? (
+              {stats && stats !== undefined && Object.keys(stats).length > 1 ? (
                 Object.values(
                   orderBySubKey(stats, "percentage_change", sortAscending)
                 ).map(

@@ -18,16 +18,15 @@ const exchangeThemes = {
 // Displays a grid of charts for the user's selected exchanges and markets.
 export default function ChartGrid() {
   const { coins, exchange, market } = useData();
-  const { maxCharts } = useAccount();
+  const maxCharts = 8;
 
-  const [interval, setInterval] = useLocalStorage("interval", "D");
+  const [interval, setInterval] = useLocalStorage("interval", "120");
 
   if (
     coins === undefined ||
     !coins ||
     !coins.length ||
     !exchange ||
-    !maxCharts ||
     !interval
   ) {
     return (
@@ -47,7 +46,7 @@ export default function ChartGrid() {
   }
   return (
     <>
-      <div className="grid grid-cols-2  md:grid-cols-3 ">
+      <div className="grid grid-cols-2  ">
         {coins?.map(
           (item, i) =>
             i < maxCharts && (
@@ -61,7 +60,7 @@ export default function ChartGrid() {
                   symbol={item}
                   show_popup_button={true}
                   theme="dark"
-                  hide_side_toolbar={true}
+                  hide_side_toolbar={false}
                   hide_legend={true}
                   interval={interval}
                   autosize

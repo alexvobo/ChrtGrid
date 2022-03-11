@@ -10,29 +10,29 @@ function useAccount() {
 }
 function AccountProvider({ children }) {
   const { account } = useMoralis();
-  const [maxCharts, setMaxCharts] = useState(9);
+  // const [maxCharts, setMaxCharts] = useState(8);
   const [customListDB, setCustomListDB] = useState(null);
 
-  const { data: memberships } = useSWR("/api/memberships/", (url) =>
-    fetch(url).then((r) => r.json())
-  );
+  // const { data: memberships } = useSWR("/api/memberships/", (url) =>
+  //   fetch(url).then((r) => r.json())
+  // );
   const { data: userData, mutate: mutateUser } = useSWR(
     account ? "/api/user/" + account : null,
     (url) => fetch(url).then((r) => r.json())
   );
 
-  function getMaxCharts(userData) {
-    if (userData && userData !== undefined) {
-      // console.log(userData);
-      let maxCharts = memberships?.memberships?.filter(
-        (m) => m?.tier === userData?.membership
-      );
-      if (maxCharts != null && Object.keys(maxCharts)?.length) {
-        // console.log("MAX CHARTS:", maxCharts);
-        setMaxCharts(maxCharts[0]["maxCharts"]);
-      }
-    }
-  }
+  // function getMaxCharts(userData) {
+  //   if (userData && userData !== undefined) {
+  //     // console.log(userData);
+  //     let maxCharts = memberships?.memberships?.filter(
+  //       (m) => m?.tier === userData?.membership
+  //     );
+  //     if (maxCharts != null && Object.keys(maxCharts)?.length) {
+  //       // console.log("MAX CHARTS:", maxCharts);
+  //       setMaxCharts(maxCharts[0]["maxCharts"]);
+  //     }
+  //   }
+  // }
   function getCustomList(userData) {
     if (userData && userData !== undefined) {
       if (userData.customList?.length) {
@@ -44,17 +44,16 @@ function AccountProvider({ children }) {
     }
   }
   useEffect(() => {
-    getMaxCharts(userData);
+    // getMaxCharts(userData);
     getCustomList(userData);
     return () => {
-      setMaxCharts(9);
+      // setMaxCharts(9);
       setCustomListDB([]);
     };
   }, [userData]);
 
   return (
-    <AccountContext.Provider
-      value={{ userData, maxCharts, customListDB, mutateUser }}>
+    <AccountContext.Provider value={{ userData, customListDB, mutateUser }}>
       {children}
     </AccountContext.Provider>
   );

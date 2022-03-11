@@ -152,13 +152,6 @@ export default function Pro({ isOpen, setIsOpen }) {
                         <PresentationChartLineIcon className="inline mb-1 h-7 w-7 ml-2" />
                       </li>
                       <li>
-                        <ArrowSmRightIcon className="inline  h-7 w-7  ml-2" />
-                        More Charts (9 &#8594; 12)
-                        {
-                          <ViewGridAddIcon className="inline mb-1 h-7 w-7 ml-2" />
-                        }
-                      </li>
-                      <li>
                         <ArrowSmRightIcon className="inline h-7 w-7  ml-2" />
                         Latest Exchange Listings
                         <ViewListIcon className="inline h-7 w-7 ml-2" />{" "}
@@ -185,7 +178,7 @@ export default function Pro({ isOpen, setIsOpen }) {
                 </div>
                 <div></div>
 
-                <div className="mt-4  text-center justify-center ">
+                <div className="mt-4 text-center justify-center ">
                   {paymentData &&
                   networks &&
                   membershipTier &&
@@ -222,7 +215,9 @@ export default function Pro({ isOpen, setIsOpen }) {
                       </div>
                     </>
                   ) : (
-                    <LoadingIcons.SpinningCircles />
+                    <div className="text-white text-lg py-2 grid grid-flow-row w-full md:w-2/3 text-center mx-auto bg-indigo-900/30 border-2 border-yellow-500/50 rounded-md ">
+                      <LoadingIcons.SpinningCircles className="mx-auto" />
+                    </div>
                   )}
                 </div>
               </div>

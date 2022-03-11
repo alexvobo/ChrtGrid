@@ -81,8 +81,8 @@ export default function CustomList({ isOpen, setIsOpen }) {
   };
   const handleAdd = (e) => {
     e.preventDefault();
-    if (customList.length === 12) {
-      toast.error("You can only have 12 items in your list", {
+    if (customList.length === 8) {
+      toast.error("You can only have 8 items in your list", {
         theme: "dark",
         position: "top-right",
         autoClose: 5000,
