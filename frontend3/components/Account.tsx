@@ -49,7 +49,7 @@ const Account = () => {
   return (
     <>
       <div className="text-white mb-5 ">
-        <div className="inline-block w-[350px] pb-4 max-w-md     align-middle bg-transparent  border-2 border-yellow-500/70 shadow-lg shadow-blue-700 rounded-xl">
+        <div className="inline-block w-[350px] md:w-[280px] lg:w-[350px] pb-4 max-w-md     align-middle bg-transparent  border-2 border-yellow-500/70 shadow-lg shadow-blue-700 rounded-xl">
           <div className="grid grid-rows-4 text-center  ">
             <div className="">
               <div className="text-3xl font-medium border-b-2 border-yellow-400 py-2  text-white-500">
