@@ -58,7 +58,7 @@ const exchangeThemes = {
 export default function Stats() {
   const [sortAscending, setSortAscending] = useState(false);
   const { exchange, stats } = useData();
-  const maxCharts = 8;
+  const maxCharts = 12;
 
   return (
     <>
