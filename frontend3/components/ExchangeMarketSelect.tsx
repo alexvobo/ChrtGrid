@@ -7,7 +7,7 @@ import LoadingIcons from "react-loading-icons";
 import Pro from "./Pro";
 import { useData, useDataUpdate } from "../contexts/DataContext";
 import { useAccount } from "../contexts/AccountContext";
-
+import { useLocalStorage } from "../hooks/useLocalStorage";
 // Allows a user to change exchanges and markets.
 
 export default function Example() {
@@ -79,10 +79,7 @@ export default function Example() {
           url: (
             <>
               {" "}
-              <a
-                href="https://www.coinbase.com/price"
-                target="_blank"
-                rel="noreferrer">
+              <a href={exchInfo.url} target="_blank" rel="noreferrer">
                 <span className="flex ">
                   <Image
                     src={exchInfo.logo}
@@ -138,15 +135,17 @@ export default function Example() {
   const { switchExchange, switchMarket } = useDataUpdate();
   const [openPro, setOpenPro] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [lastExchange, setLastExchange] = useLocalStorage("lastExchange", "1");
 
   return (
     <div className="mx-auto w-full max-w-md px-2 py-16 sm:px-0">
       <Tab.Group
-        defaultIndex={0}
+        defaultIndex={parseInt(lastExchange)}
         onChange={(index) => {
           // console.log(exchange, market);
           setLoading(true);
           switchExchange(Object.keys(exchanges)[index]);
+          setLastExchange(String(index));
           setTimeout(() => {
             setLoading(false);
           }, cooldown);
