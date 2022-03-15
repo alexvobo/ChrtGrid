@@ -53,6 +53,7 @@ export default function Home() {
         }
       }
     };
+
     connectWalletOnPageLoad();
   }, []);
   return (

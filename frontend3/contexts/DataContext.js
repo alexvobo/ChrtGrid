@@ -43,7 +43,8 @@ export function DataProvider({ children }) {
       currencyLogo: <p className="inline">Ξ</p>,
     },
   ];
-  const [exchange, setExchange] = useState("coinbase");
+  const defaultExchange = "kucoin";
+  const [exchange, setExchange] = useState(defaultExchange);
   const [market, setMarket] = useState("stats");
   const [coins, setCoins] = useState([]);
   const { customListDB } = useAccount();
