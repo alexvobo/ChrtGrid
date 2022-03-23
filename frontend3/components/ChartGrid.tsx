@@ -60,7 +60,7 @@ export default function ChartGrid() {
                   symbol={item}
                   show_popup_button={true}
                   theme="dark"
-                  hide_side_toolbar={false}
+                  hide_side_toolbar={true}
                   hide_legend={true}
                   interval={interval}
                   autosize

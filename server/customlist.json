@@ -1,0 +1,742 @@
+{
+    "LCX": {
+        "open": "0.0806",
+        "high": "0.1016",
+        "low": "0.0743",
+        "last": "0.0915",
+        "volume": "20495270.9",
+        "volume_30day": "238718233",
+        "percentage_change": 14.000000000000002,
+        "percentage_change_24": 37
+    },
+    "HIGH": {
+        "open": "3.746",
+        "high": "4.58",
+        "low": "3.711",
+        "volume": "478270.08",
+        "last": "4.186",
+        "volume_30day": "803902.99",
+        "percentage_change": 12,
+        "percentage_change_24": 23
+    },
+    "GALA": {
+        "open": "0.2143",
+        "high": "0.24",
+        "low": "0.2129",
+        "last": "0.2382",
+        "volume": "117518236",
+        "volume_30day": "6409502551",
+        "percentage_change": 11,
+        "percentage_change_24": 13
+    },
+    "UMA": {
+        "open": "7.172",
+        "high": "9.3",
+        "low": "7.159",
+        "volume": "1797455.439",
+        "last": "7.776",
+        "volume_30day": "34193297.262",
+        "percentage_change": 8,
+        "percentage_change_24": 30
+    },
+    "STORJ": {
+        "open": "1",
+        "high": "1.06",
+        "low": "0.99",
+        "last": "1.06",
+        "volume": "755574.71",
+        "volume_30day": "23911542.68",
+        "percentage_change": 6,
+        "percentage_change_24": 7.000000000000001
+    },
+    "DASH": {
+        "open": "96.53",
+        "high": "102.53",
+        "low": "94.93",
+        "volume": "20418.77224674",
+        "last": "102.02",
+        "volume_30day": "638042.47891745",
+        "percentage_change": 6,
+        "percentage_change_24": 8
+    },
+    "KNC": {
+        "open": "2.6521",
+        "high": "2.9064",
+        "low": "2.6449",
+        "volume": "1732604.6",
+        "last": "2.8142",
+        "volume_30day": "61561325.6",
+        "percentage_change": 6,
+        "percentage_change_24": 10
+    },
+    "AGLD": {
+        "open": "0.959",
+        "high": "1.049",
+        "low": "0.937",
+        "volume": "1731428.92",
+        "last": "1.008",
+        "volume_30day": "67919807.11",
+        "percentage_change": 5,
+        "percentage_change_24": 12
+    },
+    "ZEN": {
+        "open": "37.39",
+        "high": "38.97",
+        "low": "36.44",
+        "volume": "5595.121",
+        "last": "38.85",
+        "volume_30day": "275730.385",
+        "percentage_change": 4,
+        "percentage_change_24": 7.000000000000001
+    },
+    "AIOZ": {
+        "open": "0.1947",
+        "high": "0.24",
+        "low": "0.1912",
+        "volume": "9208975.8",
+        "last": "0.2034",
+        "volume_30day": "56816538.6",
+        "percentage_change": 4,
+        "percentage_change_24": 26
+    },
+    "QNT": {
+        "open": "114.56",
+        "high": "117.69",
+        "low": "113.43",
+        "volume": "18745.659",
+        "last": "117.48",
+        "volume_30day": "1546505.868",
+        "percentage_change": 3,
+        "percentage_change_24": 4
+    },
+    "ALICE": {
+        "open": "5.853",
+        "high": "6.084",
+        "low": "5.776",
+        "volume": "83033.005",
+        "last": "5.966",
+        "volume_30day": "1905014.099",
+        "percentage_change": 2,
+        "percentage_change_24": 5
+    },
+    "XTZ": {
+        "open": "3.02",
+        "high": "3.09",
+        "low": "3",
+        "volume": "1661427.13",
+        "last": "3.07",
+        "volume_30day": "98751932.76",
+        "percentage_change": 2,
+        "percentage_change_24": 3
+    },
+    "BICO": {
+        "open": "1.176",
+        "high": "1.223",
+        "low": "1.164",
+        "volume": "847833.61",
+        "last": "1.201",
+        "volume_30day": "76561237.44",
+        "percentage_change": 2,
+        "percentage_change_24": 5
+    },
+    "SKL": {
+        "open": "0.1163",
+        "high": "0.1203",
+        "low": "0.1145",
+        "volume": "5937115.8",
+        "last": "0.1187",
+        "volume_30day": "717040820.1",
+        "percentage_change": 2,
+        "percentage_change_24": 5
+    },
+    "OGN": {
+        "open": "0.265",
+        "high": "0.27",
+        "low": "0.261",
+        "volume": "1517715.41",
+        "last": "0.269",
+        "volume_30day": "177915424.08",
+        "percentage_change": 2,
+        "percentage_change_24": 3
+    },
+    "IDEX": {
+        "open": "0.1398",
+        "high": "0.1497",
+        "low": "0.1395",
+        "last": "0.1421",
+        "volume": "8517160.9",
+        "volume_30day": "320121657.9",
+        "percentage_change": 2,
+        "percentage_change_24": 7.000000000000001
+    },
+    "MDT": {
+        "open": "0.05122",
+        "high": "0.0537",
+        "low": "0.05092",
+        "volume": "9823126",
+        "last": "0.05166",
+        "volume_30day": "1142688028",
+        "percentage_change": 1,
+        "percentage_change_24": 5
+    },
+    "LPT": {
+        "open": "23.15",
+        "high": "23.66",
+        "low": "22.65",
+        "volume": "9992.362",
+        "last": "23.28",
+        "volume_30day": "1260212.293",
+        "percentage_change": 1,
+        "percentage_change_24": 4
+    },
+    "CVC": {
+        "open": "0.2589",
+        "high": "0.2611",
+        "low": "0.2559",
+        "last": "0.2606",
+        "volume": "326299.5",
+        "volume_30day": "26716633.7",
+        "percentage_change": 1,
+        "percentage_change_24": 2
+    },
+    "CRO": {
+        "open": "0.3877",
+        "high": "0.3922",
+        "low": "0.3837",
+        "last": "0.3903",
+        "volume": "12016229.5",
+        "volume_30day": "959113965.9",
+        "percentage_change": 1,
+        "percentage_change_24": 2
+    },
+    "EOS": {
+        "open": "1.99",
+        "high": "2.01",
+        "low": "1.96",
+        "volume": "1056035.1",
+        "last": "2.01",
+        "volume_30day": "57292924.1",
+        "percentage_change": 1,
+        "percentage_change_24": 3
+    },
+    "OXT": {
+        "open": "0.22",
+        "high": "0.2364",
+        "low": "0.2182",
+        "volume": "6260582",
+        "last": "0.2228",
+        "volume_30day": "292475633",
+        "percentage_change": 1,
+        "percentage_change_24": 8
+    },
+    "ADA": {
+        "open": "0.7922",
+        "high": "0.8018",
+        "low": "0.7874",
+        "volume": "29144058.15",
+        "last": "0.7976",
+        "volume_30day": "2634494216.33",
+        "percentage_change": 1,
+        "percentage_change_24": 2
+    },
+    "PLU": {
+        "open": "6.86",
+        "high": "7.17",
+        "low": "6.75",
+        "volume": "30557.55",
+        "last": "6.95",
+        "volume_30day": "2842976.5",
+        "percentage_change": 1,
+        "percentage_change_24": 6
+    },
+    "ALGO": {
+        "open": "0.7078",
+        "high": "0.718",
+        "low": "0.7031",
+        "last": "0.7156",
+        "volume": "8668881.6",
+        "volume_30day": "653178265.8",
+        "percentage_change": 1,
+        "percentage_change_24": 2
+    },
+    "BCH": {
+        "open": "291.85",
+        "high": "294.95",
+        "low": "289.23",
+        "volume": "15998.58052959",
+        "last": "294.75",
+        "volume_30day": "660850.8296836",
+        "percentage_change": 1,
+        "percentage_change_24": 2
+    },
+    "FX": {
+        "open": "0.4697",
+        "high": "0.4784",
+        "low": "0.4678",
+        "volume": "64593.8",
+        "last": "0.4732",
+        "volume_30day": "11472708.5",
+        "percentage_change": 1,
+        "percentage_change_24": 2
+    },
+    "ARPA": {
+        "open": "0.0673",
+        "high": "0.0683",
+        "low": "0.0657",
+        "volume": "1254504.7",
+        "last": "0.0679",
+        "volume_30day": "323734997",
+        "percentage_change": 1,
+        "percentage_change_24": 4
+    },
+    "DOT": {
+        "open": "18.12",
+        "high": "18.75",
+        "low": "17.94",
+        "volume": "1195772.632",
+        "last": "18.2",
+        "volume_30day": "42444425.889",
+        "percentage_change": 0,
+        "percentage_change_24": 5
+    },
+    "YFI": {
+        "open": "18629.76",
+        "high": "18794.25",
+        "low": "18285.51",
+        "last": "18629.06",
+        "volume": "117.59383",
+        "volume_30day": "8869.009686",
+        "percentage_change": 0,
+        "percentage_change_24": 3
+    },
+    "BADGER": {
+        "open": "7.13",
+        "high": "7.24",
+        "low": "7.08",
+        "volume": "15037.567",
+        "last": "7.15",
+        "volume_30day": "1603905.291",
+        "percentage_change": 0,
+        "percentage_change_24": 2
+    },
+    "UPI": {
+        "open": "0.05764",
+        "high": "0.0596",
+        "low": "0.055",
+        "volume": "9956289",
+        "last": "0.05754",
+        "volume_30day": "936979014",
+        "percentage_change": 0,
+        "percentage_change_24": 8
+    },
+    "KRL": {
+        "open": "0.6425",
+        "high": "0.6489",
+        "low": "0.6392",
+        "volume": "60372.4",
+        "last": "0.6398",
+        "volume_30day": "6263236.7",
+        "percentage_change": 0,
+        "percentage_change_24": 2
+    },
+    "ETC": {
+        "open": "26.5",
+        "high": "26.92",
+        "low": "26.11",
+        "volume": "34424.5188976",
+        "last": "26.6",
+        "volume_30day": "4835156.63311532",
+        "percentage_change": 0,
+        "percentage_change_24": 3
+    },
+    "ERN": {
+        "open": "4.56",
+        "high": "4.66",
+        "low": "4.48",
+        "volume": "35909.336",
+        "last": "4.57",
+        "volume_30day": "374395.973",
+        "percentage_change": 0,
+        "percentage_change_24": 4
+    },
+    "BAL": {
+        "open": "11.01",
+        "high": "11.11",
+        "low": "10.8",
+        "volume": "20878.775",
+        "last": "11.03",
+        "volume_30day": "2483770.937",
+        "percentage_change": 0,
+        "percentage_change_24": 3
+    },
+    "SUKU": {
+        "open": "0.2052",
+        "high": "0.2113",
+        "low": "0.1988",
+        "volume": "2710774.9",
+        "last": "0.2052",
+        "volume_30day": "185083005.2",
+        "percentage_change": 0,
+        "percentage_change_24": 6
+    },
+    "QUICK": {
+        "open": "161.06",
+        "high": "162.44",
+        "low": "159.17",
+        "volume": "1557.746",
+        "last": "161.61",
+        "volume_30day": "87101.7331",
+        "percentage_change": 0,
+        "percentage_change_24": 2
+    },
+    "FARM": {
+        "open": "86.94",
+        "high": "88.03",
+        "low": "85.76",
+        "volume": "7131.972",
+        "last": "86.53",
+        "volume_30day": "734306.606",
+        "percentage_change": 0,
+        "percentage_change_24": 3
+    },
+    "LRC": {
+        "open": "0.7056",
+        "high": "0.7116",
+        "low": "0.6866",
+        "volume": "4826353.531739",
+        "last": "0.7087",
+        "volume_30day": "468244872.908032",
+        "percentage_change": 0,
+        "percentage_change_24": 4
+    },
+    "QSP": {
+        "open": "0.04615",
+        "high": "0.04618",
+        "low": "0.04512",
+        "volume": "1706781",
+        "last": "0.0461",
+        "volume_30day": "444162074",
+        "percentage_change": 0,
+        "percentage_change_24": 2
+    },
+    "SUSHI": {
+        "open": "2.94",
+        "high": "2.97",
+        "low": "2.9",
+        "volume": "1119927.61",
+        "last": "2.95",
+        "volume_30day": "54818378.93",
+        "percentage_change": 0,
+        "percentage_change_24": 2
+    },
+    "PLA": {
+        "open": "0.7939",
+        "high": "0.8067",
+        "low": "0.7821",
+        "last": "0.7958",
+        "volume": "207908.2",
+        "volume_30day": "15641513",
+        "percentage_change": 0,
+        "percentage_change_24": 3
+    },
+    "BAND": {
+        "open": "3.451",
+        "high": "3.485",
+        "low": "3.373",
+        "last": "3.447",
+        "volume": "73678.66",
+        "volume_30day": "12401681.1",
+        "percentage_change": 0,
+        "percentage_change_24": 3
+    },
+    "LINK": {
+        "open": "13.31",
+        "high": "13.46",
+        "low": "13.07",
+        "volume": "716885.45",
+        "last": "13.33",
+        "volume_30day": "89594706.6",
+        "percentage_change": 0,
+        "percentage_change_24": 3
+    },
+    "ICP": {
+        "open": "16.33",
+        "high": "16.64",
+        "low": "16.02",
+        "last": "16.34",
+        "volume": "447019.1017",
+        "volume_30day": "26647296.5303",
+        "percentage_change": 0,
+        "percentage_change_24": 4
+    },
+    "TRB": {
+        "open": "18.05",
+        "high": "18.63",
+        "low": "17.64",
+        "volume": "6800.298",
+        "last": "18.04",
+        "volume_30day": "412634.552",
+        "percentage_change": 0,
+        "percentage_change_24": 6
+    },
+    "ACH": {
+        "open": "0.040017",
+        "high": "0.040701",
+        "low": "0.039369",
+        "last": "0.040082",
+        "volume": "26887384.7",
+        "volume_30day": "5484509796.1",
+        "percentage_change": 0,
+        "percentage_change_24": 3
+    },
+    "SHIB": {
+        "open": "0.00002235",
+        "high": "0.00002253",
+        "low": "0.000022",
+        "volume": "950780506477",
+        "last": "0.0000223",
+        "volume_30day": "98238861491578",
+        "percentage_change": 0,
+        "percentage_change_24": 2
+    },
+    "ZEC": {
+        "open": "154.65",
+        "high": "155.7",
+        "low": "143.68",
+        "volume": "66786.79857888",
+        "last": "152.55",
+        "volume_30day": "2799363.87178275",
+        "percentage_change": -1,
+        "percentage_change_24": 8
+    },
+    "DOGE": {
+        "open": "0.1164",
+        "high": "0.1171",
+        "low": "0.1141",
+        "volume": "62552991.2",
+        "last": "0.1156",
+        "volume_30day": "6187510188.2",
+        "percentage_change": -1,
+        "percentage_change_24": 3
+    },
+    "POLS": {
+        "open": "1.15",
+        "high": "1.16",
+        "low": "1.12",
+        "volume": "18657.56",
+        "last": "1.14",
+        "volume_30day": "1028584.72",
+        "percentage_change": -1,
+        "percentage_change_24": 4
+    },
+    "LQTY": {
+        "open": "2.56",
+        "high": "2.61",
+        "low": "2.5",
+        "volume": "23340.37",
+        "last": "2.53",
+        "volume_30day": "13133655.38",
+        "percentage_change": -1,
+        "percentage_change_24": 4
+    },
+    "ATOM": {
+        "open": "27.78",
+        "high": "28.02",
+        "low": "27.05",
+        "volume": "497171.58",
+        "last": "27.47",
+        "volume_30day": "50173524.86",
+        "percentage_change": -1,
+        "percentage_change_24": 4
+    },
+    "ALCX": {
+        "open": "94.94",
+        "high": "95.51",
+        "low": "91.54",
+        "last": "93.61",
+        "volume": "4200.1025",
+        "volume_30day": "125351.6891",
+        "percentage_change": -1,
+        "percentage_change_24": 4
+    },
+    "POLY": {
+        "open": "0.3915",
+        "high": "0.3921",
+        "low": "0.3829",
+        "last": "0.3867",
+        "volume": "703737",
+        "volume_30day": "105035972",
+        "percentage_change": -1,
+        "percentage_change_24": 2
+    },
+    "GODS": {
+        "open": "1.09",
+        "high": "1.13",
+        "low": "1.06",
+        "volume": "173562.41",
+        "last": "1.08",
+        "volume_30day": "16812984.47",
+        "percentage_change": -1,
+        "percentage_change_24": 7.000000000000001
+    },
+    "GLM": {
+        "open": "0.4893",
+        "high": "0.5294",
+        "low": "0.47",
+        "volume": "8575771.1",
+        "last": "0.4824",
+        "volume_30day": "34405617.6",
+        "percentage_change": -1,
+        "percentage_change_24": 13
+    },
+    "IOTX": {
+        "open": "0.09254",
+        "high": "0.09311",
+        "low": "0.08901",
+        "volume": "4034058",
+        "last": "0.09116",
+        "volume_30day": "306897236",
+        "percentage_change": -1,
+        "percentage_change_24": 5
+    },
+    "LOOM": {
+        "open": "0.0758",
+        "high": "0.0775",
+        "low": "0.0747",
+        "volume": "1369775.8",
+        "last": "0.075",
+        "volume_30day": "252442925.4",
+        "percentage_change": -1,
+        "percentage_change_24": 4
+    },
+    "ORN": {
+        "open": "3.056",
+        "high": "3.087",
+        "low": "2.982",
+        "volume": "52405.98",
+        "last": "3.014",
+        "volume_30day": "5038374.92",
+        "percentage_change": -1,
+        "percentage_change_24": 4
+    },
+    "CRV": {
+        "open": "2.042",
+        "high": "2.043",
+        "low": "1.971",
+        "volume": "2050011.26",
+        "last": "2.024",
+        "volume_30day": "135333816.83",
+        "percentage_change": -1,
+        "percentage_change_24": 4
+    },
+    "AVAX": {
+        "open": "72.48",
+        "high": "73.44",
+        "low": "70.56",
+        "volume": "442155.506",
+        "last": "71.35",
+        "volume_30day": "45423602.071",
+        "percentage_change": -2,
+        "percentage_change_24": 4
+    },
+    "MASK": {
+        "open": "3.9",
+        "high": "3.95",
+        "low": "3.75",
+        "volume": "66642.35",
+        "last": "3.83",
+        "volume_30day": "2299455.71",
+        "percentage_change": -2,
+        "percentage_change_24": 5
+    },
+    "KEEP": {
+        "open": "0.6162",
+        "high": "0.6276",
+        "low": "0.6006",
+        "volume": "445082.7",
+        "last": "0.6042",
+        "volume_30day": "78647995.2",
+        "percentage_change": -2,
+        "percentage_change_24": 4
+    },
+    "NU": {
+        "open": "0.4365",
+        "high": "0.4371",
+        "low": "0.4265",
+        "volume": "1371182.489707",
+        "last": "0.4284",
+        "volume_30day": "119894161.352776",
+        "percentage_change": -2,
+        "percentage_change_24": 2
+    },
+    "ORCA": {
+        "open": "2.11",
+        "high": "2.15",
+        "low": "2.05",
+        "volume": "42114.93",
+        "last": "2.07",
+        "volume_30day": "4329069.78",
+        "percentage_change": -2,
+        "percentage_change_24": 5
+    },
+    "IMX": {
+        "open": "1.912",
+        "high": "1.974",
+        "low": "1.8",
+        "last": "1.855",
+        "volume": "5409869.34",
+        "volume_30day": "101782258.42",
+        "percentage_change": -3,
+        "percentage_change_24": 10
+    },
+    "JASMY": {
+        "open": "0.01385",
+        "high": "0.01444",
+        "low": "0.01328",
+        "volume": "605966472",
+        "last": "0.01346",
+        "volume_30day": "27225081075",
+        "percentage_change": -3,
+        "percentage_change_24": 9
+    },
+    "PRO": {
+        "open": "1.54",
+        "high": "1.55",
+        "low": "1.44",
+        "volume": "68172.22",
+        "last": "1.49",
+        "volume_30day": "6028838.03",
+        "percentage_change": -3,
+        "percentage_change_24": 8
+    },
+    "FORTH": {
+        "open": "6.9",
+        "high": "7.45",
+        "low": "6.58",
+        "volume": "80273.31",
+        "last": "6.72",
+        "volume_30day": "7125185.381",
+        "percentage_change": -3,
+        "percentage_change_24": 13
+    },
+    "AERGO": {
+        "open": "0.2236",
+        "high": "0.2249",
+        "low": "0.2126",
+        "volume": "1053518.4",
+        "last": "0.2132",
+        "volume_30day": "12757247.5",
+        "percentage_change": -5,
+        "percentage_change_24": 6
+    },
+    "ASM": {
+        "open": "0.05262",
+        "high": "0.05289",
+        "low": "0.04748",
+        "last": "0.04854",
+        "volume": "10461764",
+        "volume_30day": "492948190",
+        "percentage_change": -8,
+        "percentage_change_24": 11
+    }
+}
