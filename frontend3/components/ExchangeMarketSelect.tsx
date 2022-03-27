@@ -50,7 +50,7 @@ export default function Example() {
         {
           name: "Best/Worst Gainers",
           market: "stats",
-          description: "Pumps & Dumps pls",
+          description: "What's moving?",
           premium: false,
           url: (
             <>
