@@ -66,7 +66,7 @@ export default function Stats() {
           <div className="inline-block w-full  max-w-sm  md:max-w-md lg:max-w-md 2xl:max-w-lg  p-4 mb-2  text-left align-middle transition-all transform bg-transparent ">
             <div className="text-center text-yellow-500 font-bold text-2xl mb-4 ">
               24H{" "}
-              <span className={exchangeThemes[exchange]["titleFont"]}>
+              <span className={exchangeThemes[exchange]?.titleFont}>
                 {exchange.toUpperCase()}
               </span>{" "}
               {sortAscending ? "WORST GAINERS 😭" : "TOP GAINERS 🚀"}

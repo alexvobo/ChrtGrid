@@ -134,7 +134,7 @@ export default function Home() {
 
         <div
           className={
-            `z-10 border-2 my-2 ` + exchangeThemes[exchange]["gridColor"]
+            `z-10 border-2 my-2 ` + exchangeThemes[exchange]?.gridColor
           }>
           <ChartGrid />
         </div>

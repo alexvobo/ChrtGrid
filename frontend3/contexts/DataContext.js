@@ -2,7 +2,6 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import useSWR from "swr";
 import Image from "next/image";
 import { useAccount } from "./AccountContext";
-
 // Fetches coins & stats from the database. Handles switching exchanges & markets in the <ExchangeMarketSelect> component.
 
 const DataContext = createContext();
@@ -44,8 +43,9 @@ export function DataProvider({ children }) {
     },
   ];
   const defaultExchange = "kucoin";
-  const [exchange, setExchange] = useState(defaultExchange);
-  const [market, setMarket] = useState("stats");
+  const defaultMarket = "stats";
+  const [exchange, setExchange] = useState("");
+  const [market, setMarket] = useState("");
   const [coins, setCoins] = useState([]);
   const { customListDB } = useAccount();
 
@@ -78,9 +78,25 @@ export function DataProvider({ children }) {
       fetchCoins();
     }
   }
+  useEffect(() => {
+    const exchangeInStorage = localStorage.getItem("exchange");
+    if (exchangeInStorage) {
+      setExchange(exchangeInStorage);
+    } else {
+      setExchange(defaultExchange);
+    }
+    const marketInStorage = localStorage.getItem("market");
+    if (marketInStorage) {
+      setMarket(marketInStorage);
+    } else {
+      setMarket(defaultMarket);
+    }
+  }, []);
 
   useEffect(() => {
     if (exchange !== "" && market !== "" && market !== "custom") {
+      localStorage.setItem("exchange", exchange);
+      localStorage.setItem("market", market);
       fetchCoins();
     }
   }, [exchange, market]);
