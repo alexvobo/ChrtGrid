@@ -71,7 +71,7 @@ export default function ExchangeMarketSelect() {
         {
           name: "Best/Worst Gainers",
           market: STATS,
-          description: "What's moving?",
+          description: "Volatile Movers",
           premium: false,
           url: (
             <>
