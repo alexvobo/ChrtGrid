@@ -38,7 +38,6 @@ const exchangeThemes = {
   },
   kucoin: {
     titleFont: "text-[#23af91] justify-stretch",
-
     exchangeStyle:
       " hover:bg-[#23af91] border-indigo-200/0 border-b-[#23af91] ",
     font: " text-white hover:text-white justify-stretch",
@@ -51,7 +50,15 @@ const exchangeThemes = {
     font: " text-white hover:text-black justify-stretch",
   },
 };
-
+function getStatsURL(exchange, symbol) {
+  if (exchange === "coinbase") {
+    return "https://www.coinbase.com/price?query=" + symbol;
+  } else if (exchange === "binance") {
+    return "https://www.binance.com/en/trade/" + symbol + "_USDT";
+  } else if (exchange === "kucoin") {
+    return "https://www.kucoin.com/trade/" + symbol + "-USDT";
+  }
+}
 //Displays the 24h stats for the selected exchange. Updates based on SWR.
 export default function Stats() {
   const [sortCategory, setSortCategory] = useState("percentage_change");
@@ -94,11 +101,7 @@ export default function Stats() {
                   (item, i) =>
                     i < maxCharts && (
                       <a
-                        href={`https://www.tradingview.com/symbols/${
-                          item["key"]
-                        }${
-                          exchange === "coinbase" ? "USD" : "USDT"
-                        }/?exchange=${exchange}`}
+                        href={getStatsURL(exchange, item["key"])}
                         target="_blank"
                         rel="noreferrer"
                         className={`${exchangeThemes[exchange]["font"]}`}

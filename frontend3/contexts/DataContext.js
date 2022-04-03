@@ -14,6 +14,8 @@ export function useDataUpdate() {
 }
 
 export function DataProvider({ children }) {
+  const CUSTOM = "custom";
+
   const networks = [
     // {
     //   name: "Avalanche Testnet",
@@ -49,7 +51,7 @@ export function DataProvider({ children }) {
   const { customListDB } = useAccount();
 
   const fetchCoins = async () => {
-    if (market !== "custom") {
+    if (market !== CUSTOM) {
       const data = await fetch(`/api/${exchange}/${market}/coins`).then((res) =>
         res.json()
       );
@@ -62,7 +64,7 @@ export function DataProvider({ children }) {
   }
   function switchMarket(marketName) {
     setMarket(marketName);
-    if (marketName === "custom") {
+    if (marketName === CUSTOM) {
       let coinList = [];
       if (customListDB.length) {
         customListDB?.map((item) => {
@@ -91,7 +93,7 @@ export function DataProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (exchange !== "" && market !== "" && market !== "custom") {
+    if (exchange !== "" && market !== "" && market !== CUSTOM) {
       localStorage.setItem("exchange", exchange);
       localStorage.setItem("market", market);
       console.log("Fetching Data...");

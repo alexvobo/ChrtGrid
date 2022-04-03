@@ -9,21 +9,20 @@ import IntervalSelect from "../components/IntervalSelect";
 import Pro from "./Pro";
 import Plaque from "./Plaque";
 import AddressBar from "./AddressBar";
-import CustomList from "./CustomList";
 
 import LoadingIcons from "react-loading-icons";
 import ReactTooltip from "react-tooltip";
 import { RefreshIcon } from "@heroicons/react/outline";
 
+const FREE = "free";
 // Account component, displays user data after login with metamask.
 // Shows address, balance, membership status, interval configuration, and allows the user to "Go Pro" or configure custom lists if they are already Pro.
-const Account = () => {
+export default function Account() {
   const { account, chainId } = useMoralis();
   const ENSName = useENSName(account);
   const { userData } = useAccount();
 
   const [openModal, setOpenModal] = useState(false);
-  const [customListOpen, setCustomListOpen] = useState(false);
 
   function refreshPage() {
     window.location.reload();
@@ -79,29 +78,18 @@ const Account = () => {
                 Membership
               </h3>
               <Plaque
-                membership={
-                  userData?.membership ? userData?.membership : "free"
-                }
+                membership={userData?.membership ? userData?.membership : FREE}
               />
             </div>
             <div>
-              {!userData || userData?.membership === "free" ? (
+              {!userData || userData?.membership === FREE ? (
                 <button
                   type="button"
                   onClick={() => setOpenModal(true)}
                   className=" hover:animate-pulse  bg-red-700 hover:bg-red-800 text-white font-bold  py-2 px-4  rounded">
                   Go Pro
                 </button>
-              ) : (
-                // <div className="grid grid-flow-col border-2 w-3/4 mx-auto">
-                //Buttons here to set chart intervals, etc.
-                // </div>
-                <button
-                  className="bg-red-700 hover:bg-red-800 rounded-sm font-medium w-40 h-10 mx-auto "
-                  onClick={() => setCustomListOpen(!customListOpen)}>
-                  Custom List Config
-                </button>
-              )}
+              ) : null}
               <div className="mt-4 relative  ">
                 <IntervalSelect />
                 <a
@@ -125,9 +113,6 @@ const Account = () => {
       </div>
       {/* Modals */}
       <Pro isOpen={openModal} setIsOpen={setOpenModal} />
-      <CustomList isOpen={customListOpen} setIsOpen={setCustomListOpen} />
     </>
   );
-};
-
-export default Account;
+}

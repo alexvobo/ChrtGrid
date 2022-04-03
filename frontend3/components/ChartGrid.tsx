@@ -51,7 +51,7 @@ export default function ChartGrid() {
           (item, i) =>
             i < maxCharts && (
               <div
-                className={`h-[320px] border w-full overflow-hidden ${exchangeThemes[exchange]["gridColor"]}`}
+                className={`h-[320px] border-2 w-full overflow-hidden ${exchangeThemes[exchange]["gridColor"]}`}
                 key={i}>
                 {/* <div className="text-white">
                   {item} {interval}

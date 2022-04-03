@@ -1,8 +1,8 @@
 import React from "react";
 //Display a formatted plaque for the membership tier, part of the <Account> component
-function Plaque({ membership }) {
+export default function Plaque({ membership }) {
   const memberships = {
-    lifetime: " shadow-lg shadow-pink-500 rainbow-effect  hover:animate-pulse ",
+    lifetime: " shadow-lg shadow-pink-500 rainbow-effect  ",
     pro: "",
     free: "",
   };
@@ -21,5 +21,3 @@ function Plaque({ membership }) {
     </div>
   );
 }
-
-export default Plaque;

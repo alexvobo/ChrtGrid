@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 //Returns a clickable component with the users address bar or ENS name. If passed in as a prop, it will allow you to copy the address to the clipboard instead of linking to etherscan.
 export default function AddressBar({ account, chainId, ENSName, copyAddress }) {
-  function copy(addr) {
+  function copy(addr: string) {
     navigator.clipboard.writeText(addr);
     toast.dark("Copied to clipboard!", {
       position: "bottom-right",
