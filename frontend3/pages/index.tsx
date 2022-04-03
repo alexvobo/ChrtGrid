@@ -93,29 +93,7 @@ export default function Home() {
                   leave="transform duration-200 transition ease-in-out"
                   leaveFrom="opacity-100 rotate-0 scale-100 "
                   leaveTo="opacity-0 rotate-[-120deg] scale-95 ">
-                  <div className="mt-8 grid grid-flow-col mb-6 mr-6">
-                    {/* <SelectNetwork /> */}
-                    <a
-                      href="https://youtu.be/8xyUaSY4ZMg?t=26"
-                      target="_blank"
-                      rel="noreferrer">
-                      <button
-                        className=" h-11 m rounded-lg  bg-transparent hover:bg-yellow-400 text-yellow-400 font-medium hover:text-black py-1 px-4 border-2 border-red-600 hover:border-transparent "
-                        disabled={!isWeb3Enabled}>
-                        I&apos;ve had enough
-                      </button>
-                    </a>
-                    <button
-                      className=" h-11 m rounded-lg  bg-transparent hover:bg-yellow-400 text-yellow-400 font-medium hover:text-black py-1 px-4 border-2 border-red-600 hover:border-transparent "
-                      disabled={!isWeb3Enabled}
-                      onClick={async () => {
-                        await deactivateWeb3();
-                        localStorage.setItem("market", "stats");
-                        setLoggedIn("false");
-                      }}>
-                      Logout
-                    </button>
-                  </div>
+                 
                   <Account />
                 </Transition>
               ) : (

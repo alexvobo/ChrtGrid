@@ -47,7 +47,7 @@ export default function IntervalSelect() {
                       </span>
                       {selected ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-500">
-                          <CheckIcon className="w-5 h-5" aria-hidden="true" />
+                          <CheckIcon className="w-6 h-6" aria-hidden="true" />
                         </span>
                       ) : null}
                     </>
