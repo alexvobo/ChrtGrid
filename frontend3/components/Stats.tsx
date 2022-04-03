@@ -1,6 +1,7 @@
 import { useState } from "react";
 import LoadingIcons from "react-loading-icons";
 import { useData } from "../contexts/DataContext";
+import useSWR from "swr";
 function orderBySubKey(input, key, order) {
   //Ascending
   if (order) {
@@ -55,8 +56,13 @@ const exchangeThemes = {
 export default function Stats() {
   const [sortCategory, setSortCategory] = useState("percentage_change");
   const [sortAscending, setSortAscending] = useState(false);
+  const { exchange } = useData();
 
-  const { exchange, stats } = useData();
+  const { data: stats } = useSWR(
+    exchange ? `/api/${exchange}/stats` : null,
+    (url) => fetch(url).then((r) => r.json())
+  );
+
   const maxCharts = 12;
 
   return (

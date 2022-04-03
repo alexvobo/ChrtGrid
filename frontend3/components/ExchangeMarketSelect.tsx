@@ -138,7 +138,6 @@ export default function Example() {
 
   return (
     <div className="mx-auto w-full max-w-md px-2 py-16 sm:px-0">
-      {console.log(exchange)}
       <Tab.Group
         defaultIndex={Object.keys(exchanges).indexOf(exchange)}
         onChange={(index) => {

@@ -75,7 +75,7 @@ export default function Home() {
               {!isWeb3Enabled ? (
                 <>
                   <button
-                    className="bg-transparent hover:bg-red-600 text-yellow-400 font-semibold hover:text-black py-2 px-4 border-2 border-red-600 hover:border-transparent rounded "
+                    className=" bg-red-700 hover:bg-red-800 text-white  font-semibold py-2 px-4 rounded "
                     disabled={isWeb3Enabled}
                     onClick={async () => {
                       await enableWeb3();
@@ -110,6 +110,7 @@ export default function Home() {
                       disabled={!isWeb3Enabled}
                       onClick={async () => {
                         await deactivateWeb3();
+                        localStorage.setItem("market", "stats");
                         setLoggedIn("false");
                       }}>
                       Logout

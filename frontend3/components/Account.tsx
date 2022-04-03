@@ -74,7 +74,7 @@ const Account = () => {
               <ETHBalance className="text-lg font-medium " />
             </div>
 
-            <div className="">
+            <div className=" ">
               <h3 className="text-xl pb-2 font-medium  text-yellow-500 ">
                 Membership
               </h3>
@@ -83,13 +83,11 @@ const Account = () => {
                   userData?.membership ? userData?.membership : "free"
                 }
               />
-            </div>
-            <div className="">
               {!userData || userData?.membership === "free" ? (
                 <button
                   type="button"
                   onClick={() => setOpenModal(true)}
-                  className=" hover:animate-pulse  bg-transparent hover:bg-red-600 text-yellow-400 font-bold hover:text-black py-2 px-4 border-2 border-red-600 hover:border-transparent rounded">
+                  className=" hover:animate-pulse  bg-red-700 hover:bg-red-800 text-white font-bold  py-2 px-4  rounded">
                   Go Pro
                 </button>
               ) : (
@@ -102,16 +100,23 @@ const Account = () => {
                   Custom List Config
                 </button>
               )}
-              <div className="mt-4 relative  ">
-                <IntervalSelect />
-                <a
-                  onClick={refreshPage}
-                  data-tip="Refresh to change interval"
-                  className="hover:cursor-pointer inline-block  absolute right-1/4 top-3 ">
-                  <RefreshIcon className="text-pink-500  absolute h-7 w-7 " />
-                </a>
-                <ReactTooltip place="right" type="info" effect="float" />
-              </div>
+            </div>
+            <div className="mt-4 relative  ">
+              <IntervalSelect />
+              <a
+                onClick={refreshPage}
+                data-tip
+                data-for="refresh"
+                className="hover:cursor-pointer inline-block  absolute right-1/4 top-3 ">
+                <RefreshIcon className="text-pink-500  absolute h-7 w-7 " />
+              </a>
+              <ReactTooltip
+                id="refresh"
+                place="right"
+                type="info"
+                effect="float">
+                <span>Refresh to change interval</span>
+              </ReactTooltip>
             </div>
           </div>
         </div>

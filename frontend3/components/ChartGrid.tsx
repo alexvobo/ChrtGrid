@@ -2,7 +2,6 @@ import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
 import { ArrowCircleUpIcon } from "@heroicons/react/outline";
 import LoadingIcons from "react-loading-icons";
 import { useData } from "../contexts/DataContext";
-import { useAccount } from "../contexts/AccountContext";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 const exchangeThemes = {
   coinbase: {
@@ -44,6 +43,7 @@ export default function ChartGrid() {
       </div>
     );
   }
+
   return (
     <>
       <div className="grid grid-cols-2  ">

@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import useSWR from "swr";
 import Image from "next/image";
 import { useAccount } from "./AccountContext";
 // Fetches coins & stats from the database. Handles switching exchanges & markets in the <ExchangeMarketSelect> component.
@@ -49,10 +48,6 @@ export function DataProvider({ children }) {
   const [coins, setCoins] = useState([]);
   const { customListDB } = useAccount();
 
-  const { data: stats } = useSWR(`/api/${exchange}/stats`, (url) =>
-    fetch(url).then((r) => r.json())
-  );
-
   const fetchCoins = async () => {
     if (market !== "custom") {
       const data = await fetch(`/api/${exchange}/${market}/coins`).then((res) =>
@@ -69,11 +64,13 @@ export function DataProvider({ children }) {
     setMarket(marketName);
     if (marketName === "custom") {
       let coinList = [];
-      customListDB?.map((item) => {
-        coinList.push(`${item?.exchange}:${item?.symbol}${item?.pair}`);
-      });
-      console.log(coinList);
-      setCoins(coinList);
+      if (customListDB.length) {
+        customListDB?.map((item) => {
+          coinList.push(`${item?.exchange}:${item?.symbol}${item?.pair}`);
+        });
+        console.log(coinList);
+        setCoins(coinList);
+      }
     } else {
       fetchCoins();
     }
@@ -97,12 +94,13 @@ export function DataProvider({ children }) {
     if (exchange !== "" && market !== "" && market !== "custom") {
       localStorage.setItem("exchange", exchange);
       localStorage.setItem("market", market);
+      console.log("Fetching Data...");
       fetchCoins();
     }
   }, [exchange, market]);
 
   return (
-    <DataContext.Provider value={{ exchange, market, coins, stats, networks }}>
+    <DataContext.Provider value={{ exchange, market, coins, networks }}>
       <DataUpdatecontext.Provider value={{ switchExchange, switchMarket }}>
         {children}
       </DataUpdatecontext.Provider>
