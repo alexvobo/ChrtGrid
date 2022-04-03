@@ -153,7 +153,7 @@ export default function Stats() {
         </div>
         <div className="text-center mb-4 flex ">
           <button
-            className="mx-auto mr-2 w-[135px] text-lg border-2  bg-transparent hover:bg-yellow-400 text-yellow-400 font-bold hover:text-black py-1 px-2 border-red-700 hover:border-transparent rounded  "
+            className="mx-auto mr-2 w-[135px] text-lg border-2  bg-transparent text-white font-bold py-1 px-2 border-pink-500 hover:border-white hover:text-pink-500 rounded  "
             onClick={() => {
               setSortAscending(!sortAscending);
               setSortCategory("percentage_change");
@@ -162,7 +162,7 @@ export default function Stats() {
           </button>
 
           <button
-            className="mx-auto ml-2 w-[125px] text-lg border-2  bg-transparent hover:bg-yellow-400 text-yellow-400 font-bold hover:text-black py-1 px-2 border-red-700 hover:border-transparent rounded  "
+            className="mx-auto ml-2 w-[125px] text-lg border-2  bg-transparent  text-white font-bold  py-1 px-2 border-pink-500  hover:border-white hover:text-pink-500 rounded  "
             onClick={() => {
               setSortAscending(!sortAscending);
               setSortCategory("percentage_change_24");

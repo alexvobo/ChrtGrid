@@ -68,7 +68,7 @@ export default function Account() {
                   />
                   <div className="mx-auto mt-4">
                     <button
-                      className=" h-8 w-1/2 rounded-sm bg-transparent hover:bg-yellow-400 text-yellow-400 font-medium hover:text-black   border-2 border-red-600 hover:border-transparent "
+                      className=" h-8 w-1/2 rounded-sm bg-transparent hover:bg-red-600 text-black-400 font-medium hover:text-black   border-2 border-pink-500 hover:border-transparent "
                       disabled={!isWeb3Enabled}
                       onClick={async () => {
                         await deactivateWeb3();
@@ -114,7 +114,7 @@ export default function Account() {
                   data-tip
                   data-for="refresh"
                   className="hover:cursor-pointer inline-block  absolute right-1/4 top-3 ">
-                  <RefreshIcon className="text-pink-500  absolute h-7 w-7 " />
+                  <RefreshIcon className="text-pink-500 hover:text-white absolute h-7 w-7 " />
                 </a>
                 <ReactTooltip
                   id="refresh"

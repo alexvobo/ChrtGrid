@@ -15,9 +15,9 @@ export default function IntervalSelect() {
             <span className="block truncate font-medium text-white">
               Interval: {interval}
             </span>
-            <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+            <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none ">
               <SelectorIcon
-                className="w-5 h-5 text-gray-400"
+                className="w-5 h-5 text-gray-200 "
                 aria-hidden="true"
               />
             </span>
