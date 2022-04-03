@@ -170,7 +170,7 @@ export default function ExchangeMarketSelect() {
             setLoading(false);
           }, cooldown);
         }}>
-        <Tab.List className="flex p-1 space-x-1 bg-blue-900/20 rounded-xl ">
+        <Tab.List className="flex p-2 bg-blue-900/20 rounded-xl ">
           {Object.keys(exchanges).map((e) => (
             <Tab
               disabled={loading}
