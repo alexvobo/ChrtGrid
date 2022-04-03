@@ -235,7 +235,7 @@ export default function ExchangeMarketSelect() {
                             className={classNames(
                               m?.premium ? "cursor-not-allowed" : null,
                               "absolute inset-0 rounded-md",
-                              "focus:z-10 focus:outline-none focus:ring-1 ring-red-600"
+                              "focus:z-10 focus:outline-none focus:ring-2 ring-pink-500"
                             )}
                           />
                         </button>
@@ -277,7 +277,7 @@ export default function ExchangeMarketSelect() {
                             href="#"
                             className={classNames(
                               "absolute inset-0 rounded-md",
-                              "focus:z-10 focus:outline-none focus:ring-1 ring-red-600"
+                              "focus:z-10 focus:outline-none focus:ring-2 ring-pink-500"
                             )}
                           />
                         </button>
@@ -293,13 +293,6 @@ export default function ExchangeMarketSelect() {
                         <ClipboardCopyIcon
                           className={`${exchangeInfo[e]["textStyle"]} absolute  inset-0 m-auto  w-10 h-10 hover:animate-pulse`}
                         />
-                        <a
-                          href="#"
-                          className={classNames(
-                            "absolute inset-0 rounded-md",
-                            "focus:z-10 focus:outline-none focus:ring-1 ring-red-600"
-                          )}
-                        />
                       </button>
                     ) : m?.market === CUSTOM &&
                       userData !== undefined &&
@@ -309,13 +302,6 @@ export default function ExchangeMarketSelect() {
                         onClick={() => setCustomListOpen(!customListOpen)}>
                         <CogIcon
                           className={`${exchangeInfo[e]["textStyle"]} absolute  inset-0 m-auto  w-10 h-10 hover:animate-pulse`}
-                        />
-                        <a
-                          href="#"
-                          className={classNames(
-                            "absolute inset-0 rounded-md",
-                            "focus:z-10 focus:outline-none focus:ring-1 ring-red-600"
-                          )}
                         />
                       </button>
                     ) : null}
