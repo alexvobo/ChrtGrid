@@ -20,8 +20,8 @@ export default async function handler(req, res) {
     var ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
     const transporter = nodemailer.createTransport({
-      port: 465,
-      host: "mail.privateemail.com",
+      port: 587,
+      host: "smtp.gmail.com",
       auth: {
         user: process.env.NODEMAILER_EMAIL,
         pass: process.env.NODEMAILER_PASSWORD,
