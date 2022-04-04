@@ -96,9 +96,6 @@ export default function Account() {
               <Plaque
                 membership={userData?.membership ? userData?.membership : FREE}
               />
-            </div>
-
-            <div>
               {!userData || userData?.membership === FREE ? (
                 <button
                   type="button"
@@ -107,6 +104,9 @@ export default function Account() {
                   Go Pro
                 </button>
               ) : null}
+            </div>
+
+            <div>
               <div className="mt-8 relative  ">
                 <IntervalSelect />
                 <a
