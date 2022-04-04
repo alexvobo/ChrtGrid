@@ -291,7 +291,7 @@ export default function ExchangeMarketSelect() {
                         className="w-20 relative   "
                         onClick={() => copy(JSON.stringify(coins))}>
                         <ClipboardCopyIcon
-                          className={`${exchangeInfo[e]["textStyle"]} absolute  inset-0 m-auto  w-10 h-10 hover:animate-pulse`}
+                          className={`${exchangeInfo[e]["textStyle"]} absolute  inset-0 m-auto  w-10 h-10 hover:text-white hover:animate-pulse`}
                         />
                       </button>
                     ) : m?.market === CUSTOM &&
@@ -301,7 +301,7 @@ export default function ExchangeMarketSelect() {
                         className="w-20 relative "
                         onClick={() => setCustomListOpen(!customListOpen)}>
                         <CogIcon
-                          className={`${exchangeInfo[e]["textStyle"]} absolute  inset-0 m-auto  w-10 h-10 hover:animate-pulse`}
+                          className={`${exchangeInfo[e]["textStyle"]} absolute  inset-0 m-auto  w-10 h-10 hover:text-white hover:animate-pulse`}
                         />
                       </button>
                     ) : null}
