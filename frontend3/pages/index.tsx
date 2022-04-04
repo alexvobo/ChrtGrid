@@ -11,6 +11,10 @@ import ChartGrid from "../components/ChartGrid";
 import Stats from "../components/Stats";
 import ExchangeMarketSelect from "../components/ExchangeMarketSelect";
 
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
 const exchangeThemes = {
   coinbase: {
     gridColor: "border-blue-600 ",
@@ -22,6 +26,7 @@ const exchangeThemes = {
     gridColor: "border-yellow-500 ",
   },
 };
+
 export default function Home() {
   const [loggedIn, setLoggedIn] = useLocalStorage("loggedIn", "");
   const { exchange, networks } = useData();
@@ -93,7 +98,6 @@ export default function Home() {
                   leave="transform duration-200 transition ease-in-out"
                   leaveFrom="opacity-100 rotate-0 scale-100 "
                   leaveTo="opacity-0 rotate-[-120deg] scale-95 ">
-                 
                   <Account />
                 </Transition>
               ) : (
@@ -103,7 +107,12 @@ export default function Home() {
               )}
             </div>
           </div>
-          <div className=" z-10 ">
+
+          <div
+            className={classNames(
+              "z-10",
+              loggedIn === "true" && supported === true ? "" : null
+            )}>
             <Stats />
           </div>
           <div className="mb-2">
