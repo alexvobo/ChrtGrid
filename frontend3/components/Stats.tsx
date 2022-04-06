@@ -119,7 +119,7 @@ export default function Stats(wide) {
   );
   const [sortCategory, setSortCategory] = useState("percentage_change");
   const [sortAscending, setSortAscending] = useState(false);
-  const [showChange, setShowChange] = useState(false);
+  const [showChange, setShowChange] = useState(true);
   const [showMax, setShowMax] = useState(false);
   const [showVolume, setShowVolume] = useState(false);
   const [titleSortingText, setTitleSortingText] = useState("GAINERS");
