@@ -15,7 +15,7 @@ export default function AddressBar({ account, chainId, ENSName, copyAddress }) {
   }
 
   return (
-    <div className="grid grid-flow-col hover:bg-blue-800   bg-blue-800/70 mx-auto px-7 hover:cursor-pointer rounded-sm ">
+    <div className="grid grid-flow-col hover:bg-blue-800   bg-blue-800/70 mx-auto px-2 hover:cursor-pointer rounded-sm ">
       <a
         onClick={() => (copyAddress ? copy(account) : null)}
         className="text-lg"
@@ -26,7 +26,7 @@ export default function AddressBar({ account, chainId, ENSName, copyAddress }) {
           target: !copyAddress ? "_blank" : null,
           rel: "noopener noreferrer",
         }}>
-        {ENSName || `${shortenHex(account, 4)}`}{" "}
+        {ENSName || `${shortenHex(account, 3)}`}{" "}
         <span className=" border-l-2  border-yellow-600  text-center ml-2 ">
           {" "}
           {copyAddress ? (

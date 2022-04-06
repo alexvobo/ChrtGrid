@@ -256,7 +256,7 @@ export default function CustomList({ isOpen, setIsOpen }) {
                     disabled={clickedSave}
                     className=" hover:bg-blue-600 rounded-md bg-blue-500 w-20 h-8  md:h-10 font-medium text-white "
                     onClick={handleSave}>
-                    <div className="text-center flex mx-auto  w-1/2">
+                    <div className="text-center flex mx-auto  w-1/2 pl-1">
                       {!clickedSave ? (
                         "Save"
                       ) : (

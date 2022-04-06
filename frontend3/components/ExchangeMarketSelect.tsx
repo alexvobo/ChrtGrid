@@ -6,15 +6,17 @@ import { titleCase } from "../util";
 import LoadingIcons from "react-loading-icons";
 import Pro from "./Pro";
 import CustomList from "./CustomList";
+import IntervalSelect from "./IntervalSelect";
 
 import { useData, useDataUpdate } from "../contexts/DataContext";
 import { useAccount } from "../contexts/AccountContext";
 
-import { ClipboardCopyIcon } from "@heroicons/react/outline";
+import { ClipboardCopyIcon, RefreshIcon } from "@heroicons/react/outline";
+import { CogIcon } from "@heroicons/react/solid";
 
+import ReactTooltip from "react-tooltip";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { CogIcon } from "@heroicons/react/solid";
 
 const FREE = "free";
 const LATEST = "latest";
@@ -59,6 +61,9 @@ export default function ExchangeMarketSelect() {
     },
   };
   const cooldown = 15000; //Required to prevent spamming of requests, tradingview will ban user
+  function refreshPage() {
+    window.location.reload();
+  }
   function copy(addr: string) {
     navigator.clipboard.writeText(addr);
     toast.dark("Copied to clipboard!", {
@@ -122,7 +127,7 @@ export default function ExchangeMarketSelect() {
           name: "Latest",
           market: LATEST,
           description: "Most Recent Listings",
-          premium: true,
+          premium: false,
           url: (
             <>
               <a href={exchInfo.twitter} target="_blank" rel="noreferrer">
@@ -190,11 +195,11 @@ export default function ExchangeMarketSelect() {
         <Tab.Panels className="mt-2">
           {Object.entries(exchanges).map(([e, markets], idx) => (
             <Tab.Panel key={idx} className={classNames(" rounded-xl p-2")}>
-              <ul>
+              <ul key={"tabpanel" + idx}>
                 {markets?.map((m, i) => (
                   <div className="flex ">
                     <li
-                      key={m.name + i}
+                      key={m?.name + i}
                       className={classNames(
                         `${exchangeInfo[e]["marketStyle"]} w-full relative p-3 rounded-md hover:bg-coolGray-100 `,
                         m?.market === market
@@ -216,11 +221,19 @@ export default function ExchangeMarketSelect() {
                           <h3 className="text-yellow-500 mb-2 text-md text-left font-medium leading-5">
                             {m?.name}
                           </h3>
-                          <ul className="flex mt-1 space-x-1 text-sm font-normal leading-4 text-coolGray-500">
-                            <li>{m?.description} &nbsp; </li>
-                            <li>&middot;</li>{" "}
+                          <ul
+                            key={"desc" + m?.name + String(i)}
+                            className="flex mt-1 space-x-1 text-sm font-normal leading-4 text-coolGray-500">
+                            <li key={"desc1" + m?.name + String(i)}>
+                              {m?.description}
+                            </li>
+                            <li key={"desc2" + m?.name + String(i)}>
+                              &middot;
+                            </li>
                             {!m?.premium ? (
-                              <li className="text-blue-500 hover:underline z-10">
+                              <li
+                                key={"url" + m?.name + String(i)}
+                                className="text-blue-500 hover:underline z-10">
                                 {m?.url}
                               </li>
                             ) : (
@@ -259,11 +272,19 @@ export default function ExchangeMarketSelect() {
                             {m?.name}
                           </h3>
 
-                          <ul className="flex mt-1 space-x-1 text-sm font-normal leading-4 text-coolGray-500">
-                            <li>{m?.description}</li>
-                            <li>&middot;</li>
+                          <ul
+                            key={m?.name + String(i)}
+                            className="flex mt-1 space-x-1 text-sm font-normal leading-4 text-coolGray-500">
+                            <li key={"desc1" + m?.name + String(i)}>
+                              {m?.description}
+                            </li>
+                            <li key={"desc2" + m?.name + String(i)}>
+                              &middot;
+                            </li>{" "}
                             {m?.premium && userData?.membership === FREE ? (
-                              <li className="text-red-500  z-10">
+                              <li
+                                key={"url" + m?.name + String(i)}
+                                className="text-red-500  z-10">
                                 Click to purchase premium
                               </li>
                             ) : (
@@ -284,9 +305,7 @@ export default function ExchangeMarketSelect() {
                       )}
                     </li>
 
-                    {m?.market === LATEST &&
-                    userData !== undefined &&
-                    userData?.membership !== FREE ? (
+                    {m?.market === LATEST ? (
                       <button
                         className="w-20 relative   "
                         onClick={() => copy(JSON.stringify(coins))}>
@@ -312,16 +331,30 @@ export default function ExchangeMarketSelect() {
           ))}
         </Tab.Panels>
       </Tab.Group>
+      <div className="mt-4 text-center font-medium text-white mx-auto">
+        <div className={loading ? "visible" : "invisible"}>
+          Please Wait...{" "}
+          <LoadingIcons.Grid stroke="" className="h-5 w-5  inline " />
+        </div>
+      </div>
+      <div>
+        <div className="mt-4 relative  ">
+          <IntervalSelect />
+          <a
+            onClick={refreshPage}
+            data-tip
+            data-for="refresh"
+            className="hover:cursor-pointer inline-block absolute right-1/3 md:right-1/4 lg:right-1/3 top-2 ">
+            <RefreshIcon className="text-pink-500 hover:text-white absolute h-7 w-7 " />
+          </a>
+          <ReactTooltip id="refresh" place="right" type="info" effect="float">
+            <span>Refresh to change interval</span>
+          </ReactTooltip>
+        </div>
+      </div>
+
       <Pro isOpen={openPro} setIsOpen={setOpenPro} />
       <CustomList isOpen={customListOpen} setIsOpen={setCustomListOpen} />
-      <div className="text-center font-medium text-white mx-auto">
-        {loading ? (
-          <div>
-            Please Wait...{" "}
-            <LoadingIcons.Grid stroke="" className="h-5 w-5 mb-2 inline " />{" "}
-          </div>
-        ) : null}
-      </div>
     </div>
   );
 }

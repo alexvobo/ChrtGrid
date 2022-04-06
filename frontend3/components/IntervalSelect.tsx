@@ -8,10 +8,10 @@ export default function IntervalSelect() {
   const intervals = ["120", "15", "30", "60", "240", "D", "W"];
   const [interval, setInterval] = useLocalStorage("interval", "D");
   return (
-    <div className="w-36 absolute left-0 right-0 mx-auto ">
+    <div className="w-36 absolute top-0 bottom-0 left-0 right-0 mx-auto ">
       <Listbox value={interval} onChange={setInterval}>
-        <div className="relative mt-1">
-          <Listbox.Button className="relative  py-2 pl-3 pr-10 border-2 border-pink-500 bg-transparent text-center rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-md">
+        <div className="relative ">
+          <Listbox.Button className="hover:cursor-pointer relative  py-2 pl-3 pr-10 border-2 border-pink-500 bg-transparent text-center rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-md">
             <span className="block truncate font-medium text-white">
               Interval: {interval}
             </span>

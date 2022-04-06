@@ -5,6 +5,7 @@ import { useData } from "../contexts/DataContext";
 import { useMoralis } from "react-moralis";
 import Image from "next/image";
 import { Transition } from "@headlessui/react";
+import { ChevronDoubleUpIcon } from "@heroicons/react/solid";
 import Account from "../components/Account";
 import Layout from "../components/Layout";
 import ChartGrid from "../components/ChartGrid";
@@ -32,19 +33,29 @@ export default function Home() {
   const { exchange, networks } = useData();
 
   const [supported, setSupported] = useState(false);
-  const { enableWeb3, isWeb3Enabled, deactivateWeb3, chainId } = useMoralis();
+  const [wide, setWide] = useState(false);
+
+  const { enableWeb3, isWeb3Enabled, chainId } = useMoralis();
   const { chain } = useChain();
 
   useEffect(() => {
     // console.log("moralis", chainId);
     // console.log("usechain", chain?.chainId);
     setSupported(false);
+
     networks?.map((network) => {
       if (network["chainID"] === chain?.chainId) {
         setSupported(true);
       }
     });
   }, [chain, , chainId, networks]);
+  useEffect(() => {
+    if (supported && loggedIn === "true") {
+      setWide(true);
+    } else {
+      setWide(false);
+    }
+  }, [supported, loggedIn]);
 
   useEffect(() => {
     const connectWalletOnPageLoad = async () => {
@@ -63,22 +74,34 @@ export default function Home() {
   }, []);
   return (
     <div>
-      <main>
-        <div className=" mt-2 items-center grid md:grid-cols-3 md:gap-3 lg:gap-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 ">
-          <div className="mx-auto grid grid-flow-row">
-            {loggedIn === "false" || !isWeb3Enabled ? (
+      <main className="border-t-2 border-yellow-600 overflow-hidden">
+        {/* Only show account window when we are logged in and connected to a supported network */}
+        {loggedIn === "true" && supported && (
+          <Transition
+            show={loggedIn === "true" && supported}
+            enter="transform transition duration-[400ms]"
+            enterFrom="opacity-0 rotate-[-120deg] scale-50"
+            enterTo="opacity-100 rotate-0 scale-100"
+            leave="transform duration-200 transition ease-in-out"
+            leaveFrom="opacity-100 rotate-0 scale-100 "
+            leaveTo="opacity-0  scale-95 ">
+            <Account />
+          </Transition>
+        )}
+
+        <div className=" mt-8 items-center grid md:grid-cols-3 md:gap-3 lg:gap-3 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 ">
+          {!isWeb3Enabled || loggedIn === "false" || !supported ? (
+            <div className="mx-auto grid grid-flow-row ">
               <Image
                 className=""
                 height={250}
                 width={300}
                 src="/grid.svg"
+                priority={true}
                 alt="GRID"
               />
-            ) : null}
-
-            <div className=" text-center mb-2">
-              {!isWeb3Enabled ? (
-                <>
+              {!isWeb3Enabled || loggedIn === "false" ? (
+                <div className=" text-center mb-2">
                   <button
                     className=" bg-red-700 hover:bg-red-800 text-white  font-semibold py-2 px-4 rounded "
                     disabled={isWeb3Enabled}
@@ -88,34 +111,30 @@ export default function Home() {
                     }}>
                     Connect to MetaMask
                   </button>
-                </>
-              ) : loggedIn === "true" && supported === true ? (
-                <Transition
-                  show={loggedIn === "true" && supported === true}
-                  enter="transform transition duration-[400ms]"
-                  enterFrom="opacity-0 rotate-[-120deg] scale-50"
-                  enterTo="opacity-100 rotate-0 scale-100"
-                  leave="transform duration-200 transition ease-in-out"
-                  leaveFrom="opacity-100 rotate-0 scale-100 "
-                  leaveTo="opacity-0 rotate-[-120deg] scale-95 ">
-                  <Account />
-                </Transition>
-              ) : (
-                <div className="text-2xl font-bold text-red-700 animate-pulse">
-                  Please switch to Avalanche or Ethereum
+                  <div className="relative mt-2">
+                    <ChevronDoubleUpIcon className="absolute  m-auto left-0 right-0 text-white  animate-pulse h-4 w-4 " />
+                  </div>
+                  <span className="mt-4 inline-block text-xs text-white/50">
+                    psst! more features are available 😎
+                  </span>
                 </div>
-              )}
+              ) : null}
+              {!supported && isWeb3Enabled ? (
+                <div className="text-xl font-bold text-red-700 animate-pulse">
+                  Please switch to Ethereum or Avalanche
+                </div>
+              ) : null}
             </div>
-          </div>
+          ) : null}
 
           <div
             className={classNames(
-              "z-10",
-              loggedIn === "true" && supported === true ? "" : null
+              "z-10 ",
+              loggedIn === "true" && supported ? "col-span-2" : null
             )}>
-            <Stats />
+            <Stats wide={wide} />
           </div>
-          <div className="mb-2">
+          <div className="mb-2 ml-6">
             <ExchangeMarketSelect />
           </div>
         </div>
@@ -130,6 +149,17 @@ export default function Home() {
     </div>
   );
 }
+// loggedIn === "true" && supported === true ? (
+//   <Transition
+//     show={loggedIn === "true" && supported === true}
+//     enter="transform transition duration-[400ms]"
+//     enterFrom="opacity-0 rotate-[-120deg] scale-50"
+//     enterTo="opacity-100 rotate-0 scale-100"
+//     leave="transform duration-200 transition ease-in-out"
+//     leaveFrom="opacity-100 rotate-0 scale-100 "
+//     leaveTo="opacity-0 rotate-[-120deg] scale-95 ">
+//     <Account />
+//   </Transition>
 Home.getLayout = function getLayout(page) {
   return <Layout>{page}</Layout>;
 };

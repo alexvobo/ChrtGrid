@@ -2,10 +2,11 @@ import React from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState, useEffect } from "react";
 import { useMoralis } from "react-moralis";
-import { useChain } from "react-moralis";
+import useSWR from "swr";
 import { useData } from "../contexts/DataContext";
 import Pay from "./Pay";
 import AddressBar from "./AddressBar";
+
 import {
   ViewGridAddIcon,
   CashIcon,
@@ -15,58 +16,52 @@ import {
 import { ViewListIcon, FireIcon, LockClosedIcon } from "@heroicons/react/solid";
 import LoadingIcons from "react-loading-icons";
 
+const fetcher = async (
+  input: RequestInfo,
+  init: RequestInit,
+  ...args: any[]
+) => {
+  const res = await fetch(input, init);
+  return res.json();
+};
+
 //Part of the <Account> component, displays the Premium membership modal when "Go Pro" is clicked.
 //Implements < Pay > for payments.
+
 export default function Pro({ isOpen, setIsOpen }) {
   function closeModal() {
     setIsOpen(false);
   }
-  const { account } = useMoralis();
-  const { chain } = useChain();
+  const { account, chainId } = useMoralis();
 
-  const [paymentData, setPaymentData] = useState({});
+  const { networks } = useData();
 
   const [membershipTier, setMembershipTier] = useState("lifetime");
   const [membershipCount, setMembershipCount] = useState(null);
   const [membershipMax, setMembershipMax] = useState(null);
-  const { networks } = useData();
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    setLoading(true);
-    if (Object.keys(paymentData).length === 0 && chain && membershipTier) {
-      // console.log("Fetching payment data");
-      fetch(
-        `/api/user/${account}/paymentInfo?network=${chain.chainId}&tier=${membershipTier}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          setPaymentData(data);
-          // console.log(data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [account, chain, paymentData, membershipTier]);
+
+  const { data: paymentData } = useSWR(
+    `/api/paymentInfo?network=${chainId}&tier=${membershipTier}`,
+    fetcher
+  );
+
+  const { data: membershipData } = useSWR(
+    `/api/membershipCount?tier=${membershipTier}`,
+    fetcher
+  );
 
   useEffect(() => {
-    if (membershipCount === null && membershipMax === null && membershipTier) {
-      // console.log("Fetching membership data");
-      fetch(`/api/membershipCount?tier=${membershipTier}`)
-        .then((res) => res.json())
-        .then((data) => {
-          // console.log(data);
-          setMembershipCount(data["count"]);
-          setMembershipMax(data["max"]);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    if (membershipData) {
+      if (membershipData?.count != membershipCount) {
+        setMembershipCount(membershipData?.count);
+      }
+      if (membershipData?.max != membershipMax) {
+        setMembershipMax(membershipData?.max);
+      }
     }
-  }, [membershipCount, membershipMax, membershipTier]);
+  }, [membershipData]);
 
-  if (chain?.chainId === undefined || account === null) {
+  if (chainId === undefined || account === null) {
     return null;
   }
   return (
@@ -191,7 +186,7 @@ export default function Pro({ isOpen, setIsOpen }) {
                         </span>
                         <AddressBar
                           account={paymentData["payment_to"]}
-                          chainId={chain.chainId}
+                          chainId={chainId}
                           ENSName={""}
                           copyAddress={true}
                         />
@@ -199,7 +194,7 @@ export default function Pro({ isOpen, setIsOpen }) {
                           {" "}
                           Price: {paymentData["payment_amount"]}{" "}
                           {
-                            networks?.find((n) => n?.chainID === chain?.chainId)
+                            networks?.find((n) => n?.chainID === chainId)
                               ?.currencyName
                           }
                         </span>

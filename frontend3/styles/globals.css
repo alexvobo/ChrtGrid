@@ -64,6 +64,9 @@ a {
 
 }
 
+.text-shadow-black {
+  text-shadow: 1px 1px 3px black, 2px 4px 7px black
+}
 
 
 .rainbow-effect {

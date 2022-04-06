@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import LoadingIcons from "react-loading-icons";
 import { useData } from "../contexts/DataContext";
 import useSWR from "swr";
+import Table from "./Table";
+import { SortAscendingIcon, SortDescendingIcon } from "@heroicons/react/solid";
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 function orderBySubKey(input, key, order) {
   //Ascending
   if (order) {
@@ -15,54 +20,109 @@ function orderBySubKey(input, key, order) {
       .sort((a, b) => b.value[key] - a.value[key]);
   }
 }
+
 function moneyFormat(labelValue) {
   // Nine Zeroes for Billions
   return Math.abs(Number(labelValue)) >= 1.0e9
-    ? (Math.abs(Number(labelValue)) / 1.0e9).toFixed(2) + " B"
+    ? (Math.abs(Number(labelValue)) / 1.0e9).toFixed(1) + " B"
     : // Six Zeroes for Millions
     Math.abs(Number(labelValue)) >= 1.0e6
-    ? (Math.abs(Number(labelValue)) / 1.0e6).toFixed(2) + " M"
+    ? (Math.abs(Number(labelValue)) / 1.0e6).toFixed(1) + " M"
     : // Three Zeroes for Thousands
     Math.abs(Number(labelValue)) >= 1.0e3
-    ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(2) + " K"
-    : Math.abs(Number(labelValue));
+    ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(1) + " K"
+    : Math.abs(Math.round(Number(labelValue)));
 }
-function decimalFormat(labelValue) {
-  return String(Number(labelValue));
-}
+
 const exchangeThemes = {
   coinbase: {
-    exchangeStyle: " hover:bg-blue-600 border-indigo-200/0 border-b-blue-600 ",
     titleFont: "text-blue-600 justify-stretch",
-    font: " text-white hover:text-white justify-stretch",
+    borderStyle: "border-blue-600 border-2 border-b-0 rounded-sm",
+    exchangeStyle:
+      " hover:text-white hover:bg-blue-600 border-indigo-200/0 border-b-blue-600  text-shadow-black ",
   },
   kucoin: {
     titleFont: "text-[#23af91] justify-stretch",
+    borderStyle: "border-[#23af91] border-2 border-b-0 rounded-sm",
     exchangeStyle:
-      " hover:bg-[#23af91] border-indigo-200/0 border-b-[#23af91] ",
-    font: " text-white hover:text-white justify-stretch",
+      " hover:bg-[#23af91] border-indigo-200/0 border-b-[#23af91]  text-shadow-black ",
   },
 
   binance: {
     titleFont: "text-white justify-stretch",
+    borderStyle: "border-yellow-500 border-2 border-b-0 rounded-sm ",
     exchangeStyle:
-      " hover:bg-yellow-500  border-indigo-200/0 border-b-yellow-500 ",
-    font: " text-white hover:text-black justify-stretch",
+      "hover:text-black  hover:bg-yellow-500  border-indigo-200/0 border-b-yellow-500  ",
   },
 };
-function getStatsURL(exchange, symbol) {
-  if (exchange === "coinbase") {
-    return "https://www.coinbase.com/price?query=" + symbol;
-  } else if (exchange === "binance") {
-    return "https://www.binance.com/en/trade/" + symbol + "_USDT";
-  } else if (exchange === "kucoin") {
-    return "https://www.kucoin.com/trade/" + symbol + "-USDT";
-  }
-}
+
 //Displays the 24h stats for the selected exchange. Updates based on SWR.
-export default function Stats() {
+export default function Stats(wide) {
+  const columns = useMemo(
+    () => [
+      {
+        Header: " ",
+        columns: [
+          {
+            Header: "Symbol",
+            accessor: "key",
+          },
+          {
+            Header: "Price ($)",
+            accessor: "value.last",
+          },
+          {
+            Header: "Change",
+            accessor: "value.percentage_change",
+            Cell: ({ cell: { value } }) => {
+              let rounded_pct: number = Math.round(value);
+
+              return (
+                <span
+                  className={classNames(
+                    "text-md font-bold",
+                    rounded_pct >= 0 ? "text-green-600" : "text-red-600"
+                  )}>
+                  {rounded_pct}%
+                </span>
+              );
+            },
+          },
+          {
+            Header: "Max Gain",
+            accessor: "value.percentage_change_24",
+            Cell: ({ cell: { value } }) => {
+              let rounded_pct: number = Math.round(value);
+
+              return (
+                <span
+                  className={classNames(
+                    "text-md font-bold",
+                    rounded_pct >= 0 ? "text-green-600" : "text-red-600"
+                  )}>
+                  {rounded_pct}%
+                </span>
+              );
+            },
+          },
+          {
+            Header: "Volume",
+            accessor: "value.volume",
+            Cell: ({ cell: { value } }) => {
+              return <>{moneyFormat(value)}</>;
+            },
+          },
+        ],
+      },
+    ],
+    []
+  );
   const [sortCategory, setSortCategory] = useState("percentage_change");
   const [sortAscending, setSortAscending] = useState(false);
+  const [showChange, setShowChange] = useState(false);
+  const [showMax, setShowMax] = useState(false);
+  const [showVolume, setShowVolume] = useState(false);
+
   const { exchange } = useData();
 
   const { data: stats } = useSWR(
@@ -74,101 +134,105 @@ export default function Stats() {
 
   return (
     <>
-      <div className="mt-10 opacity-100 inset-0 overflow-y-auto ">
+      <div className="mt-10 opacity-100 inset-0 overflow-x-show ">
         <div className="text-center">
-          <div className="inline-block w-full  max-w-sm  md:max-w-md lg:max-w-md 2xl:max-w-lg  p-4 mb-2  text-left align-middle transition-all transform bg-transparent ">
-            <div className="text-center text-yellow-500 font-bold text-2xl mb-4 ">
-              24H{" "}
+          <div
+            className={classNames(
+              "inline-block w-full md:ml-4  p-4 mb-2 text-left align-middle transition-all transform bg-transparent overflow-x-show "
+            )}>
+            <div className="text-center text-yellow-500 font-bold text-2xl mb-4  ">
               <span className={exchangeThemes[exchange]?.titleFont}>
                 {exchange.toUpperCase()}
               </span>{" "}
               {sortAscending ? "WORST GAINERS 😭" : "TOP GAINERS 🚀"}
             </div>
-
-            <div className=" grid grid-flow-row  ">
-              <div className="text-yellow-500 grid grid-flow-col  border-b-2 border-b-purple-700 text-xl pb-1 font-medium ">
-                <p className="text-left pl-2">Symbol</p>{" "}
-                <p className="text-center">Price</p>
-                {/* <p className="text-right">Volume</p> */}
-                <p className="text-right pr-2">Change</p>
-                <p className="text-right pr-2 ">Max</p>
-              </div>
-
-              {stats && stats !== undefined && Object.keys(stats).length > 1 ? (
-                Object.values(
+            {stats && stats !== undefined && Object.keys(stats).length > 1 ? (
+              <Table
+                exchangeStyle={exchangeThemes[exchange]}
+                columns={columns}
+                data={Object.values(
                   orderBySubKey(stats, sortCategory, sortAscending)
-                ).map(
-                  (item, i) =>
-                    i < maxCharts && (
-                      <a
-                        href={getStatsURL(exchange, item["key"])}
-                        target="_blank"
-                        rel="noreferrer"
-                        className={`${exchangeThemes[exchange]["font"]}`}
-                        key={i}>
-                        <div
-                          className={
-                            `hover:text-xl hover:pl-2 hover:pr-2  leading-7  grid grid-flow-col border-2  ` +
-                            exchangeThemes[exchange]["exchangeStyle"] +
-                            exchangeThemes[exchange]["font"]
-                          }>
-                          <p className={`pl-4 text-md font-bold text-left `}>
-                            {item["key"]}
-                          </p>
-                          {/* Changes price color based on % change. May remove in future. */}
-                          <p className={`text-md font-bold text-center  `}>
-                            ${decimalFormat(item["value"]["last"])}
-                          </p>
-                          {/* {console.log(item["value"])} */}
-                          {/* <p className="text-md font-medium hover:text-white  text-gray-200 text-center ">
-                            {moneyFormat(item["value"]['volume']*item["value"]["last"])}
-                          </p> */}
-                          <p
-                            className={`text-md font-bold text-right pr-4 ${
-                              item["value"]["percentage_change"] > 0
-                                ? "text-green-600"
-                                : "text-red-600"
-                            }`}>
-                            {Math.round(item["value"]["percentage_change"])}%
-                          </p>
-                          <p
-                            className={`text-md font-bold text-right pr-4 ${
-                              item["value"]["percentage_change_24"] > 0
-                                ? "text-green-600"
-                                : "text-red-600"
-                            }`}>
-                            {Math.round(item["value"]["percentage_change_24"])}%
-                          </p>
-                        </div>
-                      </a>
-                    )
-                )
-              ) : (
-                <div className="flex justify-center mt-4 z-10">
-                  <LoadingIcons.Bars height="2em" fill="#ffffff" speed={1} />
-                </div>
-              )}
+                ).slice(0, 15)}
+              />
+            ) : null}
+          </div>
+          <div className="text-center mb-4 flex mx-auto justify-center  ">
+            <div className="border-pink-500 border-2 rounded flex">
+              <button
+                className=" w-[125px] text-lg  bg-transparent  text-white font-bold  py-1 px-2 border-pink-500   hover:text-pink-500 rounded-sm  "
+                onClick={() => {
+                  setSortAscending(!sortAscending);
+                  setSortCategory("percentage_change_24");
+                  setShowChange(false);
+                  setShowMax(true);
+                  setShowVolume(false);
+                }}>
+                <span className="flex">
+                  <span
+                    className={classNames(
+                      "my-auto",
+                      !showMax ? "invisible" : "visible"
+                    )}>
+                    {sortAscending ? (
+                      <SortAscendingIcon className="h-5 w-5 my-auto mx-2  " />
+                    ) : (
+                      <SortDescendingIcon className="h-5 w-5 my-auto mx-2" />
+                    )}{" "}
+                  </span>
+                  Max
+                </span>
+              </button>
+              <button
+                className="w-[135px] text-lg  border-x-2 bg-transparent text-white font-bold py-1 px-2 border-pink-500  hover:text-pink-500 rounded-sm  "
+                onClick={() => {
+                  setSortAscending(!sortAscending);
+                  setSortCategory("percentage_change");
+                  setShowChange(true);
+                  setShowMax(false);
+                  setShowVolume(false);
+                }}>
+                <span className="flex my-auto">
+                  <span
+                    className={classNames(
+                      "my-auto",
+                      !showChange ? "invisible" : "visible"
+                    )}>
+                    {sortAscending ? (
+                      <SortAscendingIcon className="h-5 w-5 my-auto mx-2 " />
+                    ) : (
+                      <SortDescendingIcon className="h-5 w-5 my-auto mx-2" />
+                    )}
+                  </span>
+                  Change
+                </span>
+              </button>
+
+              <button
+                className=" w-[135px] text-lg bg-transparent text-white font-bold py-1 px-2 border-pink-500 hover:border-white hover:text-pink-500 rounded  "
+                onClick={() => {
+                  setSortAscending(!sortAscending);
+                  setSortCategory("volume");
+                  setShowChange(false);
+                  setShowMax(false);
+                  setShowVolume(true);
+                }}>
+                <span className="flex my-auto">
+                  <span
+                    className={classNames(
+                      "my-auto",
+                      !showVolume ? "invisible" : "visible"
+                    )}>
+                    {sortAscending ? (
+                      <SortAscendingIcon className="h-5 w-5 my-auto mx-2" />
+                    ) : (
+                      <SortDescendingIcon className="h-5 w-5 my-auto mx-2" />
+                    )}
+                  </span>
+                  Volume
+                </span>
+              </button>
             </div>
           </div>
-        </div>
-        <div className="text-center mb-4 flex ">
-          <button
-            className="mx-auto mr-2 w-[135px] text-lg border-2  bg-transparent text-white font-bold py-1 px-2 border-pink-500 hover:border-white hover:text-pink-500 rounded  "
-            onClick={() => {
-              setSortAscending(!sortAscending);
-              setSortCategory("percentage_change");
-            }}>
-            Sort Change
-          </button>
-
-          <button
-            className="mx-auto ml-2 w-[125px] text-lg border-2  bg-transparent  text-white font-bold  py-1 px-2 border-pink-500  hover:border-white hover:text-pink-500 rounded  "
-            onClick={() => {
-              setSortAscending(!sortAscending);
-              setSortCategory("percentage_change_24");
-            }}>
-            Sort Max
-          </button>
         </div>
       </div>
     </>

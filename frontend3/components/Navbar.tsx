@@ -64,9 +64,7 @@ export default function Navbar() {
   );
 
   return (
-    <Disclosure
-      as="nav"
-      className="bg-transparent border-b-2 border-yellow-600">
+    <Disclosure as="nav" className="bg-transparent ">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -88,6 +86,7 @@ export default function Navbar() {
                     height={80}
                     width={80}
                     src="/grid-nav.svg"
+                    priority={true}
                     alt="GRID"
                   />
                 </div>
