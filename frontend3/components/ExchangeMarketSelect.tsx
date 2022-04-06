@@ -338,7 +338,11 @@ export default function ExchangeMarketSelect() {
         </div>
       </div>
       <div>
-        <div className="mt-4 relative  ">
+        <div
+          className={classNames(
+            "mt-4 relative",
+            userData === undefined ? "invisible" : "visible"
+          )}>
           <IntervalSelect />
           <a
             onClick={refreshPage}
