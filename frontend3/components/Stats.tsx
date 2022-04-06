@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import LoadingIcons from "react-loading-icons";
 import { useData } from "../contexts/DataContext";
 import useSWR from "swr";
@@ -122,7 +122,7 @@ export default function Stats(wide) {
   const [showChange, setShowChange] = useState(false);
   const [showMax, setShowMax] = useState(false);
   const [showVolume, setShowVolume] = useState(false);
-
+  const [titleSortingText, setTitleSortingText] = useState("GAINERS");
   const { exchange } = useData();
 
   const { data: stats } = useSWR(
@@ -130,7 +130,15 @@ export default function Stats(wide) {
     (url) => fetch(url).then((r) => r.json())
   );
 
-  const maxCharts = 12;
+  useEffect(() => {
+    if (showVolume) {
+      setTitleSortingText("VOLUME");
+    } else {
+      if (titleSortingText != "GAINERS") {
+        setTitleSortingText("GAINERS");
+      }
+    }
+  }, [showChange, showMax, showVolume]);
 
   return (
     <>
@@ -144,7 +152,9 @@ export default function Stats(wide) {
               <span className={exchangeThemes[exchange]?.titleFont}>
                 {exchange.toUpperCase()}
               </span>{" "}
-              {sortAscending ? "WORST GAINERS 😭" : "TOP GAINERS 🚀"}
+              {sortAscending
+                ? "WORST " + titleSortingText + " 😭"
+                : "TOP " + titleSortingText + " 🚀"}
             </div>
             {stats && stats !== undefined && Object.keys(stats).length > 1 ? (
               <Table
