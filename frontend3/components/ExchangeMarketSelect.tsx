@@ -164,7 +164,7 @@ export default function ExchangeMarketSelect() {
   const [customListOpen, setCustomListOpen] = useState(false);
 
   return (
-    <div className="mx-auto w-full max-w-md px-2 py-16 sm:px-0">
+    <div className="mx-auto w-full max-w-md pr-6 sm:pr-0 py-16 ">
       <Tab.Group
         defaultIndex={Object.keys(exchanges).indexOf(exchange)}
         onChange={(index) => {
@@ -348,7 +348,7 @@ export default function ExchangeMarketSelect() {
             onClick={refreshPage}
             data-tip
             data-for="refresh"
-            className="hover:cursor-pointer inline-block absolute right-1/3 md:right-1/4 lg:right-1/3 top-2 ">
+            className="hover:cursor-pointer inline-block absolute right-1/4 xl:right-1/3 top-2 ">
             <RefreshIcon className="text-pink-500 hover:text-white absolute h-7 w-7 " />
           </a>
           <ReactTooltip id="refresh" place="right" type="info" effect="float">

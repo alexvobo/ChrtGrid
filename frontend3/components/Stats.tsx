@@ -167,9 +167,9 @@ export default function Stats(wide) {
             ) : null}
           </div>
           <div className="text-center mb-4 flex mx-auto justify-center  ">
-            <div className="border-pink-500 border-2 rounded flex">
+            <div className="border-pink-500 border-2 rounded ">
               <button
-                className=" w-[125px] text-lg  bg-transparent  text-white font-bold  py-1 px-2 border-pink-500   hover:text-pink-500 rounded-sm  "
+                className=" min-w-[75px] text-lg  bg-transparent  text-white font-bold  py-1 px-2 pr-6 border-pink-500   hover:text-pink-500 rounded-sm  "
                 onClick={() => {
                   setSortAscending(!sortAscending);
                   setSortCategory("percentage_change_24");
@@ -193,7 +193,7 @@ export default function Stats(wide) {
                 </span>
               </button>
               <button
-                className="w-[135px] text-lg  border-x-2 bg-transparent text-white font-bold py-1 px-2 border-pink-500  hover:text-pink-500 rounded-sm  "
+                className=" min-w-[75px] text-lg   border-x-2 bg-transparent text-white font-bold py-1 px-2 border-pink-500  hover:text-pink-500 rounded-sm  "
                 onClick={() => {
                   setSortAscending(!sortAscending);
                   setSortCategory("percentage_change");
@@ -218,7 +218,7 @@ export default function Stats(wide) {
               </button>
 
               <button
-                className=" w-[135px] text-lg bg-transparent text-white font-bold py-1 px-2 border-pink-500 hover:border-white hover:text-pink-500 rounded  "
+                className=" text-lg bg-transparent text-white font-bold py-1 px-2 pr-6 border-pink-500 hover:border-white hover:text-pink-500 rounded  "
                 onClick={() => {
                   setSortAscending(!sortAscending);
                   setSortCategory("volume");
@@ -238,7 +238,7 @@ export default function Stats(wide) {
                       <SortDescendingIcon className="h-5 w-5 my-auto mx-2" />
                     )}
                   </span>
-                  Volume
+                  Vol
                 </span>
               </button>
             </div>

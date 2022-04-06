@@ -18,7 +18,7 @@ export default function AddressBar({ account, chainId, ENSName, copyAddress }) {
     <div className="grid grid-flow-col hover:bg-blue-800   bg-blue-800/70 mx-auto px-2 hover:cursor-pointer rounded-sm ">
       <a
         onClick={() => (copyAddress ? copy(account) : null)}
-        className="text-lg"
+        className="text-md md:text-lg"
         {...{
           href: !copyAddress
             ? formatEtherscanLink("Account", [chainId, account])

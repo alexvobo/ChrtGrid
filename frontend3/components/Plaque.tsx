@@ -12,7 +12,7 @@ export default function Plaque({ membership }) {
   }
   return (
     <div
-      className={`text-center m-auto w-full px-2 pb-2 rounded-sm ${
+      className={`text-center text-sm md:text-md m-auto w-full px-2 pb-1 rounded-sm ${
         memberships[membership.toLowerCase()]
       }`}>
       <div className="pt-1  text-center font-extrabold  ">
