@@ -11,7 +11,10 @@ export default function Table({ columns, data, exchangeStyle }) {
       data,
     });
   return (
-    <div className={classNames(" overflow-hidden", exchangeStyle?.borderStyle)}>
+    <div
+      className={classNames(
+        "border-2 border-gray-400/20 rounded-sm overflow-hidden"
+      )}>
       <table className=" text-white text-center w-full " {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -34,7 +37,7 @@ export default function Table({ columns, data, exchangeStyle }) {
             return (
               <tr
                 className={classNames(
-                  " text-gray-300 font-medium md:font-bold  ",
+                  "border-b-gray-400/20 border-b-2 text-gray-300 font-medium md:font-bold  ",
                   exchangeStyle?.exchangeStyle
                 )}
                 {...row.getRowProps()}>
