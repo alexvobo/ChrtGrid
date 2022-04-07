@@ -10,9 +10,8 @@ export default function Table({ columns, data, exchangeStyle }) {
       columns,
       data,
     });
-
   return (
-    <div className={exchangeStyle.borderStyle}>
+    <div className={classNames(" overflow-hidden", exchangeStyle?.borderStyle)}>
       <table className=" text-white text-center w-full " {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -35,8 +34,8 @@ export default function Table({ columns, data, exchangeStyle }) {
             return (
               <tr
                 className={classNames(
-                  "border-2 text-gray-300 font-bold text-md  ",
-                  exchangeStyle.exchangeStyle
+                  " text-gray-300 font-medium md:font-bold  ",
+                  exchangeStyle?.exchangeStyle
                 )}
                 {...row.getRowProps()}>
                 {row.cells.map((cell) => {

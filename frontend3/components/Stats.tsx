@@ -3,6 +3,7 @@ import LoadingIcons from "react-loading-icons";
 import { useData } from "../contexts/DataContext";
 import useSWR from "swr";
 import Table from "./Table";
+import TableSkeleton from "./TableSkeleton";
 import { SortAscendingIcon, SortDescendingIcon } from "@heroicons/react/solid";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -37,20 +38,23 @@ function moneyFormat(labelValue) {
 const exchangeThemes = {
   coinbase: {
     titleFont: "text-blue-600 justify-stretch",
-    borderStyle: "border-blue-600 border-2 border-b-0 rounded-sm",
+    borderStyle: "border-blue-600 border-2  rounded-sm",
+    highlight: "#2563eb",
     exchangeStyle:
       " hover:text-white hover:bg-blue-600 border-indigo-200/0 border-b-blue-600  text-shadow-black ",
   },
   kucoin: {
     titleFont: "text-[#23af91] justify-stretch",
-    borderStyle: "border-[#23af91] border-2 border-b-0 rounded-sm",
+    borderStyle: "border-[#23af91] border-2  rounded-sm",
+    highlight: "#23af91",
     exchangeStyle:
       " hover:bg-[#23af91] border-indigo-200/0 border-b-[#23af91]  text-shadow-black ",
   },
 
   binance: {
     titleFont: "text-white justify-stretch",
-    borderStyle: "border-yellow-500 border-2 border-b-0 rounded-sm ",
+    borderStyle: "border-yellow-500 border-2  rounded-sm ",
+    highlight: "#eab308",
     exchangeStyle:
       "hover:text-black  hover:bg-yellow-500  border-indigo-200/0 border-b-yellow-500  ",
   },
@@ -76,7 +80,6 @@ export default function Stats(wide) {
             accessor: "value.percentage_change",
             Cell: ({ cell: { value } }) => {
               let rounded_pct: number = Math.round(value);
-
               return (
                 <span
                   className={classNames(
@@ -123,11 +126,39 @@ export default function Stats(wide) {
   const [showMax, setShowMax] = useState(false);
   const [showVolume, setShowVolume] = useState(false);
   const [titleSortingText, setTitleSortingText] = useState("GAINERS");
+
   const { exchange } = useData();
 
   const { data: stats } = useSWR(
     exchange ? `/api/${exchange}/stats` : null,
     (url) => fetch(url).then((r) => r.json())
+  );
+
+  const tableData = useMemo(
+    () =>
+      !stats || stats === undefined
+        ? Array(15).fill({})
+        : Object.values(
+            orderBySubKey(stats, sortCategory, sortAscending)
+          ).slice(0, 15),
+    [stats, sortCategory, sortAscending]
+  );
+  const tableColumns = useMemo(
+    () =>
+      !stats || stats === undefined
+        ? columns[0].columns?.map((column) => ({
+            ...column,
+            Cell: (
+              <TableSkeleton
+                base="#202020"
+                highlight={
+                  exchange ? exchangeThemes[exchange].highlight : "#444"
+                }
+              />
+            ),
+          }))
+        : columns,
+    [stats, columns, exchange]
   );
 
   useEffect(() => {
@@ -151,20 +182,20 @@ export default function Stats(wide) {
             <div className="text-center text-yellow-500 font-bold text-2xl mb-4  ">
               <span className={exchangeThemes[exchange]?.titleFont}>
                 {exchange.toUpperCase()}
-              </span>{" "}
+              </span>
+
               {sortAscending
-                ? "WORST " + titleSortingText + " 😭"
-                : "TOP " + titleSortingText + " 🚀"}
+                ? " WORST " + titleSortingText + " 😭"
+                : " TOP " + titleSortingText + " 🚀"}
             </div>
-            {stats && stats !== undefined && Object.keys(stats).length > 1 ? (
-              <Table
-                exchangeStyle={exchangeThemes[exchange]}
-                columns={columns}
-                data={Object.values(
-                  orderBySubKey(stats, sortCategory, sortAscending)
-                ).slice(0, 15)}
-              />
-            ) : null}
+
+            <Table
+              exchangeStyle={
+                stats && stats !== undefined ? exchangeThemes[exchange] : null
+              }
+              columns={tableColumns}
+              data={tableData}
+            />
           </div>
           <div className="text-center mb-4 flex mx-auto justify-center  ">
             <div className="border-pink-500 border-2 rounded ">

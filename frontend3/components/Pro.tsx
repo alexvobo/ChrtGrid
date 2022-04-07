@@ -41,12 +41,14 @@ export default function Pro({ isOpen, setIsOpen }) {
   const [membershipMax, setMembershipMax] = useState(null);
 
   const { data: paymentData } = useSWR(
-    `/api/paymentInfo?network=${chainId}&tier=${membershipTier}`,
+    chainId && membershipTier
+      ? `/api/paymentInfo?network=${chainId}&tier=${membershipTier}`
+      : null,
     fetcher
   );
 
   const { data: membershipData } = useSWR(
-    `/api/membershipCount?tier=${membershipTier}`,
+    membershipTier ? `/api/membershipCount?tier=${membershipTier}` : null,
     fetcher
   );
 

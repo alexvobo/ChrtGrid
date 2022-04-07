@@ -222,18 +222,12 @@ export default function ExchangeMarketSelect() {
                             {m?.name}
                           </h3>
                           <ul
-                            key={"desc" + m?.name + String(i)}
+                            key={m?.name + String(i)}
                             className="flex mt-1 space-x-1 text-sm font-normal leading-4 text-coolGray-500">
-                            <li key={"desc1" + m?.name + String(i)}>
-                              {m?.description}
-                            </li>
-                            <li key={"desc2" + m?.name + String(i)}>
-                              &middot;
-                            </li>
+                            <li>{m?.description}</li>
+                            <li>&middot;</li>
                             {!m?.premium ? (
-                              <li
-                                key={"url" + m?.name + String(i)}
-                                className="text-blue-500 hover:underline z-10">
+                              <li className="text-blue-500 hover:underline z-10">
                                 {m?.url}
                               </li>
                             ) : (

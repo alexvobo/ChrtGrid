@@ -36,7 +36,7 @@ function AccountProvider({ children }) {
   function getCustomList(userData) {
     if (userData && userData !== undefined) {
       if (userData.customList?.length) {
-        console.log(userData.customList);
+        // console.log(userData.customList);
         setCustomListDB(userData.customList);
       } else {
         console.log("No list found");
