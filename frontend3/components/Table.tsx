@@ -13,7 +13,7 @@ export default function Table({ columns, data, exchangeStyle }) {
   return (
     <div
       className={classNames(
-        "border-2 border-gray-400/20 rounded-sm overflow-hidden"
+        "overflow-y-auto h-[500px] border-2 border-gray-400/20 rounded-sm overflow-hidden"
       )}>
       <table className=" text-white text-center w-full " {...getTableProps()}>
         <thead>
@@ -23,7 +23,7 @@ export default function Table({ columns, data, exchangeStyle }) {
               {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th
-                  className="text-yellow-500 text-md md:text-sm lg:text-lg"
+                  className="text-yellow-500 text-md md:text-sm lg:text-lg "
                   {...column.getHeaderProps()}>
                   {column.render("Header")}
                 </th>
@@ -37,7 +37,7 @@ export default function Table({ columns, data, exchangeStyle }) {
             return (
               <tr
                 className={classNames(
-                  "border-b-gray-400/20 border-b-2 text-gray-300 font-medium md:font-bold  ",
+                  "border-b-gray-400/20 border-b-2 text-gray-300 font-sm sm:font-bold  ",
                   exchangeStyle?.exchangeStyle
                 )}
                 {...row.getRowProps()}>

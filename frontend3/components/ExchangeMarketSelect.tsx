@@ -126,7 +126,7 @@ export default function ExchangeMarketSelect() {
         {
           name: "Latest",
           market: LATEST,
-          description: "Most Recent Listings",
+          description: "Recent Listings",
           premium: false,
           url: (
             <>
@@ -164,7 +164,7 @@ export default function ExchangeMarketSelect() {
   const [customListOpen, setCustomListOpen] = useState(false);
 
   return (
-    <div className="mx-auto w-full max-w-md pr-6 sm:pr-0 py-16 ">
+    <div className="mx-auto w-full max-w-md pr-6 sm:pr-0 py-8 ">
       <Tab.Group
         defaultIndex={Object.keys(exchanges).indexOf(exchange)}
         onChange={(index) => {

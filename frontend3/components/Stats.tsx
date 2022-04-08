@@ -8,7 +8,7 @@ import { SortAscendingIcon, SortDescendingIcon } from "@heroicons/react/solid";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-function orderBySubKey(input, key, order) {
+function orderBySubKey(input, key, key2 = null, order) {
   //Ascending
   if (order) {
     return Object.keys(input)
@@ -24,6 +24,10 @@ function orderBySubKey(input, key, order) {
 
 function moneyFormat(labelValue) {
   // Nine Zeroes for Billions
+  if (Number(labelValue) === 0) {
+    return 0;
+  }
+
   return Math.abs(Number(labelValue)) >= 1.0e9
     ? (Math.abs(Number(labelValue)) / 1.0e9).toFixed(1) + " B"
     : // Six Zeroes for Millions
@@ -31,7 +35,7 @@ function moneyFormat(labelValue) {
     ? (Math.abs(Number(labelValue)) / 1.0e6).toFixed(1) + " M"
     : // Three Zeroes for Thousands
     Math.abs(Number(labelValue)) >= 1.0e3
-    ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(1) + " K"
+    ? (Math.abs(Number(labelValue)) / 1.0e3).toFixed(0) + " K"
     : Math.abs(Math.round(Number(labelValue)));
 }
 
@@ -59,7 +63,7 @@ const exchangeThemes = {
       "hover:text-black  hover:bg-yellow-500  border-indigo-200/0 border-b-yellow-500  ",
   },
 };
-
+const MAX_COINS = 25;
 //Displays the 24h stats for the selected exchange. Updates based on SWR.
 export default function Stats(wide) {
   const columns = useMemo(
@@ -72,7 +76,7 @@ export default function Stats(wide) {
             accessor: "key",
           },
           {
-            Header: "Price ($)",
+            Header: "Price",
             accessor: "value.last",
           },
           {
@@ -91,26 +95,40 @@ export default function Stats(wide) {
               );
             },
           },
-          {
-            Header: "Max Gain",
-            accessor: "value.percentage_change_24",
-            Cell: ({ cell: { value } }) => {
-              let rounded_pct: number = Math.round(value);
+          // {
+          //   Header: "Max Gain",
+          //   accessor: "value.percentage_change_24",
+          //   Cell: ({ cell: { value } }) => {
+          //     let rounded_pct: number = Math.round(value);
 
-              return (
-                <span
-                  className={classNames(
-                    "text-md font-bold",
-                    rounded_pct >= 0 ? "text-green-600" : "text-red-600"
-                  )}>
-                  {rounded_pct}%
-                </span>
-              );
-            },
-          },
+          //     return (
+          //       <span
+          //         className={classNames(
+          //           "text-md font-bold",
+          //           rounded_pct >= 0 ? "text-green-600" : "text-red-600"
+          //         )}>
+          //         {rounded_pct}%
+          //       </span>
+          //     );
+          //   },
+          // },
           {
             Header: "Volume",
             accessor: "value.volume",
+            Cell: ({ cell: { value } }) => {
+              return <>{moneyFormat(value)}</>;
+            },
+          },
+          {
+            Header: "Cap",
+            accessor: "value.cap",
+            Cell: ({ cell: { value } }) => {
+              return <>{moneyFormat(value)}</>;
+            },
+          },
+          {
+            Header: "FDV",
+            accessor: "value.fdv",
             Cell: ({ cell: { value } }) => {
               return <>{moneyFormat(value)}</>;
             },
@@ -123,8 +141,11 @@ export default function Stats(wide) {
   const [sortCategory, setSortCategory] = useState("percentage_change");
   const [sortAscending, setSortAscending] = useState(false);
   const [showChange, setShowChange] = useState(true);
-  const [showMax, setShowMax] = useState(false);
+  // const [showMax, setShowMax] = useState(false);
   const [showVolume, setShowVolume] = useState(false);
+  const [showCap, setShowCap] = useState(false);
+  const [showFDV, setShowFDV] = useState(false);
+
   const [titleSortingText, setTitleSortingText] = useState("GAINERS");
 
   const { exchange } = useData();
@@ -137,10 +158,10 @@ export default function Stats(wide) {
   const tableData = useMemo(
     () =>
       !stats || stats === undefined
-        ? Array(15).fill({})
+        ? Array(MAX_COINS).fill({})
         : Object.values(
-            orderBySubKey(stats, sortCategory, sortAscending)
-          ).slice(0, 15),
+            orderBySubKey(stats, sortCategory, showCap, sortAscending)
+          ).slice(0, MAX_COINS),
     [stats, sortCategory, sortAscending]
   );
   const tableColumns = useMemo(
@@ -150,7 +171,7 @@ export default function Stats(wide) {
             ...column,
             Cell: (
               <TableSkeleton
-                base="#202020"
+                base="black"
                 highlight={
                   exchange ? exchangeThemes[exchange].highlight : "#444"
                 }
@@ -162,31 +183,45 @@ export default function Stats(wide) {
   );
 
   useEffect(() => {
+    let sortingText = "";
+    let emoji = "";
+    let category = "";
+
     if (showVolume) {
-      setTitleSortingText("VOLUME");
+      sortingText = sortAscending ? " LOWEST " : " HIGHEST ";
+      emoji = sortAscending ? "📉" : "📈";
+      category = " VOLUME ";
+    } else if (showCap) {
+      sortingText = sortAscending ? " LOWEST " : " HIGHEST ";
+      emoji = sortAscending ? "💎" : "💰";
+      category = " CAP ";
+    } else if (showFDV) {
+      sortingText = sortAscending ? " LOWEST " : " HIGHEST ";
+      emoji = sortAscending ? "💎" : "💰";
+      category = " FDV ";
     } else {
-      if (titleSortingText != "GAINERS") {
-        setTitleSortingText("GAINERS");
-      }
+      sortingText = sortAscending ? " WORST " : " TOP ";
+      emoji = sortAscending ? "😭" : "🚀";
+      category = " GAINERS ";
     }
-  }, [showChange, showMax, showVolume]);
+    setTitleSortingText(sortingText + category + emoji);
+    // , showMax
+  }, [sortAscending, showChange, showCap, showFDV, showVolume]);
 
   return (
     <>
-      <div className="mt-10 opacity-100 inset-0 overflow-x-show ">
+      <div className="mt-10 opacity-100 inset-0 overflow-x-show  ">
         <div className="text-center">
           <div
             className={classNames(
-              "inline-block w-full md:ml-4  p-4 mb-2 text-left align-middle transition-all transform bg-transparent overflow-x-show "
+              "inline-block w-full md:ml-4 mb-4 mt-4 text-left align-middle transition-all transform bg-transparent overflow-x-show "
             )}>
             <div className="text-center text-yellow-500 font-bold text-2xl mb-4  ">
               <span className={exchangeThemes[exchange]?.titleFont}>
                 {exchange.toUpperCase()}
               </span>
 
-              {sortAscending
-                ? " WORST " + titleSortingText + " 😭"
-                : " TOP " + titleSortingText + " 🚀"}
+              {titleSortingText}
             </div>
 
             <Table
@@ -197,16 +232,19 @@ export default function Stats(wide) {
               data={tableData}
             />
           </div>
-          <div className="text-center mb-4 flex mx-auto justify-center  ">
+          <div className="text-center  flex mx-auto justify-center ">
             <div className="border-pink-500 border-2 rounded ">
-              <button
+              {/* <button
                 className=" min-w-[75px] text-lg  bg-transparent  text-white font-bold  py-1 px-2 pr-6 border-pink-500   hover:text-pink-500 rounded-sm  "
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   setSortAscending(!sortAscending);
                   setSortCategory("percentage_change_24");
                   setShowChange(false);
                   setShowMax(true);
                   setShowVolume(false);
+                  setShowCap(false);
+                  setShowFDV(false);
                 }}>
                 <span className="flex">
                   <span
@@ -222,15 +260,18 @@ export default function Stats(wide) {
                   </span>
                   Max
                 </span>
-              </button>
+              </button> */}
               <button
-                className=" min-w-[75px] text-lg   border-x-2 bg-transparent text-white font-bold py-1 px-2 border-pink-500  hover:text-pink-500 rounded-sm  "
-                onClick={() => {
+                className=" min-w-[75px] text-lg   border-r-2 bg-transparent text-white font-bold py-1 pr-2  border-pink-500  hover:text-pink-500 rounded-sm  "
+                onClick={(e) => {
+                  e.preventDefault();
                   setSortAscending(!sortAscending);
                   setSortCategory("percentage_change");
                   setShowChange(true);
-                  setShowMax(false);
+                  // setShowMax(false);
                   setShowVolume(false);
+                  setShowCap(false);
+                  setShowFDV(false);
                 }}>
                 <span className="flex my-auto">
                   <span
@@ -239,9 +280,9 @@ export default function Stats(wide) {
                       !showChange ? "invisible" : "visible"
                     )}>
                     {sortAscending ? (
-                      <SortAscendingIcon className="h-5 w-5 my-auto mx-2 " />
+                      <SortAscendingIcon className="h-5 w-5 my-auto mx-1 sm:mx-2 " />
                     ) : (
-                      <SortDescendingIcon className="h-5 w-5 my-auto mx-2" />
+                      <SortDescendingIcon className="h-5 w-5 my-auto mx-1 sm:mx-2" />
                     )}
                   </span>
                   Change
@@ -249,13 +290,16 @@ export default function Stats(wide) {
               </button>
 
               <button
-                className=" text-lg bg-transparent text-white font-bold py-1 px-2 pr-6 border-pink-500 hover:border-white hover:text-pink-500 rounded  "
-                onClick={() => {
+                className=" text-lg bg-transparent text-white font-bold py-1 pr-2  border-pink-500 hover:border-white hover:text-pink-500 rounded  "
+                onClick={(e) => {
+                  e.preventDefault();
                   setSortAscending(!sortAscending);
                   setSortCategory("volume");
                   setShowChange(false);
-                  setShowMax(false);
+                  // setShowMax(false);
                   setShowVolume(true);
+                  setShowCap(false);
+                  setShowFDV(false);
                 }}>
                 <span className="flex my-auto">
                   <span
@@ -264,12 +308,66 @@ export default function Stats(wide) {
                       !showVolume ? "invisible" : "visible"
                     )}>
                     {sortAscending ? (
-                      <SortAscendingIcon className="h-5 w-5 my-auto mx-2" />
+                      <SortAscendingIcon className="h-5 w-5 my-auto mx-1 sm:mx-2" />
                     ) : (
-                      <SortDescendingIcon className="h-5 w-5 my-auto mx-2" />
+                      <SortDescendingIcon className="h-5 w-5 my-automx-1 sm:mx-2" />
                     )}
                   </span>
                   Vol
+                </span>
+              </button>
+              <button
+                className=" min-w-[75px] text-lg   border-l-2 bg-transparent text-white font-bold py-1 pr-2  border-pink-500  hover:text-pink-500 rounded-sm  "
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSortAscending(!sortAscending);
+                  setSortCategory("cap");
+                  setShowChange(false);
+                  // setShowMax(false);
+                  setShowVolume(false);
+                  setShowCap(true);
+                  setShowFDV(false);
+                }}>
+                <span className="flex my-auto">
+                  <span
+                    className={classNames(
+                      "my-auto",
+                      !showCap ? "invisible" : "visible"
+                    )}>
+                    {sortAscending ? (
+                      <SortAscendingIcon className="h-5 w-5 my-auto mx-1 sm:mx-2" />
+                    ) : (
+                      <SortDescendingIcon className="h-5 w-5 my-automx-1 sm:mx-2" />
+                    )}
+                  </span>
+                  Cap
+                </span>
+              </button>
+              <button
+                className=" min-w-[75px] text-lg   border-l-2 bg-transparent text-white font-bold py-1 sm:pr-2  border-pink-500  hover:text-pink-500 rounded-sm  "
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSortAscending(!sortAscending);
+                  setSortCategory("fdv");
+                  setShowChange(false);
+                  // setShowMax(false);
+                  setShowVolume(false);
+                  setShowCap(false);
+                  setShowFDV(true);
+                }}>
+                <span className="flex my-auto">
+                  <span
+                    className={classNames(
+                      "my-auto",
+                      !showFDV ? "invisible" : "visible"
+                    )}>
+                    {sortAscending ? (
+                      <SortAscendingIcon className="h-5 w-5 my-auto mx-1 sm:mx-2" />
+                    ) : (
+                      <SortDescendingIcon className="h-5 w-5 my-auto mx-1 sm:mx-2" />
+                    )}
+                  </span>
+                  FDV
                 </span>
               </button>
             </div>
