@@ -164,7 +164,7 @@ export default function ExchangeMarketSelect() {
   const [customListOpen, setCustomListOpen] = useState(false);
 
   return (
-    <div className="mx-auto w-full max-w-md pr-6 sm:pr-0 py-8 ">
+    <div className="mx-auto w-full max-w-md pr-6 sm:pr-0 py-4 ">
       <Tab.Group
         defaultIndex={Object.keys(exchanges).indexOf(exchange)}
         onChange={(index) => {

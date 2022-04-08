@@ -210,7 +210,7 @@ export default function Stats(wide) {
 
   return (
     <>
-      <div className="mt-10 opacity-100 inset-0 overflow-x-show  ">
+      <div className="mt-10 mb-8 opacity-100 inset-0 overflow-x-show  ">
         <div className="text-center">
           <div
             className={classNames(
@@ -233,7 +233,7 @@ export default function Stats(wide) {
             />
           </div>
           <div className="text-center  flex mx-auto justify-center ">
-            <div className="border-pink-500 border-2 rounded ">
+            <div className="border-pink-500 border-2 rounded mt-8 md:mt-4 ">
               {/* <button
                 className=" min-w-[75px] text-lg  bg-transparent  text-white font-bold  py-1 px-2 pr-6 border-pink-500   hover:text-pink-500 rounded-sm  "
                 onClick={(e) => {

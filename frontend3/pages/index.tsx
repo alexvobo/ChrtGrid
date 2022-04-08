@@ -134,7 +134,7 @@ export default function Home() {
             )}>
             <Stats wide={wide} />
           </div>
-          <div className="mb-2 ml-6">
+          <div className="mb-8 ml-6">
             <ExchangeMarketSelect />
           </div>
         </div>
