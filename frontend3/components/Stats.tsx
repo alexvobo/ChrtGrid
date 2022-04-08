@@ -63,7 +63,7 @@ const exchangeThemes = {
       "hover:text-black  hover:bg-yellow-500  border-indigo-200/0 border-b-yellow-500  ",
   },
 };
-const MAX_COINS = 25;
+const MAX_COINS = 50;
 //Displays the 24h stats for the selected exchange. Updates based on SWR.
 export default function Stats(wide) {
   const columns = useMemo(
