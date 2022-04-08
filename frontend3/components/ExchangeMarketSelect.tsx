@@ -164,7 +164,11 @@ export default function ExchangeMarketSelect() {
   const [customListOpen, setCustomListOpen] = useState(false);
 
   return (
-    <div className="mx-auto w-full max-w-md pr-6 sm:pr-0 py-4 ">
+    <div
+      className={classNames(
+        loading ? "hover:cursor-wait" : null,
+        "mx-auto w-full max-w-md pr-6 sm:pr-0 py-4 "
+      )}>
       <Tab.Group
         defaultIndex={Object.keys(exchanges).indexOf(exchange)}
         onChange={(index) => {
@@ -175,17 +179,22 @@ export default function ExchangeMarketSelect() {
             setLoading(false);
           }, cooldown);
         }}>
-        <Tab.List className="flex p-2 bg-blue-900/20 rounded-xl ">
+        <Tab.List
+          className={classNames(
+            loading ? "hover:cursor-wait" : null,
+            "flex p-2 bg-blue-900/20 rounded-xl "
+          )}>
           {Object.keys(exchanges).map((e) => (
             <Tab
               disabled={loading}
               key={e}
               className={({ selected }) =>
                 classNames(
+                  loading ? "hover:cursor-wait" : null,
                   "w-full py-2.5 text-md leading-5 font-medium rounded-lg",
                   selected
                     ? ` ${exchangeInfo[e]["exchangeStyle"]} shadow`
-                    : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+                    : "text-blue-100 hover:bg-indigo-800/20 hover:text-white"
                 )
               }>
               {titleCase(e)}
@@ -201,16 +210,18 @@ export default function ExchangeMarketSelect() {
                     <li
                       key={m?.name + i}
                       className={classNames(
+                        loading ? "hover:cursor-wait" : null,
                         `${exchangeInfo[e]["marketStyle"]} w-full relative p-3 rounded-md hover:bg-coolGray-100 `,
                         m?.market === market
-                          ? "bg-indigo-700/50"
-                          : "hover:bg-indigo-800/40"
+                          ? "bg-indigo-800/50"
+                          : "hover:bg-indigo-800/20"
                       )}>
                       {/* If the user is not logged in */}
                       {!userData || userData === undefined ? (
                         <button
                           disabled={loading || m?.premium}
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.preventDefault();
                             // if not logged in and it's loading or it's a premium option, do nothing, else switch market
                             setLoading(true);
                             switchMarket(m?.market);
@@ -238,8 +249,8 @@ export default function ExchangeMarketSelect() {
                           </ul>
 
                           <a
-                            href="#"
                             className={classNames(
+                              loading ? "hover:cursor-wait" : null,
                               m?.premium ? "cursor-not-allowed" : null,
                               "absolute inset-0 rounded-md",
                               "focus:z-10 focus:outline-none focus:ring-2 ring-pink-500"
@@ -289,8 +300,8 @@ export default function ExchangeMarketSelect() {
                           </ul>
 
                           <a
-                            href="#"
                             className={classNames(
+                              loading ? "hover:cursor-wait" : null,
                               "absolute inset-0 rounded-md",
                               "focus:z-10 focus:outline-none focus:ring-2 ring-pink-500"
                             )}

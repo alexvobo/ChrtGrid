@@ -100,8 +100,8 @@ export default function Navbar() {
                             className={classNames(
                               item.current
                                 ? " text-white "
-                                : "text-gray-300 hover:border-2 hover:border-pink-500 hover:text-white shadow-md hover:shadow-blue-500 ",
-                              "hover:animate-pulse px-2 py-2 rounded-md  font-medium text-md "
+                                : "text-gray-300 hover:border-2 hover:border-pink-500 hover:text-white shadow-md  ",
+                              "hover:animate-pulse px-2 py-1 mt-2 rounded-md  font-medium text-md "
                             )}
                             aria-current={item.current ? "page" : undefined}>
                             {item.name}

@@ -43,7 +43,7 @@ export default function Account() {
   return (
     <>
       <div className="text-white relative">
-        <div className="shadow-md shadow-blue-700 z-[100] pt-2 h-[80px] py-1 pb-2 rounded-md absolute w-full lg:w-[500px]  lg:right-12   top-[-8px] max-w-full   bg-transparent  border-b-2 border-x-2 border-yellow-500/70  ">
+        <div className=" z-[100] pt-2 h-[80px] py-1 pb-2 rounded-md absolute w-full lg:w-[500px]  lg:right-12   top-[-9px] max-w-full   bg-transparent  border-b-2 border-x-2 border-yellow-600  ">
           <div className="flex text-center ">
             <div className="m-auto">
               <h3 className="text-yellow-500 font-medium  text-md md:text-lg">
@@ -89,7 +89,7 @@ export default function Account() {
 
             <div className="m-auto">
               <button
-                className=" text-sm md:text-lg text-center mt-2  h-8 px-2 md:px-4 rounded-sm bg-transparent hover:bg-red-600 text-black-400 font-medium hover:text-black   border-2 border-pink-500 hover:border-transparent "
+                className=" text-sm md:text-lg text-center mt-2  h-8 px-2 md:px-4 rounded-sm bg-transparent hover:bg-red-600  font-medium hover:text-white   border-2 border-pink-500 hover:border-transparent "
                 disabled={!isWeb3Enabled}
                 onClick={async () => {
                   await deactivateWeb3();
