@@ -1,8 +1,8 @@
 import { AdvancedRealTimeChart } from "react-ts-tradingview-widgets";
 import { ArrowCircleUpIcon } from "@heroicons/react/outline";
-import LoadingIcons from "react-loading-icons";
 import { useData } from "../contexts/DataContext";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+
 const exchangeThemes = {
   coinbase: {
     gridColor: "border-blue-600 ",
@@ -29,18 +29,34 @@ export default function ChartGrid() {
     !interval
   ) {
     return (
-      <div className="relative flex justify-center items-center h-screen text-white">
+      <>
         {market === "custom" && coins.length === 0 ? (
-          <div className="">
-            <span className="text-white invisible md:visible absolute top-4 left-40 2xl:left-[300px] animate-bounce ">
-              <ArrowCircleUpIcon className=" h-12 w-12 " />
-            </span>
-            <span className="text-3xl animate-pulse">Please Add Coins</span>
+          <div className="relative flex justify-center items-center h-screen text-white">
+            <div className="">
+              <span className="text-white invisible md:visible absolute top-4 left-40 2xl:left-[300px] animate-bounce ">
+                <ArrowCircleUpIcon className=" h-12 w-12 " />
+              </span>
+              <span className="text-3xl animate-pulse">Please Add Coins</span>
+            </div>
           </div>
         ) : (
-          <LoadingIcons.Bars height="5em" fill="white" speed={0.75} />
+          <div className="grid md:grid-cols-2">
+            {Array(maxCharts)
+              .fill({})
+              .map(
+                (_, i) =>
+                  i < maxCharts && (
+                    <div
+                      className={`h-[320px] border-2 w-full overflow-hidden ${exchangeThemes[exchange]?.gridColor}`}
+                      key={i}>
+                      <div className="bg-[#0b1e4d] h-full w-full animate-pulse " />
+                    </div>
+                  )
+                // <LoadingIcons.Bars height="5em" fill="white" speed={0.75} />
+              )}
+          </div>
         )}
-      </div>
+      </>
     );
   }
 
@@ -51,7 +67,7 @@ export default function ChartGrid() {
           (item, i) =>
             i < maxCharts && (
               <div
-                className={`h-[320px] border-2 w-full overflow-hidden ${exchangeThemes[exchange]["gridColor"]}`}
+                className={`h-[320px] border-2 w-full overflow-hidden ${exchangeThemes[exchange]?.gridColor}`}
                 key={i}>
                 {/* <div className="text-white">
                   {item} {interval}

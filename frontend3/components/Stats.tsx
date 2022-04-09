@@ -1,14 +1,12 @@
 import { useState, useMemo, useEffect } from "react";
-import LoadingIcons from "react-loading-icons";
 import { useData } from "../contexts/DataContext";
 import useSWR from "swr";
 import Table from "./Table";
-import TableSkeleton from "./TableSkeleton";
 import { SortAscendingIcon, SortDescendingIcon } from "@heroicons/react/solid";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-function orderBySubKey(input, key, key2 = null, order) {
+function orderBySubKey(input, key, order) {
   //Ascending
   if (order) {
     return Object.keys(input)
@@ -65,7 +63,7 @@ const exchangeThemes = {
 };
 const MAX_COINS = 50;
 //Displays the 24h stats for the selected exchange. Updates based on SWR.
-export default function Stats(wide) {
+export default function Stats() {
   const columns = useMemo(
     () => [
       {
@@ -160,27 +158,28 @@ export default function Stats(wide) {
       !stats || stats === undefined
         ? Array(MAX_COINS).fill({})
         : Object.values(
-            orderBySubKey(stats, sortCategory, showCap, sortAscending)
+            orderBySubKey(stats, sortCategory, sortAscending)
           ).slice(0, MAX_COINS),
     [stats, sortCategory, sortAscending]
   );
-  const tableColumns = useMemo(
-    () =>
-      !stats || stats === undefined
-        ? columns[0].columns?.map((column) => ({
-            ...column,
-            Cell: (
-              <TableSkeleton
-                base="black"
-                highlight={
-                  exchange ? exchangeThemes[exchange].highlight : "#444"
-                }
-              />
-            ),
-          }))
-        : columns,
-    [stats, columns, exchange]
-  );
+  // const tableColumns = useMemo(
+  //   () =>
+  //     !stats || stats === undefined
+  //       ? columns[0].columns?.map((column) => ({
+  //           ...column,
+  //           Cell: (
+  //             <></>
+  //             // <TableSkeleton
+  //             //   base="#010C27"
+  //             //   highlight={
+  //             //     exchange ? exchangeThemes[exchange].highlight : "#444"
+  //             //   }
+  //             // />
+  //           ),
+  //         }))
+  //       : columns,
+  //   [stats, columns, exchange]
+  // );
 
   useEffect(() => {
     let sortingText = "";
@@ -225,10 +224,8 @@ export default function Stats(wide) {
             </div>
 
             <Table
-              exchangeStyle={
-                stats && stats !== undefined ? exchangeThemes[exchange] : null
-              }
-              columns={tableColumns}
+              exchangeStyle={exchange ? exchangeThemes[exchange] : null}
+              columns={columns}
               data={tableData}
             />
           </div>

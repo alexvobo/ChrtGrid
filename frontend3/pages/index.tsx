@@ -33,7 +33,7 @@ export default function Home() {
   const { exchange, networks } = useData();
 
   const [supported, setSupported] = useState(false);
-  const [wide, setWide] = useState(false);
+  // const [wide, setWide] = useState(false);
 
   const { enableWeb3, isWeb3Enabled, chainId } = useMoralis();
   const { chain } = useChain();
@@ -49,13 +49,13 @@ export default function Home() {
       }
     });
   }, [chain, , chainId, networks]);
-  useEffect(() => {
-    if (supported && loggedIn === "true") {
-      setWide(true);
-    } else {
-      setWide(false);
-    }
-  }, [supported, loggedIn]);
+  // useEffect(() => {
+  //   if (supported && loggedIn === "true") {
+  //     setWide(true);
+  //   } else {
+  //     setWide(false);
+  //   }
+  // }, [supported, loggedIn]);
 
   useEffect(() => {
     const connectWalletOnPageLoad = async () => {
@@ -132,7 +132,7 @@ export default function Home() {
               "z-10 ",
               loggedIn === "true" && supported ? "col-span-2" : null
             )}>
-            <Stats wide={wide} />
+            <Stats />
           </div>
           <div className="mb-8 ml-6">
             <ExchangeMarketSelect />

@@ -1,6 +1,6 @@
 import React from "react";
 import { useTable } from "react-table";
-
+import TableSkeleton from "./TableSkeleton";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -34,7 +34,18 @@ export default function Table({ columns, data, exchangeStyle }) {
         <tbody {...getTableBodyProps()}>
           {rows.map((row, i) => {
             prepareRow(row);
-            return (
+            return row?.values?.key === undefined ? (
+              <tr>
+                <td colSpan={6}>
+                  <TableSkeleton
+                    base="#010C27"
+                    highlight={
+                      exchangeStyle ? exchangeStyle?.highlight : "#233242"
+                    }
+                  />
+                </td>
+              </tr>
+            ) : (
               <tr
                 className={classNames(
                   "border-b-gray-400/20 border-b-2 text-gray-300 font-sm sm:font-bold  ",
