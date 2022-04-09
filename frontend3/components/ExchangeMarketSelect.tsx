@@ -252,8 +252,7 @@ export default function ExchangeMarketSelect() {
                             className={classNames(
                               loading ? "hover:cursor-wait" : null,
                               m?.premium ? "cursor-not-allowed" : null,
-                              "absolute inset-0 rounded-md",
-                              "focus:z-10 focus:outline-none focus:ring-2 ring-pink-500"
+                              "absolute inset-0 rounded-md"
                             )}
                           />
                         </button>
@@ -303,8 +302,7 @@ export default function ExchangeMarketSelect() {
                             href="#"
                             className={classNames(
                               loading ? "hover:cursor-wait" : null,
-                              "absolute inset-0 rounded-md",
-                              "focus:z-10 focus:outline-none focus:ring-2 ring-pink-500"
+                              "absolute inset-0 rounded-md"
                             )}
                           />
                         </button>
