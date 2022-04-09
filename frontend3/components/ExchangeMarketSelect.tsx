@@ -74,7 +74,7 @@ export default function ExchangeMarketSelect() {
     if (exchInfo) {
       return [
         {
-          name: "Best/Worst Gainers",
+          name: "Top Gainers",
           market: STATS,
           description: "Volatile Movers",
           premium: false,
