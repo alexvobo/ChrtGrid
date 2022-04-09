@@ -190,7 +190,6 @@ export default function ExchangeMarketSelect() {
               key={e}
               className={({ selected }) =>
                 classNames(
-                  loading ? "hover:cursor-wait" : null,
                   "w-full py-2.5 text-md leading-5 font-medium rounded-lg",
                   selected
                     ? ` ${exchangeInfo[e]["exchangeStyle"]} shadow`
@@ -249,6 +248,7 @@ export default function ExchangeMarketSelect() {
                           </ul>
 
                           <a
+                            href="#"
                             className={classNames(
                               loading ? "hover:cursor-wait" : null,
                               m?.premium ? "cursor-not-allowed" : null,
@@ -300,6 +300,7 @@ export default function ExchangeMarketSelect() {
                           </ul>
 
                           <a
+                            href="#"
                             className={classNames(
                               loading ? "hover:cursor-wait" : null,
                               "absolute inset-0 rounded-md",
