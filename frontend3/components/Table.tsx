@@ -17,8 +17,9 @@ export default function Table({ columns, data, exchangeStyle }) {
       )}>
       <table className=" text-white text-center w-full " {...getTableProps()}>
         <thead>
-          {headerGroups.map((headerGroup) => (
+          {headerGroups.map((headerGroup, i) => (
             <tr
+              key={i}
               className=" font-bold  text-md "
               {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
@@ -35,7 +36,7 @@ export default function Table({ columns, data, exchangeStyle }) {
           {rows.map((row, i) => {
             prepareRow(row);
             return row?.values?.key === undefined ? (
-              <tr>
+              <tr key={i}>
                 <td colSpan={6}>
                   <TableSkeleton
                     base="#010C27"
@@ -47,6 +48,7 @@ export default function Table({ columns, data, exchangeStyle }) {
               </tr>
             ) : (
               <tr
+                key={i}
                 className={classNames(
                   "border-b-gray-400/20 border-b-2 text-gray-300 font-sm sm:font-bold  ",
                   exchangeStyle?.exchangeStyle

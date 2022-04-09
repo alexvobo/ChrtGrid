@@ -164,11 +164,7 @@ export default function ExchangeMarketSelect() {
   const [customListOpen, setCustomListOpen] = useState(false);
 
   return (
-    <div
-      className={classNames(
-        loading ? "hover:cursor-wait" : null,
-        "mx-auto w-full max-w-md pr-6 sm:pr-0 py-4 "
-      )}>
+    <div className={classNames("mx-auto w-full max-w-md pr-6 sm:pr-0 py-4 ")}>
       <Tab.Group
         defaultIndex={Object.keys(exchanges).indexOf(exchange)}
         onChange={(index) => {
@@ -179,17 +175,14 @@ export default function ExchangeMarketSelect() {
             setLoading(false);
           }, cooldown);
         }}>
-        <Tab.List
-          className={classNames(
-            loading ? "hover:cursor-wait" : null,
-            "flex p-2 bg-blue-900/20 rounded-xl "
-          )}>
+        <Tab.List className={classNames("flex p-2 bg-blue-900/20 rounded-xl ")}>
           {Object.keys(exchanges).map((e) => (
             <Tab
               disabled={loading}
               key={e}
               className={({ selected }) =>
                 classNames(
+                  loading ? "hover:cursor-wait" : null,
                   "w-full py-2.5 text-md leading-5 font-medium rounded-lg",
                   selected
                     ? ` ${exchangeInfo[e]["exchangeStyle"]} shadow`
@@ -202,12 +195,11 @@ export default function ExchangeMarketSelect() {
         </Tab.List>
         <Tab.Panels className="mt-2">
           {Object.entries(exchanges).map(([e, markets], idx) => (
-            <Tab.Panel key={idx} className={classNames(" rounded-xl p-2")}>
-              <ul key={"tabpanel" + idx}>
+            <Tab.Panel key={e} className={classNames(" rounded-xl p-2")}>
+              <ul key={idx}>
                 {markets?.map((m, i) => (
-                  <div className="flex ">
+                  <div key={i} className="flex ">
                     <li
-                      key={m?.name + i}
                       className={classNames(
                         loading ? "hover:cursor-wait" : null,
                         `${exchangeInfo[e]["marketStyle"]} w-full relative p-3 rounded-md hover:bg-coolGray-100 `,
@@ -231,9 +223,7 @@ export default function ExchangeMarketSelect() {
                           <h3 className="text-yellow-500 mb-2 text-md text-left font-medium leading-5">
                             {m?.name}
                           </h3>
-                          <ul
-                            key={m?.name + String(i)}
-                            className="flex mt-1 space-x-1 text-sm font-normal leading-4 text-coolGray-500">
+                          <ul className="flex mt-1 space-x-1 text-sm font-normal leading-4 text-coolGray-500">
                             <li>{m?.description}</li>
                             <li>&middot;</li>
                             {!m?.premium ? (
@@ -276,19 +266,11 @@ export default function ExchangeMarketSelect() {
                             {m?.name}
                           </h3>
 
-                          <ul
-                            key={m?.name + String(i)}
-                            className="flex mt-1 space-x-1 text-sm font-normal leading-4 text-coolGray-500">
-                            <li key={"desc1" + m?.name + String(i)}>
-                              {m?.description}
-                            </li>
-                            <li key={"desc2" + m?.name + String(i)}>
-                              &middot;
-                            </li>{" "}
+                          <ul className="flex mt-1 space-x-1 text-sm font-normal leading-4 text-coolGray-500">
+                            <li>{m?.description}</li>
+                            <li>&middot;</li>{" "}
                             {m?.premium && userData?.membership === FREE ? (
-                              <li
-                                key={"url" + m?.name + String(i)}
-                                className="text-red-500  z-10">
+                              <li className="text-red-500  z-10">
                                 Click to purchase premium
                               </li>
                             ) : (

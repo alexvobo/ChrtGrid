@@ -19,7 +19,7 @@ export default function ChartGrid() {
   const { coins, exchange, market } = useData();
   const maxCharts = 8;
 
-  const [interval, setInterval] = useLocalStorage("interval", "120");
+  const [interval, setInterval] = useLocalStorage("interval", "D");
 
   if (
     coins === undefined ||

@@ -5,8 +5,8 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 
 //Part of the <Account> Component, allows a user to select the interval for the charts and saves it to local storage.
 export default function IntervalSelect() {
-  const intervals = ["120", "15", "30", "60", "240", "D", "W"];
-  const [interval, setInterval] = useLocalStorage("interval", "D");
+  const intervals = ["15", "30", "60", "240", "120", "D", "W"];
+  const [interval, setInterval] = useLocalStorage("interval", intervals[5]); //D
   return (
     <div className="w-36 absolute top-0 bottom-0 left-0 right-0 mx-auto ">
       <Listbox value={interval} onChange={setInterval}>
@@ -40,7 +40,7 @@ export default function IntervalSelect() {
                   {({ selected }) => (
                     <>
                       <span
-                        className={`block truncate ${
+                        className={`block  ${
                           selected ? "font-medium" : "font-normal"
                         }`}>
                         {item}

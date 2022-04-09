@@ -70,7 +70,7 @@ export function DataProvider({ children }) {
         customListDB?.map((item) => {
           coinList.push(`${item?.exchange}:${item?.symbol}${item?.pair}`);
         });
-        console.log(coinList);
+        // console.log(coinList);
         setCoins(coinList);
       }
     } else {
@@ -96,7 +96,7 @@ export function DataProvider({ children }) {
     if (exchange !== "" && market !== "" && market !== CUSTOM) {
       localStorage.setItem("exchange", exchange);
       localStorage.setItem("market", market);
-      console.log("Fetching Data...");
+      // console.log("Fetching Data...");
       fetchCoins();
     }
   }, [exchange, market]);
