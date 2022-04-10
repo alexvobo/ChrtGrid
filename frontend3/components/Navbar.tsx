@@ -124,7 +124,7 @@ export default function Navbar() {
 
                 {/* TickerTape */}
               </div>
-              <div className=" pl-4 relative w-2/3 right-24  sm:w-1/2 sm:right-4 md:w-1/2 lg:w-1/2 lg:right-5 xl:w-3/5 mb-1 overflow-hidden h-[68px]">
+              <div className=" pl-4 relative w-4/5  right-24  sm:w-1/2 sm:right-4 md:w-1/2 lg:w-1/2 lg:right-5 xl:w-3/5 mb-1 overflow-hidden h-[68px]">
                 <TickerTape
                   colorTheme="dark"
                   isTransparent={true}

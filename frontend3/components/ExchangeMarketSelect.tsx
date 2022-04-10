@@ -294,7 +294,12 @@ export default function ExchangeMarketSelect() {
                     {m?.market === LATEST ? (
                       <button
                         className="w-20 relative   "
-                        onClick={() => copy(JSON.stringify(coins))}>
+                        onClick={async () => {
+                          const latest = await fetch(
+                            `/api/${exchange}/latest/coins`
+                          ).then((res) => res.json());
+                          copy(JSON.stringify(latest));
+                        }}>
                         <ClipboardCopyIcon
                           className={`${exchangeInfo[e]["textStyle"]} absolute  inset-0 m-auto  w-10 h-10 hover:text-white hover:animate-pulse`}
                         />
