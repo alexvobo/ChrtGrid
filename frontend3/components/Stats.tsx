@@ -81,7 +81,7 @@ export default function Stats() {
             Header: "Change",
             accessor: "value.percentage_change",
             Cell: ({ cell: { value } }) => {
-              let rounded_pct: number = Math.round(value);
+              let rounded_pct: number = value.toFixed(1);
               return (
                 <span
                   className={classNames(
@@ -93,23 +93,7 @@ export default function Stats() {
               );
             },
           },
-          // {
-          //   Header: "Max Gain",
-          //   accessor: "value.percentage_change_24",
-          //   Cell: ({ cell: { value } }) => {
-          //     let rounded_pct: number = Math.round(value);
 
-          //     return (
-          //       <span
-          //         className={classNames(
-          //           "text-md font-bold",
-          //           rounded_pct >= 0 ? "text-green-600" : "text-red-600"
-          //         )}>
-          //         {rounded_pct}%
-          //       </span>
-          //     );
-          //   },
-          // },
           {
             Header: "Volume",
             accessor: "value.volume",
@@ -162,24 +146,6 @@ export default function Stats() {
           ).slice(0, MAX_COINS),
     [stats, sortCategory, sortAscending]
   );
-  // const tableColumns = useMemo(
-  //   () =>
-  //     !stats || stats === undefined
-  //       ? columns[0].columns?.map((column) => ({
-  //           ...column,
-  //           Cell: (
-  //             <></>
-  //             // <TableSkeleton
-  //             //   base="#010C27"
-  //             //   highlight={
-  //             //     exchange ? exchangeThemes[exchange].highlight : "#444"
-  //             //   }
-  //             // />
-  //           ),
-  //         }))
-  //       : columns,
-  //   [stats, columns, exchange]
-  // );
 
   useEffect(() => {
     let sortingText = "";
@@ -231,33 +197,6 @@ export default function Stats() {
           </div>
           <div className="text-center  flex mx-auto justify-center ">
             <div className="border-pink-500 border-2 rounded mt-8 md:mt-4 ">
-              {/* <button
-                className=" min-w-[75px] text-lg  bg-transparent  text-white font-bold  py-1 px-2 pr-6 border-pink-500   hover:text-pink-500 rounded-sm  "
-                onClick={(e) => {
-                  e.preventDefault();
-                  setSortAscending(!sortAscending);
-                  setSortCategory("percentage_change_24");
-                  setShowChange(false);
-                  setShowMax(true);
-                  setShowVolume(false);
-                  setShowCap(false);
-                  setShowFDV(false);
-                }}>
-                <span className="flex">
-                  <span
-                    className={classNames(
-                      "my-auto",
-                      !showMax ? "invisible" : "visible"
-                    )}>
-                    {sortAscending ? (
-                      <SortAscendingIcon className="h-5 w-5 my-auto mx-2  " />
-                    ) : (
-                      <SortDescendingIcon className="h-5 w-5 my-auto mx-2" />
-                    )}{" "}
-                  </span>
-                  Max
-                </span>
-              </button> */}
               <button
                 className=" min-w-[75px] text-lg   border-r-2 bg-transparent text-white font-bold py-1 pr-2  border-pink-500  hover:text-pink-500 rounded-sm  "
                 onClick={(e) => {
