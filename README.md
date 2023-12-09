@@ -1,1 +1,2 @@
-"# gridly.xyz" 
+"# gridly.xyz"
+Ultimate charting tool
